@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,12 +12,45 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
-import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import MicrosoftIcon from "../../sign-in/components/microosoft-icon";
+import { signUpWithEmail } from "@/lib/actions/auth-actions";
+
+const signupSchema = z
+  .object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.email("Invalid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string(),
+    terms: z.boolean().refine((val) => val === true, {
+      message: "You must agree to the terms and conditions",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+type SignupFormData = z.infer<typeof signupSchema>;
 
 export function SignupForm() {
-  const isLoading = false;
+  const [error, setError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit = async (data: SignupFormData) => {
+    setError(null);
+    try {
+      await signUpWithEmail(data.name, data.email, data.password);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign up failed");
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
@@ -28,10 +65,17 @@ export function SignupForm() {
             </p>
           </div>
 
+          {error && (
+            <div className="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
           <Button
             type="button"
             variant="outline"
             className="h-11 w-full gap-3 text-card-foreground hover:bg-secondary"
+            disabled={isSubmitting}
           >
             <MicrosoftIcon className="h-5 w-5" />
             Sign up with Microsoft
@@ -39,7 +83,7 @@ export function SignupForm() {
 
           <FieldSeparator className="my-6">or</FieldSeparator>
 
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="name">Full name</FieldLabel>
@@ -47,9 +91,15 @@ export function SignupForm() {
                   id="name"
                   type="text"
                   placeholder="John Doe"
-                  required
                   className="h-11"
+                  {...register("name")}
+                  disabled={isSubmitting}
                 />
+                {errors.name && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.name.message}
+                  </p>
+                )}
               </Field>
 
               <Field>
@@ -58,9 +108,15 @@ export function SignupForm() {
                   id="email"
                   type="email"
                   placeholder="name@company.com"
-                  required
                   className="h-11"
+                  {...register("email")}
+                  disabled={isSubmitting}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
               </Field>
 
               <Field>
@@ -69,10 +125,15 @@ export function SignupForm() {
                   id="password"
                   type="password"
                   placeholder="Create a password"
-                  required
-                  minLength={8}
                   className="h-11"
+                  {...register("password")}
+                  disabled={isSubmitting}
                 />
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
                 <p className="mt-1 text-xs text-muted-foreground">
                   Must be at least 8 characters
                 </p>
@@ -86,40 +147,23 @@ export function SignupForm() {
                   id="confirmPassword"
                   type="password"
                   placeholder="Confirm your password"
-                  required
                   className="h-11"
+                  {...register("confirmPassword")}
+                  disabled={isSubmitting}
                 />
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </Field>
-
-              <div className="flex items-start gap-2">
-                <Checkbox id="terms" className="mt-0.5" />
-                <label
-                  htmlFor="terms"
-                  className="cursor-pointer leading-relaxed text-sm text-muted-foreground"
-                >
-                  I agree to the{" "}
-                  <Link
-                    href="#"
-                    className="text-foreground underline-offset-4 hover:underline"
-                  >
-                    Terms of Service
-                  </Link>{" "}
-                  and{" "}
-                  <Link
-                    href="#"
-                    className="text-foreground underline-offset-4 hover:underline"
-                  >
-                    Privacy Policy
-                  </Link>
-                </label>
-              </div>
 
               <Button
                 type="submit"
                 className="h-11 w-full"
-                disabled={isLoading}
+                disabled={isSubmitting}
               >
-                {isLoading ? "Creating account..." : "Create account"}
+                {isSubmitting ? "Creating account..." : "Create account"}
               </Button>
             </FieldGroup>
           </form>
@@ -127,7 +171,7 @@ export function SignupForm() {
           <p className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
-              href="/"
+              href="/dashboard"
               className="font-medium text-foreground underline-offset-4 hover:underline"
             >
               Sign in
