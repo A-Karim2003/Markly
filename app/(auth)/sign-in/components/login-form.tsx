@@ -1,6 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,9 +16,36 @@ import {
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
 import MicrosoftIcon from "./microosoft-icon";
+import { signInWithEmail } from "@/lib/actions/auth-actions";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  remember: z.boolean().optional(),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const isLoading = false;
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    setError(null);
+    try {
+      await signInWithEmail(data.email, data.password);
+      router.push("/dashboard");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign in failed");
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
@@ -29,10 +61,17 @@ export function LoginForm() {
             </p>
           </div>
 
+          {error && (
+            <div className="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
           <Button
             type="button"
             variant="outline"
             className="h-11 w-full gap-3 text-card-foreground hover:bg-secondary"
+            disabled={isSubmitting}
           >
             <MicrosoftIcon className="h-5 w-5" />
             Continue with Microsoft
@@ -40,7 +79,7 @@ export function LoginForm() {
 
           <FieldSeparator className="my-6">or</FieldSeparator>
 
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -48,9 +87,15 @@ export function LoginForm() {
                   id="email"
                   type="email"
                   placeholder="name@company.com"
-                  required
                   className="h-11"
+                  {...register("email")}
+                  disabled={isSubmitting}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
               </Field>
 
               <Field>
@@ -59,14 +104,24 @@ export function LoginForm() {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
-                  required
                   className="h-11"
+                  {...register("password")}
+                  disabled={isSubmitting}
                 />
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
               </Field>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Checkbox id="remember" />
+                  <Checkbox
+                    id="remember"
+                    {...register("remember")}
+                    disabled={isSubmitting}
+                  />
                   <label
                     htmlFor="remember"
                     className="cursor-pointer text-sm text-muted-foreground"
@@ -86,9 +141,9 @@ export function LoginForm() {
               <Button
                 type="submit"
                 className="h-11 w-full"
-                disabled={isLoading}
+                disabled={isSubmitting}
               >
-                {isLoading ? "Signing in..." : "Sign in"}
+                {isSubmitting ? "Signing in..." : "Sign in"}
               </Button>
             </FieldGroup>
           </form>
