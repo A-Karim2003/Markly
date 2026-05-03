@@ -7,6 +7,9 @@ import {
   BookOpen,
   ClipboardList,
   Settings,
+  ChevronUp,
+  User,
+  LogOut,
 } from "lucide-react";
 import {
   Sidebar,
@@ -20,7 +23,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut } from "@/lib/actions/auth-actions";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -69,22 +78,46 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="px-4 py-4">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-              {user.initials}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col gap-1">
-            <span className="text-sm font-medium leading-none">
-              {user.name}
-            </span>
-            <Badge variant="secondary" className="w-fit text-xs px-2 py-0.5">
-              Year {user.year}
-            </Badge>
-          </div>
-        </div>
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton className="h-12 hover:bg-accent/50">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                      {user.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-0.5 flex-1">
+                    <span className="text-sm font-semibold">{user.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      Year {user.year}
+                    </span>
+                  </div>
+                  <ChevronUp className="h-4 w-4 ml-auto text-muted-foreground transition-transform" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="top" className="w-56">
+                <DropdownMenuItem className="cursor-pointer">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Account</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer text-red-600"
+                  onClick={signOut}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
   );

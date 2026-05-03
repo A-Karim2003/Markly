@@ -2,6 +2,7 @@
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function signUpWithEmail(
   name: string,
@@ -54,6 +55,8 @@ export async function signOut() {
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Sign out failed");
   }
+
+  redirect("/sign-in");
 }
 
 export async function getSession() {
