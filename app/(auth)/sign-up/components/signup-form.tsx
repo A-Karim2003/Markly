@@ -46,11 +46,7 @@ export default function SignupForm() {
   async function onSubmit(data: SignupFormData) {
     setError(null);
     try {
-      const res = await signUpWithEmail(data.name, data.email, data.password);
-      if (res.error) {
-        setError(res.error.message ?? "Sign up failed");
-        return;
-      }
+      await signUpWithEmail(data.name, data.email, data.password);
       router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
