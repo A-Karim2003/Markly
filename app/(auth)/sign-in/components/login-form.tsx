@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
@@ -19,8 +19,8 @@ import MicrosoftIcon from "./microosoft-icon";
 import { signInWithEmail } from "@/lib/actions/auth-actions";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
   remember: z.boolean().optional(),
 });
 
@@ -32,20 +32,21 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  async function onSubmit(data: LoginFormData) {
     setError(null);
     try {
-      await signInWithEmail(data.email, data.password);
+      await signInWithEmail(data.email, data.password, data.remember);
       router.push("/dashboard");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Sign in failed");
+    } catch {
+      setError("Invalid email or password.");
     }
-  };
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
@@ -117,10 +118,15 @@ export function LoginForm() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="remember"
-                    {...register("remember")}
-                    disabled={isSubmitting}
+                  <Controller
+                    name="remember"
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    )}
                   />
                   <label
                     htmlFor="remember"

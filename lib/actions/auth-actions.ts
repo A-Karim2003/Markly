@@ -25,12 +25,17 @@ export async function signUpWithEmail(
   }
 }
 
-export async function signInWithEmail(email: string, password: string) {
+export async function signInWithEmail(
+  email: string,
+  password: string,
+  remember: boolean | undefined,
+) {
   try {
     const response = await auth.api.signInEmail({
       body: {
         email,
         password,
+        rememberMe: remember,
       },
       headers: await headers(),
     });
