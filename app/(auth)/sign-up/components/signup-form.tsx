@@ -22,9 +22,6 @@ const signupSchema = z
     email: z.email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
-    terms: z.boolean().refine((val) => val === true, {
-      message: "You must agree to the terms and conditions",
-    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -33,8 +30,9 @@ const signupSchema = z
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
-export function SignupForm() {
+export default function SignupForm() {
   const [error, setError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -43,14 +41,14 @@ export function SignupForm() {
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = async (data: SignupFormData) => {
+  async function onSubmit(data: SignupFormData) {
     setError(null);
     try {
       await signUpWithEmail(data.name, data.email, data.password);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
     }
-  };
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
@@ -171,7 +169,7 @@ export function SignupForm() {
           <p className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
-              href="/dashboard"
+              href="/sign-in"
               className="font-medium text-foreground underline-offset-4 hover:underline"
             >
               Sign in

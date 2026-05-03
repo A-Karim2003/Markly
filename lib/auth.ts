@@ -10,8 +10,18 @@ export const auth = betterAuth({
   // When Better Auth tries to set cookies inside a Server Action, manually sync those cookies into Next.js/browser.”
   plugins: [nextCookies()],
 
+  // Enable email + password login
   emailAndPassword: {
     enabled: true,
+    autoSignIn: true,
+    sendResetPassword: async ({ user, url }) => {
+      console.log("Reset password email for:", user.email);
+      console.log("Reset link:", url);
+
+      // later:
+      // send email here
+    },
+    resetPasswordTokenExpiresIn: 3600, // 1 hour
   },
 
   // socialProviders: {
