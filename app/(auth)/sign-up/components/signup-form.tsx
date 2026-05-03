@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import MicrosoftIcon from "../../sign-in/components/microosoft-icon";
 import { signUpWithEmail } from "@/lib/actions/auth-actions";
+import { useRouter } from "next/navigation";
 
 const signupSchema = z
   .object({
@@ -32,6 +33,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const {
     register,
@@ -44,7 +46,12 @@ export default function SignupForm() {
   async function onSubmit(data: SignupFormData) {
     setError(null);
     try {
-      await signUpWithEmail(data.name, data.email, data.password);
+      const res = await signUpWithEmail(data.name, data.email, data.password);
+      if (res.error) {
+        setError(res.error.message ?? "Sign up failed");
+        return;
+      }
+      router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
     }

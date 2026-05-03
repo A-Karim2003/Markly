@@ -1,6 +1,7 @@
 "use server";
 
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function signUpWithEmail(
   name: string,
@@ -8,12 +9,16 @@ export async function signUpWithEmail(
   password: string,
 ) {
   try {
-    const response = await authClient.signUp.email({
-      name,
-      email,
-      password,
-      callbackURL: "https://example.com/callback",
+    const response = await auth.api.signUpEmail({
+      body: {
+        name,
+        email,
+        password,
+        callbackURL: "/dashboard",
+      },
+      headers: await headers(),
     });
+
     return response;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Sign up failed");
@@ -22,10 +27,14 @@ export async function signUpWithEmail(
 
 export async function signInWithEmail(email: string, password: string) {
   try {
-    const response = await authClient.signIn.email({
-      email,
-      password,
+    const response = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+      },
+      headers: await headers(),
     });
+
     return response;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Sign in failed");
@@ -34,7 +43,9 @@ export async function signInWithEmail(email: string, password: string) {
 
 export async function signOut() {
   try {
-    await authClient.signOut();
+    await auth.api.signOut({
+      headers: await headers(),
+    });
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Sign out failed");
   }
@@ -42,7 +53,10 @@ export async function signOut() {
 
 export async function getSession() {
   try {
-    const session = await authClient.getSession();
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
     return session;
   } catch {
     return null;

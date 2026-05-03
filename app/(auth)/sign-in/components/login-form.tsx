@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -74,12 +75,12 @@ export function LoginForm() {
                   </label>
                 </div>
 
-                <a
+                <Link
                   href="#"
                   className="text-sm text-foreground underline-offset-4 hover:underline"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               <Button
@@ -94,25 +95,14 @@ export function LoginForm() {
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             {"Don't have an account? "}
-            <a
-              href="#"
+            <Link
+              href="/sign-up"
               className="font-medium text-foreground underline-offset-4 hover:underline"
             >
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
-
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          By continuing, you agree to our{" "}
-          <a href="#" className="underline-offset-4 hover:underline">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="#" className="underline-offset-4 hover:underline">
-            Privacy Policy
-          </a>
-        </p>
       </div>
     </div>
   );
