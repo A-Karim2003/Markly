@@ -1,9 +1,12 @@
-import Step1 from "../_components/step-1";
+import { getModulesByYear } from "@/lib/data/modules";
+import OnboardingSteps from "../_components/onboarding-steps";
 
-export default function OnboardingPage() {
+export default async function OnboardingPage() {
+  const modules = await getModulesByYear(3);
+
   return (
     <div>
-      <Step1 />
+      <OnboardingSteps modules={modules} />
     </div>
   );
 }

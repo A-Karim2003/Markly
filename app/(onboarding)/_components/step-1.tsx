@@ -26,8 +26,12 @@ const years = [
   },
 ];
 
-export default function Step1() {
-  const [selectedYear, setSelectedYear] = useState("year-1");
+export default function Step1({
+  setCurrentStep,
+}: {
+  setCurrentStep: (step: number) => void;
+}) {
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center justify-center p-6 font-serif">
@@ -76,7 +80,11 @@ export default function Step1() {
         })}
       </div>
 
-      <Button className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors">
+      <Button
+        className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
+        disabled={!selectedYear}
+        onClick={() => setCurrentStep(2)}
+      >
         Continue
       </Button>
     </div>
