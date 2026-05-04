@@ -47,7 +47,7 @@ export default function SignupForm() {
     setError(null);
     try {
       await signUpWithEmail(data.name, data.email, data.password);
-      router.push("/dashboard");
+      router.push("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
     }
