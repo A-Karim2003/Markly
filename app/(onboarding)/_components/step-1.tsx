@@ -4,34 +4,43 @@ import { useState } from "react";
 import { Sprout, Layers, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { updateStudentYear } from "@/lib/data/student-profiles";
 
 const years = [
   {
-    id: "year-1",
+    id: 1,
     title: "Year 1",
     description: "Foundations (does not count toward final grade)",
     icon: Sprout,
   },
   {
-    id: "year-2",
+    id: 2,
     title: "Year 2",
     description: "Core Theory (40% of final degree)",
     icon: Layers,
   },
   {
-    id: "year-3",
+    id: 3,
     title: "Year 3",
     description: "Specialisation (60% of final degree)",
     icon: Trophy,
   },
-];
+] as const;
 
 export default function Step1({
   setCurrentStep,
 }: {
   setCurrentStep: (step: number) => void;
 }) {
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+
+  function handleYearSelect(studentId: number, year: 1 | 2 | 3) {
+    if (!selectedYear) return;
+
+    setSelectedYear(year);
+    updateStudentYear(studentId, selectedYear);
+    setCurrentStep(2);
+  }
 
   return (
     <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center justify-center p-6 font-serif">
@@ -83,7 +92,7 @@ export default function Step1({
       <Button
         className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
         disabled={!selectedYear}
-        onClick={() => setCurrentStep(2)}
+        onClick={() => handleYearSelect(1, selectedYear)}
       >
         Continue
       </Button>
