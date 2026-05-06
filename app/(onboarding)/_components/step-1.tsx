@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Sprout, Layers, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { updateStudentYear } from "@/lib/data/student-profiles";
+// import { updateStudentYear } from "@/lib/data/student-profiles";
 
 const years = [
   {
@@ -38,7 +38,7 @@ export default function Step1({
     if (!selectedYear) return;
 
     setSelectedYear(year);
-    updateStudentYear(studentId, selectedYear);
+    // updateStudentYear(studentId, selectedYear);
     setCurrentStep(2);
   }
 
@@ -92,7 +92,8 @@ export default function Step1({
       <Button
         className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
         disabled={!selectedYear}
-        onClick={() => handleYearSelect(1, selectedYear)}
+        // onClick={() => handleYearSelect(1, selectedYear)}
+        onClick={() => setCurrentStep(2)}
       >
         Continue
       </Button>
