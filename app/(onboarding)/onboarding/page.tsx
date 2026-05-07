@@ -1,12 +1,14 @@
 import { getModulesByYear } from "@/lib/data/modules";
 import OnboardingSteps from "../_components/onboarding-steps";
+import { getStudentProfile } from "@/lib/data/student-profiles";
 
 export default async function OnboardingPage() {
-  const modules = await getModulesByYear(3);
+  const student = await getStudentProfile();
+  const modules = await getModulesByYear(student.year);
 
   return (
     <div>
-      <OnboardingSteps modules={modules} />
+      <OnboardingSteps modules={modules} student={student} />
     </div>
   );
 }

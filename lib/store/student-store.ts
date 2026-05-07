@@ -1,8 +1,14 @@
-import { createStore } from "zustand";
+import { createStore } from "zustand/vanilla";
 import { Tables } from "@/types/supabase";
 
-const StudentProfile = Table<"Student_profiles">;
+type StudentProfile = Tables<"student_profiles">;
 
-export const createStudentStore = () => {
-  return createStore()((set) => {});
+type StudentStore = {
+  student: StudentProfile;
 };
+
+export function createStudentStore(initialState: StudentProfile) {
+  return createStore<StudentStore>()(() => ({
+    student: initialState,
+  }));
+}

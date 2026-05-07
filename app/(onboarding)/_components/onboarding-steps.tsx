@@ -4,8 +4,19 @@ import { useState } from "react";
 import Step1 from "./step-1";
 import Step2 from "./Step2";
 import type { Module } from "@/lib/data/modules";
+import { Tables } from "@/types/supabase";
 
-export default function OnboardingSteps({ modules }: { modules: Module[] }) {
+type StudentProfile = Tables<"student_profiles">;
+
+type OnboardingStepsProp = {
+  modules: Module[];
+  student: StudentProfile;
+};
+
+export default function OnboardingSteps({
+  modules,
+  student,
+}: OnboardingStepsProp) {
   const [currentStep, setCurrentStep] = useState(1);
 
   return (
