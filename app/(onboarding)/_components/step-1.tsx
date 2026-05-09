@@ -10,6 +10,7 @@ import {
   updateStudentYear,
 } from "@/lib/actions/student-actions";
 import Link from "next/link";
+import OnboardingHeader from "./Onboarding-header";
 
 const years = [
   {
@@ -54,18 +55,7 @@ export default function Step1({ setCurrentStep, student }: Step1Props) {
 
   return (
     <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center justify-center p-6 font-serif">
-      {/* Header Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-indigo-400 mb-2">Markly</h1>
-        <p className="text-zinc-500 text-sm uppercase tracking-widest mb-8">
-          Step 1 of 2
-        </p>
-        <h2 className="text-3xl font-semibold mb-3">What year are you in?</h2>
-        <p className="text-zinc-400 max-w-md mx-auto">
-          This determines which modules are available and how your grades are
-          weighted.
-        </p>
-      </div>
+      <OnboardingHeader>Step 1 of 2</OnboardingHeader>
 
       {/* Selection Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mb-10">
@@ -98,17 +88,13 @@ export default function Step1({ setCurrentStep, student }: Step1Props) {
           );
         })}
       </div>
-      <Link href="/dashboard">
-        <Button
-          className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
-          disabled={!selectedYear}
-          onClick={() =>
-            handleYearSelect(student.id, selectedYear as 1 | 2 | 3)
-          }
-        >
-          Continue
-        </Button>
-      </Link>
+      <Button
+        className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
+        disabled={!selectedYear}
+        onClick={() => handleYearSelect(student.id, selectedYear as 1 | 2 | 3)}
+      >
+        Continue
+      </Button>
     </div>
   );
 }
