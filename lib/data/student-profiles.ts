@@ -1,4 +1,7 @@
 import { createClient } from "../supabase/server";
+import type { Tables } from "@/types/supabase";
+
+export type StudentProfile = Tables<"student_profiles">;
 
 export async function getStudentProfile() {
   const supabase = await createClient();

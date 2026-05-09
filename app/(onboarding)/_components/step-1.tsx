@@ -4,7 +4,12 @@ import { useState } from "react";
 import { Sprout, Layers, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-// import { updateStudentYear } from "@/lib/data/student-profiles";
+import { StudentProfile } from "@/lib/data/student-profiles";
+import {
+  updateStudentOnboardingStep,
+  updateStudentYear,
+} from "@/lib/actions/student-actions";
+import Link from "next/link";
 
 const years = [
   {
@@ -25,20 +30,25 @@ const years = [
     description: "Specialisation (60% of final degree)",
     icon: Trophy,
   },
-] as const;
+];
 
-export default function Step1({
-  setCurrentStep,
-}: {
+type Step1Props = {
   setCurrentStep: (step: number) => void;
-}) {
+  student: StudentProfile;
+};
+
+export default function Step1({ setCurrentStep, student }: Step1Props) {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
-  function handleYearSelect(studentId: number, year: 1 | 2 | 3) {
+  async function handleYearSelect(studentId: number, year: 1 | 2 | 3) {
     if (!selectedYear) return;
 
     setSelectedYear(year);
-    // updateStudentYear(studentId, selectedYear);
+
+    await Promise.all([
+      updateStudentYear(studentId, year),
+      updateStudentOnboardingStep(studentId, 2),
+    ]);
     setCurrentStep(2);
   }
 
@@ -88,15 +98,17 @@ export default function Step1({
           );
         })}
       </div>
-
-      <Button
-        className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
-        disabled={!selectedYear}
-        // onClick={() => handleYearSelect(1, selectedYear)}
-        onClick={() => setCurrentStep(2)}
-      >
-        Continue
-      </Button>
+      <Link href="/dashboard">
+        <Button
+          className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
+          disabled={!selectedYear}
+          onClick={() =>
+            handleYearSelect(student.id, selectedYear as 1 | 2 | 3)
+          }
+        >
+          Continue
+        </Button>
+      </Link>
     </div>
   );
 }

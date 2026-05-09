@@ -4,6 +4,8 @@ import type { Tables } from "@/types/supabase";
 export type Module = Tables<"modules">;
 
 export async function getModulesByYear(year: number) {
+  if (!year) return [];
+
   const supabase = await createClient();
 
   const { data, error } = await supabase

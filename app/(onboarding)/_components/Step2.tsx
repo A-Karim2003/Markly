@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Module } from "@/lib/data/modules";
 import ModuleCardCore from "./module-card-core";
 import ModuleCardOptional from "./module-card-optional";
+import Link from "next/link";
 
 type Step2Props = {
   setCurrentStep: (step: number) => void;
@@ -92,12 +93,14 @@ export default function Step2({ setCurrentStep, modules }: Step2Props) {
               </span>
             )}
           </div>
-          <Button
-            disabled={totalCredits < 120}
-            className="bg-indigo-700/50 hover:bg-indigo-600/60 text-indigo-200 border border-indigo-500/30 px-8 py-6 rounded-xl transition-all disabled:opacity-40"
-          >
-            Continue to Dashboard
-          </Button>
+          <Link href="/dashboard">
+            <Button
+              disabled={totalCredits < 120}
+              className="bg-indigo-700/50 hover:bg-indigo-600/60 text-indigo-200 border border-indigo-500/30 px-8 py-6 rounded-xl transition-all disabled:opacity-40"
+            >
+              Continue to Dashboard
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { getStudentProfile } from "@/lib/data/student-profiles";
 
 export default async function OnboardingPage() {
   const student = await getStudentProfile();
-  const modules = await getModulesByYear(student.year);
+  const modules = student?.year ? await getModulesByYear(student.year) : [];
 
   return (
     <div>
