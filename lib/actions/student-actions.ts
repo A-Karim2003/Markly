@@ -38,7 +38,10 @@ export async function updateStudentOnboardingStep(
   revalidatePath("/onboarding");
 }
 
-async function enrolStudentModules(studentId: number, moduleIds: number[]) {
+export async function enrolStudentModules(
+  studentId: number,
+  moduleIds: number[],
+) {
   const session = getSession();
   if (!session) throw new Error("User not authenticated");
 

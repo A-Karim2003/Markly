@@ -7,6 +7,11 @@ import ModuleCardOptional from "./module-card-optional";
 import OnboardingHeader from "./Onboarding-header";
 import OnboardingFooter from "./onboarding-footer";
 import { StudentProfile } from "@/lib/data/student-profiles";
+import {
+  enrolStudentModules,
+  updateStudentOnboardingStep,
+} from "@/lib/actions/student-actions";
+import { useRouter } from "next/navigation";
 
 type Step2Props = {
   setCurrentStep: (step: number) => void;
@@ -20,6 +25,8 @@ export default function Step2({
   student,
 }: Step2Props) {
   const [selectedOptionalIds, setSelectedOptionalIds] = useState<number[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const coreModules = modules.filter((module) => !module.is_optional);
   const optionalModules = modules.filter((module) => module.is_optional);
@@ -41,15 +48,20 @@ export default function Step2({
 
   async function handleOnboardingSubmit(studentId: number) {
     const moduleIds = [...selectedOptionalIds, ...coreModules.map((m) => m.id)];
-    console.log(moduleIds);
-
-    //! Handle logic for updating onboarding step to step 3:
-    //! if modules are selected navigate to /dashboard using router.push()
+    setError(null);
+    try {
+      await enrolStudentModules(studentId, moduleIds);
+      await updateStudentOnboardingStep(studentId, 3);
+      router.replace("/dashboard");
+    } catch {
+      setError("Failed to submit onboarding. Please try again.");
+    }
   }
 
   return (
     <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center pt-16 pb-32 px-6 font-serif">
       <OnboardingHeader>Step 2 of 2</OnboardingHeader>
+      {error && <p className="text-red-500 text-lg">{error}</p>}
 
       <div className="w-full max-w-4xl space-y-12">
         {/* Core Modules */}
