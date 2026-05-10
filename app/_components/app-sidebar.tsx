@@ -29,7 +29,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "@/lib/actions/auth-actions";
+import { Session, signOut } from "@/lib/actions/auth-actions";
+import { Module } from "@/lib/data/modules";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -38,16 +39,12 @@ const navItems = [
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
-// TODO: replace with real user data from session
-const user = {
-  name: "Alex Johnson",
-  year: 2,
-  initials: "AJ",
+type AppSidebar = {
+  student: Module;
+  session: Session;
 };
-
-export function AppSidebar() {
+export function AppSidebar({ student, session }: AppSidebar) {
   const pathname = usePathname();
-
   return (
     <Sidebar>
       <SidebarHeader className="px-6 py-5">
@@ -86,13 +83,18 @@ export function AppSidebar() {
                 <SidebarMenuButton className="h-12 hover:bg-accent/50">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
-                      {user.initials}
+                      {session.user?.name
+                        ?.split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col gap-0.5 flex-1">
-                    <span className="text-sm font-semibold">{user.name}</span>
+                    <span className="text-sm font-semibold">
+                      {session.user.name}
+                    </span>
                     <span className="text-xs text-muted-foreground">
-                      Year {user.year}
+                      Year {student.year}
                     </span>
                   </div>
                   <ChevronUp className="h-4 w-4 ml-auto text-muted-foreground transition-transform" />
