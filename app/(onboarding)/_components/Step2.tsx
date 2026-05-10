@@ -6,13 +6,19 @@ import ModuleCardCore from "./module-card-core";
 import ModuleCardOptional from "./module-card-optional";
 import OnboardingHeader from "./Onboarding-header";
 import OnboardingFooter from "./onboarding-footer";
+import { StudentProfile } from "@/lib/data/student-profiles";
 
 type Step2Props = {
   setCurrentStep: (step: number) => void;
   modules: Module[];
+  student: StudentProfile;
 };
 
-export default function Step2({ setCurrentStep, modules }: Step2Props) {
+export default function Step2({
+  setCurrentStep,
+  modules,
+  student,
+}: Step2Props) {
   const [selectedOptionalIds, setSelectedOptionalIds] = useState<number[]>([]);
 
   const coreModules = modules.filter((module) => !module.is_optional);
@@ -32,6 +38,14 @@ export default function Step2({ setCurrentStep, modules }: Step2Props) {
 
   const totalModules = coreModules.length + selectedOptionalIds.length;
   const isMaxed = totalCredits >= 120;
+
+  async function handleOnboardingSubmit(studentId: number) {
+    const moduleIds = [...selectedOptionalIds, ...coreModules.map((m) => m.id)];
+    console.log(moduleIds);
+
+    //! Handle logic for updating onboarding step to step 3:
+    //! if modules are selected navigate to /dashboard using router.push()
+  }
 
   return (
     <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center pt-16 pb-32 px-6 font-serif">
@@ -73,6 +87,7 @@ export default function Step2({ setCurrentStep, modules }: Step2Props) {
         totalModules={totalModules}
         totalCredits={totalCredits}
         onBack={() => setCurrentStep(1)}
+        onContinue={() => handleOnboardingSubmit(student.id)}
       />
     </div>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
@@ -6,12 +8,14 @@ type OnboardingFooterProps = {
   totalModules: number;
   totalCredits: number;
   onBack: () => void;
+  onContinue: () => void;
 };
 
 export default function OnboardingFooter({
   totalModules,
   totalCredits,
   onBack,
+  onContinue,
 }: OnboardingFooterProps) {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-[#050509]/80 backdrop-blur-md border-t border-zinc-800/50 p-6">
@@ -36,14 +40,13 @@ export default function OnboardingFooter({
           )}
         </div>
 
-        <Link href="/dashboard">
-          <Button
-            disabled={totalCredits < 120}
-            className="bg-indigo-700/50 hover:bg-indigo-600/60 text-indigo-200 border border-indigo-500/30 px-8 py-6 rounded-xl transition-all disabled:opacity-40"
-          >
-            Continue to Dashboard
-          </Button>
-        </Link>
+        <Button
+          disabled={totalCredits < 120}
+          className="bg-indigo-700/50 hover:bg-indigo-600/60 text-indigo-200 border border-indigo-500/30 px-8 py-6 rounded-xl transition-all disabled:opacity-40"
+          onClick={onContinue}
+        >
+          Continue to Dashboard
+        </Button>
       </div>
     </div>
   );

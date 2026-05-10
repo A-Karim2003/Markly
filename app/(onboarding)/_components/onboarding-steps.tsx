@@ -23,7 +23,11 @@ export default function OnboardingSteps({
         <Step1 setCurrentStep={setCurrentStep} student={student} />
       )}
       {currentStep === 2 && (
-        <Step2 setCurrentStep={setCurrentStep} modules={modules} />
+        <Step2
+          setCurrentStep={setCurrentStep}
+          modules={modules}
+          student={student}
+        />
       )}
     </div>
   );

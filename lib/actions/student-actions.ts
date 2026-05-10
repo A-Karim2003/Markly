@@ -37,3 +37,19 @@ export async function updateStudentOnboardingStep(
   if (error) throw new Error(error.message);
   revalidatePath("/onboarding");
 }
+
+async function enrolStudentModules(studentId: number, moduleIds: number[]) {
+  const session = getSession();
+  if (!session) throw new Error("User not authenticated");
+
+  const supabase = await createClient();
+
+  const rows = moduleIds.map((moduleId) => ({
+    student_profile_id: studentId,
+    module_id: moduleId,
+  }));
+
+  const { error } = await supabase.from("student_modules").insert(rows);
+
+  if (error) throw new Error(error.message);
+}
