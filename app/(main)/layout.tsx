@@ -14,9 +14,8 @@ export default async function Layout({
     getSession(),
   ]);
 
-  if (!student || student.onboarding_step < 3) {
-    redirect("/onboarding");
-  }
+  if (!session) redirect("/sign-in");
+  if (!student || student.onboarding_step < 3) redirect("/onboarding");
 
   return (
     <SidebarProvider>

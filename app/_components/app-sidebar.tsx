@@ -30,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Session, signOut } from "@/lib/actions/auth-actions";
-import { Module } from "@/lib/data/modules";
+import { StudentProfile } from "@/lib/data/student-profiles";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -40,7 +40,7 @@ const navItems = [
 ];
 
 type AppSidebar = {
-  student: Module;
+  student: StudentProfile;
   session: Session;
 };
 export function AppSidebar({ student, session }: AppSidebar) {
