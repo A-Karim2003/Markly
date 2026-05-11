@@ -1,3 +1,4 @@
+import { getStudentModulesWithGrades } from "@/lib/data/student-modules";
 import { ModuleSection } from "./components/module-section";
 
 const modules = [
@@ -65,9 +66,11 @@ const modules = [
 
 export type Module = (typeof modules)[number];
 
-export default function ModulesPage() {
+export default async function ModulesPage() {
   const coreModules = modules.filter((m) => !m.is_optional);
   const optionalModules = modules.filter((m) => m.is_optional);
+  const data = await getStudentModulesWithGrades();
+  console.log(data);
 
   return (
     <div>
