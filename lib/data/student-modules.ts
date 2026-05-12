@@ -20,7 +20,7 @@ export async function getStudentModulesWithGrades() {
     .select(
       `
     id,
-    modules(code, name, credits, is_optional),
+    module_info:modules(code, name, credits, is_optional),
     assessments(grade, weight)
   `,
     )

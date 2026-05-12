@@ -5,10 +5,37 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ProgressBar } from "@/app/_components/progress-bar";
 import { getGradeClass, getGradeColor } from "../lib/utils/module-grades";
+import { StudentModuleWithGrades } from "@/lib/data/student-modules";
 
-export function ModuleCard({ module }: { module: Module }) {
-  const hasGrades = module.graded > 0;
-  const isComplete = module.graded === module.total && module.total > 0;
+type ModuleCardProps = {
+  module: StudentModuleWithGrades;
+};
+
+// {
+//   id: 6,
+//   module_info: {
+//     code: "CE301-6-FY",
+//     name: "Individual Capstone Project Challenge",
+//     credits: 45,
+//     is_optional: false,
+//   },
+//   assessments: [],
+// },
+
+export function ModuleCard({ module }: ModuleCardProps) {
+  const { module_info, assessments } = module;
+
+  const gradedCount = assessments.filter((a) => a.grade !== null).length;
+  const totalCount = assessments.length;
+  const weightedAverage =
+    gradedCount > 0
+      ? assessments
+          .filter((a) => a.grade !== null)
+          .reduce((sum, a) => sum + a.grade! * a.weight, 0)
+      : 0;
+
+  const hasGrades = gradedCount > 0;
+  const isComplete = gradedCount === totalCount && totalCount > 0;
 
   return (
     <Link href={`/modules/${module.id}`}>
@@ -16,15 +43,15 @@ export function ModuleCard({ module }: { module: Module }) {
         <CardHeader className="flex flex-row items-start justify-between pb-2">
           <div>
             <p className="text-xs text-muted-foreground font-medium">
-              {module.code}
+              {module_info?.code}
             </p>
 
             <h4 className="text-base font-semibold text-foreground mt-0.5 group-hover:text-primary transition-colors">
-              {module.name}
+              {module_info?.name}
             </h4>
           </div>
 
-          <Badge variant="secondary">{module.credits} credits</Badge>
+          <Badge variant="secondary">{module_info?.credits} credits</Badge>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -32,13 +59,13 @@ export function ModuleCard({ module }: { module: Module }) {
             <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
               <span>Assessments graded</span>
               <span>
-                {module.graded}/{module.total}
+                {gradedCount}/{totalCount}
               </span>
             </div>
 
             <ProgressBar
-              value={module.graded}
-              max={module.total}
+              value={gradedCount}
+              max={totalCount}
               color="var(--primary)"
             />
           </div>
@@ -49,13 +76,13 @@ export function ModuleCard({ module }: { module: Module }) {
                 <>
                   <p
                     className="text-2xl font-bold"
-                    style={{ color: getGradeColor(module.average) }}
+                    style={{ color: getGradeColor(weightedAverage) }}
                   >
-                    {module.average.toFixed(1)}%
+                    {weightedAverage.toFixed(1)}%
                   </p>
 
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {getGradeClass(module.average)} · weighted average
+                    {getGradeClass(weightedAverage)} · weighted average
                   </p>
                 </>
               ) : (
@@ -75,7 +102,7 @@ export function ModuleCard({ module }: { module: Module }) {
               </Badge>
             ) : (
               <Badge variant="outline">
-                {module.total - module.graded} remaining
+                {totalCount - gradedCount} remaining
               </Badge>
             )}
           </div>

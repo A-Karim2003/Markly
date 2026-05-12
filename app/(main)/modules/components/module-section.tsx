@@ -1,12 +1,12 @@
+import { StudentModulesWithGrades } from "@/lib/data/student-modules";
 import { ModuleCard } from "./module-card";
 
-export function ModuleSection({
-  title,
-  modules,
-}: {
+type ModuleSectionProps = {
   title: string;
-  modules: Module[];
-}) {
+  modules: StudentModulesWithGrades;
+};
+
+export function ModuleSection({ title, modules }: ModuleSectionProps) {
   return (
     <div className="mb-10">
       <h2 className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">
