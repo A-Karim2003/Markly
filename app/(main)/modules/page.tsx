@@ -70,7 +70,6 @@ export default async function ModulesPage() {
   const coreModules = modules.filter((m) => !m.is_optional);
   const optionalModules = modules.filter((m) => m.is_optional);
   const data = await getStudentModulesWithGrades();
-  console.log(data);
 
   return (
     <div>

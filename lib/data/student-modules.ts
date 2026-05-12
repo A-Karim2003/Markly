@@ -1,7 +1,11 @@
 import { getSession } from "../actions/auth-actions";
 import { createClient } from "../supabase/server";
-import type { Tables } from "@/types/supabase";
 import { getStudentProfile } from "./student-profiles";
+
+export type StudentModulesWithGrades = Awaited<
+  ReturnType<typeof getStudentModulesWithGrades>
+>;
+export type StudentModuleWithGrades = StudentModulesWithGrades[number];
 
 export async function getStudentModulesWithGrades() {
   const session = await getSession();
