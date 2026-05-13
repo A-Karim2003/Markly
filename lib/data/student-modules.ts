@@ -20,9 +20,15 @@ export async function getStudentModulesWithGrades() {
     .select(
       `
     id,
-    module_info:modules(code, name, credits, is_optional),
+    module_info:modules(
+      code,
+      name,
+      credits,
+      is_optional,
+      module_assessments_scheme!module_id(id, name, type, weight)
+    ),
     assessments(grade, weight)
-  `,
+  `, // The !module_id hint tells PostgREST "use the module_id column to join this table",
     )
     .eq("student_profile_id", studentProfile.id);
 

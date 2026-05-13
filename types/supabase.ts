@@ -108,6 +108,47 @@ export type Database = {
           },
         ];
       };
+      module_assessments_scheme: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          id: number;
+          module_id: number;
+          name: string;
+          type: string;
+          updated_at: string;
+          weight: number;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          id?: never;
+          module_id: number;
+          name: string;
+          type: string;
+          updated_at?: string;
+          weight: number;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          id?: never;
+          module_id?: number;
+          name?: string;
+          type?: string;
+          updated_at?: string;
+          weight?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "module_assessments_module_id_fkey";
+            columns: ["module_id"];
+            isOneToOne: false;
+            referencedRelation: "modules";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       modules: {
         Row: {
           code: string;
@@ -227,23 +268,31 @@ export type Database = {
           id: number;
           onboarding_step: number;
           user_id: string;
-          year: number;
+          year: number | null;
         };
         Insert: {
           created_at?: string;
           id?: number;
           onboarding_step?: number;
           user_id: string;
-          year: number;
+          year?: number | null;
         };
         Update: {
           created_at?: string;
           id?: number;
           onboarding_step?: number;
           user_id?: string;
-          year?: number;
+          year?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "student_profiles_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "user";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       user: {
         Row: {
