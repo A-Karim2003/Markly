@@ -11,17 +11,6 @@ type ModuleCardProps = {
   module: StudentModuleWithGrades;
 };
 
-// {
-//   id: 6,
-//   module_info: {
-//     code: "CE301-6-FY",
-//     name: "Individual Capstone Project Challenge",
-//     credits: 45,
-//     is_optional: false,
-//   },
-//   assessments: [],
-// },
-
 export function ModuleCard({ module }: ModuleCardProps) {
   const { module_info, assessments } = module;
 
