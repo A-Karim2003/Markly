@@ -13,18 +13,26 @@ type ModuleCardProps = {
 
 export function ModuleCard({ module }: ModuleCardProps) {
   const { module_info, assessments } = module;
+  console.log(module);
 
-  const gradedCount = assessments.filter((a) => a.grade !== null).length;
-  const totalCount = assessments.length;
+  const totalAvailableAssessments =
+    module_info?.module_assessments_scheme?.length ?? 0;
+
+  const totalGradedAssessments = assessments.filter(
+    (a) => a.grade !== null,
+  ).length;
+
   const weightedAverage =
-    gradedCount > 0
+    totalGradedAssessments > 0
       ? assessments
           .filter((a) => a.grade !== null)
           .reduce((sum, a) => sum + a.grade! * a.weight, 0)
       : 0;
 
-  const hasGrades = gradedCount > 0;
-  const isComplete = gradedCount === totalCount && totalCount > 0;
+  const hasGrades = totalGradedAssessments > 0;
+  const isComplete =
+    totalGradedAssessments === totalAvailableAssessments &&
+    totalAvailableAssessments > 0;
 
   return (
     <Link href={`/modules/${module.id}`}>
@@ -48,13 +56,14 @@ export function ModuleCard({ module }: ModuleCardProps) {
             <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
               <span>Assessments graded</span>
               <span>
-                {gradedCount}/{totalCount}
+                {totalGradedAssessments}/{totalAvailableAssessments}
               </span>
             </div>
 
             <ProgressBar
-              value={gradedCount}
-              max={totalCount}
+              className="border rounded-md"
+              value={totalGradedAssessments}
+              max={totalAvailableAssessments}
               color="var(--primary)"
             />
           </div>
@@ -65,13 +74,19 @@ export function ModuleCard({ module }: ModuleCardProps) {
                 <>
                   <p
                     className="text-2xl font-bold"
-                    style={{ color: getGradeColor(weightedAverage) }}
+                    style={{
+                      color: isComplete
+                        ? getGradeColor(weightedAverage)
+                        : undefined,
+                    }}
                   >
                     {weightedAverage.toFixed(1)}%
                   </p>
 
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {getGradeClass(weightedAverage)} · weighted average
+                    {isComplete
+                      ? `${getGradeClass(weightedAverage)} · final grade`
+                      : "weighted so far"}
                   </p>
                 </>
               ) : (
@@ -91,7 +106,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
               </Badge>
             ) : (
               <Badge variant="outline">
-                {totalCount - gradedCount} remaining
+                {totalAvailableAssessments - totalGradedAssessments} remaining
               </Badge>
             )}
           </div>
