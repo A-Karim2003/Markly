@@ -15,6 +15,7 @@ export async function getStudentModulesWithGrades() {
 
   const supabase = await createClient();
 
+  // get modules row and their associated assessments info such as weight adn type
   const { data, error } = await supabase
     .from("student_modules")
     .select(
@@ -37,6 +38,11 @@ export async function getStudentModulesWithGrades() {
   return data;
 }
 
+/* 
+1st Query (Scheme): "What are the rules for this module? Is there an exam? How much is it worth?"
+
+2nd Query (Assessments): "How did the student actually perform? What grade was recorded for each part?"
+*/
 export async function getStudentModuleById(studentModuleId: number) {
   const session = await getSession();
   if (!session) throw new Error("User not authenticated");
@@ -44,7 +50,10 @@ export async function getStudentModuleById(studentModuleId: number) {
   const studentProfile = await getStudentProfile();
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  /*
+    Selects info about a specific student module and assessments info for that specific module
+  */
+  const { data: moduleData, error: moduleError } = await supabase
     .from("student_modules")
     .select(
       `
@@ -54,21 +63,36 @@ export async function getStudentModuleById(studentModuleId: number) {
         name,
         credits,
         is_optional,
-        module_assessments_scheme!module_id(
-          id,
-          name,
-          type,
-          weight,
-          assessments!scheme_id(id, grade)
-        )
-      ),
-      assessments(id, name, weight, grade)
+        module_assessments_scheme!module_id(id, name, type, weight)
+      )
     `,
     )
     .eq("id", studentModuleId)
     .eq("student_profile_id", studentProfile.id)
     .single();
 
-  if (error) throw new Error(error.message);
-  return data;
+  if (moduleError) throw new Error(moduleError.message);
+
+  // Select all the assessments a student has taken for a specific module
+  const { data: assessments, error: assessmentsError } = await supabase
+    .from("assessments")
+    .select("id, grade, scheme_id")
+    .eq("student_module_id", studentModuleId);
+
+  if (assessmentsError) throw new Error(assessmentsError.message);
+
+  return { ...moduleData, assessments };
 }
+
+export type StudentModuleById = Awaited<
+  ReturnType<typeof getStudentModuleById>
+>;
+/*
+{
+  id: 1,
+  name: "Assignment 1",
+  type: "Coursework",
+  weight: 0.150,
+  assessments: [{ id: 5, grade: 72 }] // empty array if not graded yet
+}
+*/
