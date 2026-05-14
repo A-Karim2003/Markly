@@ -36,3 +36,33 @@ export async function getStudentModulesWithGrades() {
 
   return data;
 }
+
+export async function getStudentModuleById(studentModuleId: number) {
+  const session = await getSession();
+  if (!session) throw new Error("User not authenticated");
+
+  const studentProfile = await getStudentProfile();
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("student_modules")
+    .select(
+      `
+      id,
+      module_info:modules(
+        code,
+        name,
+        credits,
+        is_optional,
+        module_assessments_scheme(id, name, type, weight)
+      ),
+      assessments(id, name, weight, grade)
+    `,
+    )
+    .eq("id", studentModuleId)
+    .eq("student_profile_id", studentProfile.id)
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
