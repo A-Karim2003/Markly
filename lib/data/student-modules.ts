@@ -54,7 +54,13 @@ export async function getStudentModuleById(studentModuleId: number) {
         name,
         credits,
         is_optional,
-        module_assessments_scheme(id, name, type, weight)
+        module_assessments_scheme!module_id(
+          id,
+          name,
+          type,
+          weight,
+          assessments!scheme_id(id, grade)
+        )
       ),
       assessments(id, name, weight, grade)
     `,
