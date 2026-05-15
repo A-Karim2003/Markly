@@ -87,12 +87,3 @@ export async function getStudentModuleById(studentModuleId: number) {
 export type StudentModuleById = Awaited<
   ReturnType<typeof getStudentModuleById>
 >;
-/*
-{
-  id: 1,
-  name: "Assignment 1",
-  type: "Coursework",
-  weight: 0.150,
-  assessments: [{ id: 5, grade: 72 }] // empty array if not graded yet
-}
-*/

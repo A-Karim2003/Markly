@@ -13,7 +13,6 @@ type ModuleCardProps = {
 
 export function ModuleCard({ module }: ModuleCardProps) {
   const { module_info, assessments } = module;
-  console.log(module);
 
   const totalAvailableAssessments =
     module_info?.module_assessments_scheme?.length ?? 0;

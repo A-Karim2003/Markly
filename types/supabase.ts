@@ -76,6 +76,7 @@ export type Database = {
           grade: number | null;
           id: number;
           name: string;
+          scheme_id: number | null;
           student_module_id: number;
           updated_at: string;
           weight: number;
@@ -85,6 +86,7 @@ export type Database = {
           grade?: number | null;
           id?: never;
           name: string;
+          scheme_id?: number | null;
           student_module_id: number;
           updated_at?: string;
           weight: number;
@@ -94,11 +96,19 @@ export type Database = {
           grade?: number | null;
           id?: never;
           name?: string;
+          scheme_id?: number | null;
           student_module_id?: number;
           updated_at?: string;
           weight?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: "assessments_scheme_id_fkey";
+            columns: ["scheme_id"];
+            isOneToOne: false;
+            referencedRelation: "module_assessments_scheme";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "assessments_student_module_id_fkey";
             columns: ["student_module_id"];
