@@ -94,6 +94,7 @@ export function AssessmentsTable({
                   )}
                 </TableCell>
                 <TableCell>
+                  {/* if assessment hasnt been graded we need to show required grade to reach target */}
                   {!isGraded && requiredGrade !== null ? (
                     <span
                       className={`px-2.5 py-1 rounded-md text-sm font-medium ${
@@ -122,8 +123,13 @@ export function AssessmentsTable({
             <TableCell>{(gradedWeight * 100).toFixed(0)}%</TableCell>
             <TableCell className="text-muted-foreground">—</TableCell>
             <TableCell>{currentGrade.toFixed(1)}%</TableCell>
-            <TableCell colSpan={2} className="text-muted-foreground">
-              Projected final if target met: {targetGrade}%
+            <TableCell colSpan={2}>
+              <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                <span>Projected final if target met:</span>
+                <span className="font-semibold text-foreground">
+                  {targetGrade}%
+                </span>
+              </span>
             </TableCell>
           </TableRow>
         </TableBody>

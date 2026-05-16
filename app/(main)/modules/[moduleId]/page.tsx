@@ -14,33 +14,39 @@ export default async function ModuleDetailPage({ params }: PageProps) {
 
   const studentModule = await getStudentModuleById(Number(moduleId));
 
-  const moduleInfo = studentModule.module_info;
-  const scheme = moduleInfo?.module_assessments_scheme ?? [];
-  const assessments = studentModule.assessments;
+  const { module_info: moduleInfo, assessments } = studentModule;
+
+  const assessment_schemes = moduleInfo?.module_assessments_scheme ?? [];
 
   // Merge scheme + assessments: each row is a scheme entry with its grade looked up
-  const rows = scheme.map((s) => {
-    const match = assessments.find((a) => a.scheme_id === s.id);
+  const rows = assessment_schemes.map((scheme) => {
+    // for each scheme, find if there is a corresponding assessment.
+    const match = assessments.find(
+      (assessment) => assessment.scheme_id === scheme.id,
+    );
     return {
-      id: s.id,
-      name: s.name,
-      type: s.type,
-      weight: s.weight,
+      id: scheme.id,
+      name: scheme.name,
+      type: scheme.type,
+      weight: scheme.weight,
       grade: match?.grade ?? null,
     };
   });
 
   const gradedRows = rows.filter((r) => r.grade !== null);
+
   const currentGrade = gradedRows.reduce(
     (sum, r) => sum + r.grade! * r.weight,
     0,
   );
   const gradedWeight = gradedRows.reduce((sum, r) => sum + r.weight, 0);
   const remainingWeight = rows
-    .filter((r) => r.grade === null)
+    .filter((r) => r.grade === null) // keeps only ungraded assessments
     .reduce((sum, r) => sum + r.weight, 0);
 
-  const TARGET_GRADE = 70;
+  const TARGET_GRADE = 70; // TODO: Make it dynamic later
+
+  // if remaining weight is 0, every assessment is already graded so there's nothing left to calculate,
   const requiredGrade =
     remainingWeight > 0
       ? (TARGET_GRADE - currentGrade) / remainingWeight
@@ -49,13 +55,6 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   return (
     <div>
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <Link
-          href="/dashboard"
-          className="hover:text-foreground transition-colors"
-        >
-          Dashboard
-        </Link>
-        <ChevronRight className="h-4 w-4" />
         <Link
           href="/modules"
           className="hover:text-foreground transition-colors"

@@ -28,8 +28,8 @@ export function ModuleHeader({
           {code} · {credits} credits
         </p>
 
-        <div className="flex items-center gap-12 mt-4 mb-4">
-          <div>
+        <div className="flex items-center gap-12 mt-4 mb-4 h-22">
+          <div className="flex flex-col h-full">
             <p className="text-sm text-muted-foreground mb-1">Current Grade</p>
             <p
               className="text-4xl font-bold"
@@ -41,7 +41,7 @@ export function ModuleHeader({
               {getGradeClass(currentGrade)} · weighted so far
             </p>
           </div>
-          <div>
+          <div className="flex flex-col h-full">
             <p className="text-sm text-muted-foreground mb-1">Target</p>
             <p className="text-4xl font-bold text-foreground">{targetGrade}%</p>
           </div>
