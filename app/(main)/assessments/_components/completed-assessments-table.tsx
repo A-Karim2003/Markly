@@ -15,11 +15,11 @@ import {
 } from "../../modules/lib/utils/module-grades";
 
 export type CompletedAssessment = {
-  id: string;
-  name: string;
-  module: string;
-  code: string;
-  weight: number;
+  id: number;
+  assessmentName: string;
+  moduleName: string | undefined;
+  code: string | undefined;
+  weight: number | undefined;
   grade: number;
 };
 
@@ -50,9 +50,11 @@ export function CompletedAssessmentsTable({
           <TableBody>
             {assessments.map((a) => (
               <TableRow key={a.id}>
-                <TableCell className="font-medium">{a.name}</TableCell>
+                <TableCell className="font-medium">
+                  {a.assessmentName}
+                </TableCell>
                 <TableCell>
-                  <span className="text-foreground">{a.module}</span>
+                  <span className="text-foreground">{a.moduleName}</span>
                   <span className="text-xs text-muted-foreground ml-2">
                     {a.code}
                   </span>
