@@ -4,8 +4,6 @@ import { ModuleSection } from "./components/module-section";
 export default async function ModulesPage() {
   const modules = await getStudentModulesWithGrades();
 
-  console.log(modules);
-
   const coreModules = modules.filter(
     (module) => !module.module_info?.is_optional,
   );

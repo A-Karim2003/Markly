@@ -2,6 +2,9 @@ import { getSession } from "../actions/auth-actions";
 import { createClient } from "../supabase/server";
 import { getStudentProfile } from "./student-profiles";
 
+export const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function getAssessments() {
   const session = await getSession();
   if (!session) throw new Error("User not authenticated");
