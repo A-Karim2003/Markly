@@ -8,7 +8,7 @@ import { SettingsTarget } from "./settings-target";
 type SettingsFormProps = {
   initialName: string;
   initialYear: number;
-  initialTargetGrade: number;
+  initialTargetGrade: number | null;
 };
 
 export function SettingsForm({

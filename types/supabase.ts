@@ -279,6 +279,7 @@ export type Database = {
           onboarding_step: number;
           user_id: string;
           year: number | null;
+          target_grade: number | null;
         };
         Insert: {
           created_at?: string;
@@ -286,6 +287,7 @@ export type Database = {
           onboarding_step?: number;
           user_id: string;
           year?: number | null;
+          target_grade: number | null;
         };
         Update: {
           created_at?: string;
@@ -293,6 +295,7 @@ export type Database = {
           onboarding_step?: number;
           user_id?: string;
           year?: number | null;
+          target_grade: number | null;
         };
         Relationships: [
           {

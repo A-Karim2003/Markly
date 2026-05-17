@@ -1,9 +1,12 @@
+import { getSession } from "@/lib/actions/auth-actions";
 import { SettingsForm } from "./_components/settings-form";
+import { getStudentProfile } from "@/lib/data/student-profiles";
 
 export default async function SettingsPage() {
-  const initialName = "Alex Johnson";
-  const initialYear = 2;
-  const initialTargetGrade = 70;
+  const [session, studentProfile] = await Promise.all([
+    getSession(),
+    getStudentProfile(),
+  ]);
 
   return (
     <div>
@@ -15,9 +18,9 @@ export default async function SettingsPage() {
       </div>
 
       <SettingsForm
-        initialName={initialName}
-        initialYear={initialYear}
-        initialTargetGrade={initialTargetGrade}
+        initialName={session?.user.name as string}
+        initialYear={studentProfile?.year as number}
+        initialTargetGrade={studentProfile?.target_grade}
       />
     </div>
   );

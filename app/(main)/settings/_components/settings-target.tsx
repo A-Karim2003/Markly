@@ -10,7 +10,7 @@ const CLASSIFICATIONS = [
 ] as const;
 
 type SettingsTargetProps = {
-  targetGrade: number;
+  targetGrade: number | null;
   onTargetChange: (grade: number) => void;
 };
 
