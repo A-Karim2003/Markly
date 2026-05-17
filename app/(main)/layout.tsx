@@ -20,7 +20,10 @@ export default async function Layout({
   return (
     <SidebarProvider>
       <AppSidebar student={student} session={session} />
-      <main className="w-full h-screen pt-17.5 px-4">
+      <main
+        className="w-full h-screen pt-17.5 px-4"
+        style={{ maxWidth: "1600px" }}
+      >
         <SidebarTrigger />
         {children}
       </main>
