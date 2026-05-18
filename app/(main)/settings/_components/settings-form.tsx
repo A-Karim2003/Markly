@@ -6,6 +6,7 @@ import { SettingsProfile } from "./settings-profile";
 import { SettingsTarget } from "./settings-target";
 import { updateStudentProfile } from "@/lib/actions/student-actions";
 import { toast } from "react-toastify";
+import { updateUserName } from "@/lib/actions/user-action";
 
 type SettingsFormProps = {
   studentId: number;
@@ -27,14 +28,24 @@ export function SettingsForm({
 
   function handleSave() {
     startTransition(async () => {
-      const result = await updateStudentProfile(studentId, {
-        year,
-        target_grade: targetGrade ?? 70,
-      });
+      if (year !== initialYear || targetGrade !== initialTargetGrade) {
+        const result = await updateStudentProfile(studentId, {
+          year,
+          target_grade: targetGrade ?? 70,
+        });
 
-      if (!result.success) {
-        toast.error(result.error ?? "Something went wrong");
-        return;
+        if (!result.success) {
+          toast.error(result.error ?? "Something went wrong");
+          return;
+        }
+      }
+
+      if (name !== initialName) {
+        const result = await updateUserName(name);
+        if (!result.success) {
+          toast.error(result.error ?? "Something went wrong");
+          return;
+        }
       }
 
       toast.success("Settings saved");
