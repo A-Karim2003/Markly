@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { SettingsProfile } from "./settings-profile";
 import { SettingsTarget } from "./settings-target";
+import { updateStudentProfile } from "@/lib/actions/student-actions";
+import { toast } from "react-toastify";
 
 type SettingsFormProps = {
+  studentId: number;
   initialName: string;
   initialYear: number;
   initialTargetGrade: number | null;
 };
 
 export function SettingsForm({
+  studentId,
   initialName,
   initialYear,
   initialTargetGrade,
@@ -19,11 +23,23 @@ export function SettingsForm({
   const [name, setName] = useState(initialName);
   const [year, setYear] = useState(initialYear);
   const [targetGrade, setTargetGrade] = useState(initialTargetGrade);
+  const [pending, startTransition] = useTransition();
 
-  async function handleSave() {
-    // server action will be wired here
+  function handleSave() {
+    startTransition(async () => {
+      const result = await updateStudentProfile(studentId, {
+        year,
+        target_grade: targetGrade ?? 70,
+      });
+
+      if (!result.success) {
+        toast.error(result.error ?? "Something went wrong");
+        return;
+      }
+
+      toast.success("Settings saved");
+    });
   }
-
   return (
     <div className="flex flex-col gap-10" style={{ gap: "3rem" }}>
       <SettingsProfile
@@ -38,8 +54,8 @@ export function SettingsForm({
         onTargetChange={setTargetGrade}
       />
 
-      <Button className="w-full py-6 text-sm font-medium" onClick={handleSave}>
-        Save Changes
+      <Button disabled={pending} onClick={handleSave}>
+        {pending ? "Saving..." : "Save Changes"}
       </Button>
     </div>
   );

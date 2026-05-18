@@ -56,3 +56,31 @@ export async function enrolStudentModules(
 
   if (error) throw new Error(error.message);
 }
+
+type UpdateStudentProfileData = {
+  year?: number;
+  target_grade?: number;
+};
+
+export async function updateStudentProfile(
+  studentId: number,
+  data: UpdateStudentProfileData,
+) {
+  if (Object.keys(data).length === 0)
+    return { success: false, error: "Nothing to update" };
+
+  const session = await getSession();
+  if (!session) return { success: false, error: "User not authenticated" };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("student_profiles")
+    .update(data)
+    .eq("id", studentId);
+
+  if (error) return { success: false, error: error.message };
+
+  revalidatePath("/settings");
+
+  return { success: true };
+}

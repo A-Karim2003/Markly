@@ -277,25 +277,25 @@ export type Database = {
           created_at: string;
           id: number;
           onboarding_step: number;
+          target_grade: number | null;
           user_id: string;
           year: number | null;
-          target_grade: number | null;
         };
         Insert: {
           created_at?: string;
           id?: number;
           onboarding_step?: number;
+          target_grade?: number | null;
           user_id: string;
           year?: number | null;
-          target_grade: number | null;
         };
         Update: {
           created_at?: string;
           id?: number;
           onboarding_step?: number;
+          target_grade?: number | null;
           user_id?: string;
           year?: number | null;
-          target_grade: number | null;
         };
         Relationships: [
           {

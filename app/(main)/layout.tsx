@@ -3,6 +3,7 @@ import { AppSidebar } from "../_components/app-sidebar";
 import { getStudentProfile } from "@/lib/data/student-profiles";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/actions/auth-actions";
+import { Bounce, ToastContainer } from "react-toastify";
 
 export default async function Layout({
   children,
@@ -26,6 +27,12 @@ export default async function Layout({
       >
         <SidebarTrigger />
         {children}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          closeOnClick={false}
+          transition={Bounce}
+        />
       </main>
     </SidebarProvider>
   );

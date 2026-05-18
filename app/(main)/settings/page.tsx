@@ -18,6 +18,7 @@ export default async function SettingsPage() {
       </div>
 
       <SettingsForm
+        studentId={studentProfile?.id}
         initialName={session?.user.name as string}
         initialYear={studentProfile?.year as number}
         initialTargetGrade={studentProfile?.target_grade}
