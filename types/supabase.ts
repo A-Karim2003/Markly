@@ -238,6 +238,7 @@ export type Database = {
           id: number;
           module_id: number | null;
           student_profile_id: number;
+          year: number;
         };
         Insert: {
           created_at?: string;
@@ -246,6 +247,7 @@ export type Database = {
           id?: never;
           module_id?: number | null;
           student_profile_id: number;
+          year: number;
         };
         Update: {
           created_at?: string;
@@ -254,6 +256,7 @@ export type Database = {
           id?: never;
           module_id?: number | null;
           student_profile_id?: number;
+          year?: number;
         };
         Relationships: [
           {

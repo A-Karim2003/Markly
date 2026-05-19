@@ -18,7 +18,6 @@ export function SettingsProfile({
   onNameChange,
   onYearChange,
 }: SettingsProfileProps) {
-  console.log(name, year);
   return (
     <Card>
       <CardHeader className="pb-4">

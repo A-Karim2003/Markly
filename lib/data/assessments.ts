@@ -10,6 +10,7 @@ export async function getAssessments() {
   if (!session) throw new Error("User not authenticated");
 
   const studentProfile = await getStudentProfile();
+  if (!studentProfile.year) throw new Error("Student year not set");
 
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -27,7 +28,8 @@ export async function getAssessments() {
     )
   `,
     )
-    .eq("student_modules.student_profile_id", studentProfile.id);
+    .eq("student_modules.student_profile_id", studentProfile.id)
+    .eq("student_modules.year", studentProfile.year);
 
   if (error) throw new Error(error.message);
 

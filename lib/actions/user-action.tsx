@@ -18,6 +18,6 @@ export async function updateUserName(name: string) {
 
   if (error) return { success: false, error: error.message };
 
-  revalidatePath("/settings");
+  revalidatePath("/", "layout");
   return { success: true };
 }

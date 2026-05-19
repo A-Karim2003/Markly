@@ -12,6 +12,7 @@ export async function getStudentModulesWithGrades() {
   if (!session) throw new Error("User not authenticated");
 
   const studentProfile = await getStudentProfile();
+  if (!studentProfile.year) throw new Error("Student year not set");
 
   const supabase = await createClient();
 
@@ -31,7 +32,8 @@ export async function getStudentModulesWithGrades() {
     assessments(grade, weight)
   `, // The !module_id hint tells PostgREST "use the module_id column to join this table",
     )
-    .eq("student_profile_id", studentProfile.id);
+    .eq("student_profile_id", studentProfile.id)
+    .eq("year", studentProfile.year);
 
   if (error) throw new Error(error.message);
 

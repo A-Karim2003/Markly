@@ -4,6 +4,7 @@ import { ModuleHeader } from "../components/module-header";
 import { AssessmentsTable } from "../components/assessments-table";
 import { GradeSummary } from "../components/grade-summary";
 import { getStudentModuleById } from "@/lib/data/student-modules";
+import { getStudentProfile } from "@/lib/data/student-profiles";
 
 interface PageProps {
   params: Promise<{ moduleId: string }>;
@@ -11,8 +12,10 @@ interface PageProps {
 
 export default async function ModuleDetailPage({ params }: PageProps) {
   const { moduleId } = await params;
-
-  const studentModule = await getStudentModuleById(Number(moduleId));
+  const [studentModule, studentProfile] = await Promise.all([
+    getStudentModuleById(Number(moduleId)),
+    getStudentProfile(),
+  ]);
 
   const { module_info: moduleInfo, assessments } = studentModule;
 
@@ -44,7 +47,7 @@ export default async function ModuleDetailPage({ params }: PageProps) {
     .filter((r) => r.grade === null) // keeps only ungraded assessments
     .reduce((sum, r) => sum + r.weight, 0);
 
-  const TARGET_GRADE = 70; // TODO: Make it dynamic later
+  const TARGET_GRADE = studentProfile.target_grade ?? 70;
 
   // if remaining weight is 0, every assessment is already graded so there's nothing left to calculate,
   const requiredGrade =
