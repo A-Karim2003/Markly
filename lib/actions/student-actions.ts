@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "../supabase/server";
 import { getSession } from "./auth-actions";
+import { getStudentProfile } from "../data/student-profiles";
 
 export async function updateStudentYear(studentId: number, year: number) {
   const session = getSession();
@@ -45,11 +46,14 @@ export async function enrolStudentModules(
   const session = getSession();
   if (!session) throw new Error("User not authenticated");
 
+  const studentProfile = await getStudentProfile();
+
   const supabase = await createClient();
 
   const rows = moduleIds.map((moduleId) => ({
     student_profile_id: studentId,
     module_id: moduleId,
+    year: studentProfile.year!,
   }));
 
   const { error } = await supabase.from("student_modules").insert(rows);
