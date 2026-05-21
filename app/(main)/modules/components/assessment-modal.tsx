@@ -11,26 +11,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AssessmentRow } from "./assessments-table";
-
-type ModalState =
-  | { mode: "closed" }
-  | { mode: "add" }
-  | { mode: "edit"; row: AssessmentRow };
+import { ModalState } from "./assessments-table";
+import z from "zod";
 
 type AssessmentModalProps = {
   modal: ModalState;
   onClose: () => void;
 };
 
+const assessmentSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  weight: z.coerce.number().min(1).max(100),
+  grade: z.coerce.number().min(0).max(100).nullable(),
+});
+
 export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
   const isAdd = modal.mode === "add";
   const isEdit = modal.mode === "edit";
 
-  const defaultName = isEdit ? modal.row.name : "";
+  const defaultName = isEdit ? modal.row.name : "add dont get defaults";
   const defaultWeight = isEdit ? (modal.row.weight * 100).toFixed(0) : "";
   const defaultGrade =
     isEdit && modal.row.grade !== null ? String(modal.row.grade) : "";
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    // Implementation for adding assessment
+  }
 
   return (
     <Dialog
@@ -44,7 +50,7 @@ export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4 py-2">
+        <form onSubmit={} className="space-y-4 py-2">
           {/* Name */}
           <div className="space-y-1.5">
             <Label htmlFor="name">Assessment Name</Label>
@@ -85,7 +91,7 @@ export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
               defaultValue={defaultGrade}
             />
           </div>
-        </div>
+        </form>
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>

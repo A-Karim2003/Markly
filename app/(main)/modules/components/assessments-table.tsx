@@ -23,7 +23,7 @@ export type AssessmentRow = {
   grade: number | null;
 };
 
-type ModalState =
+export type ModalState =
   | { mode: "closed" }
   | { mode: "add" }
   | { mode: "edit"; row: AssessmentRow };
