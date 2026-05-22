@@ -18,9 +18,10 @@ import { AssessmentModal } from "./assessment-modal";
 export type AssessmentRow = {
   id: number;
   name: string;
-  type: string;
+  type: string | null;
   weight: number;
   grade: number | null;
+  isCustom: boolean;
 };
 
 export type ModalState =

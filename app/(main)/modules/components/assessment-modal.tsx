@@ -79,6 +79,8 @@ export function AssessmentModal({
     } else if (modal.mode === "edit") {
       await updateAssessment(modal.row.id, result.data);
     }
+
+    onClose();
   }
 
   return (

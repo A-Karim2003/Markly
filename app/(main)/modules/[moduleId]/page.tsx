@@ -22,17 +22,24 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   const assessment_schemes = moduleInfo?.module_assessments_scheme ?? [];
 
   // Merge scheme + assessments: each row is a scheme entry with its grade looked up
-  const rows = assessment_schemes.map((scheme) => {
-    // for each scheme, find if there is a corresponding assessment.
-    const match = assessments.find(
-      (assessment) => assessment.scheme_id === scheme.id,
+
+  const rows = assessments.map((assessment) => {
+    /* 
+    for each assessment, find if theres a scheme associated with it.
+    if not, it means it's a custom assessment
+    */
+
+    const matchedScheme = assessment_schemes.find(
+      (scheme) => scheme.id === assessment.scheme_id,
     );
+
     return {
-      id: scheme.id,
-      name: scheme.name,
-      type: scheme.type,
-      weight: scheme.weight,
-      grade: match?.grade ?? null,
+      id: assessment.id,
+      name: matchedScheme?.name ?? assessment.name,
+      type: matchedScheme?.type ?? null,
+      weight: matchedScheme?.weight ?? assessment.weight,
+      grade: assessment.grade ?? null,
+      isCustom: !matchedScheme,
     };
   });
 
