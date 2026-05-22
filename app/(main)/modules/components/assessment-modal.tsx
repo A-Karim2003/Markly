@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,35 +8,77 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ModalState } from "./assessments-table";
-import z from "zod";
+import { z } from "zod";
+import {
+  addCustomAssessment,
+  updateAssessment,
+} from "@/lib/actions/assessment-actions";
 
 type AssessmentModalProps = {
   modal: ModalState;
+  studentModuleId: number;
   onClose: () => void;
 };
 
 const assessmentSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  weight: z.coerce.number().min(1).max(100),
-  grade: z.coerce.number().min(0).max(100).nullable(),
+  weight: z.coerce.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
+  grade: z.coerce
+    .number()
+    .min(0, "Minimum 0")
+    .max(100, "Maximum 100")
+    .nullable(),
 });
 
-export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
+export type Assessment = z.infer<typeof assessmentSchema>;
+type FieldErrors = Partial<Record<"name" | "weight" | "grade", string[]>>;
+
+export function AssessmentModal({
+  modal,
+  onClose,
+  studentModuleId,
+}: AssessmentModalProps) {
+  const [errors, setErrors] = useState<FieldErrors>({});
+
   const isAdd = modal.mode === "add";
   const isEdit = modal.mode === "edit";
 
-  const defaultName = isEdit ? modal.row.name : "add dont get defaults";
+  const defaultName = isEdit ? modal.row.name : "";
   const defaultWeight = isEdit ? (modal.row.weight * 100).toFixed(0) : "";
   const defaultGrade =
     isEdit && modal.row.grade !== null ? String(modal.row.grade) : "";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    // Implementation for adding assessment
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setErrors({});
+
+    const formData = new FormData(e.currentTarget);
+
+    const result = assessmentSchema.safeParse({
+      name: formData.get("name"),
+      weight: formData.get("weight"),
+      grade: formData.get("grade") || null,
+    });
+
+    if (!result.success) {
+      const formatted = z.flattenError(result.error);
+      setErrors(formatted.fieldErrors);
+      return;
+    }
+
+    if (modal.mode === "add") {
+      const newAssessment = await addCustomAssessment(
+        studentModuleId,
+        result.data,
+      );
+      console.log(newAssessment);
+    } else if (modal.mode === "edit") {
+      await updateAssessment(modal.row.id, result.data);
+    }
   }
 
   return (
@@ -50,15 +93,19 @@ export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={} className="space-y-4 py-2">
+        <form onSubmit={handleSubmit} className="space-y-4 py-2">
           {/* Name */}
           <div className="space-y-1.5">
             <Label htmlFor="name">Assessment Name</Label>
             <Input
               id="name"
+              name="name"
               placeholder="e.g. Coursework 1"
               defaultValue={defaultName}
             />
+            {errors.name && (
+              <p className="text-destructive text-xs">{errors.name[0]}</p>
+            )}
           </div>
 
           {/* Weight */}
@@ -66,39 +113,47 @@ export function AssessmentModal({ modal, onClose }: AssessmentModalProps) {
             <Label htmlFor="weight">Weight (%)</Label>
             <Input
               id="weight"
+              name="weight"
               type="number"
               placeholder="e.g. 30"
               min={1}
               max={100}
               defaultValue={defaultWeight}
             />
+            {errors.weight && (
+              <p className="text-destructive text-xs">{errors.weight[0]}</p>
+            )}
           </div>
 
           {/* Grade */}
           <div className="space-y-1.5">
             <Label htmlFor="grade">
-              Grade (%){"  "}
+              Grade (%){" "}
               <span className="text-muted-foreground font-normal text-xs">
                 optional
               </span>
             </Label>
             <Input
               id="grade"
+              name="grade"
               type="number"
               placeholder="e.g. 72"
               min={0}
               max={100}
               defaultValue={defaultGrade}
             />
+            {errors.grade && (
+              <p className="text-destructive text-xs">{errors.grade[0]}</p>
+            )}
           </div>
-        </form>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={onClose}>{isAdd ? "Add" : "Save Changes"}</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit">{isAdd ? "Add" : "Save Changes"}</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

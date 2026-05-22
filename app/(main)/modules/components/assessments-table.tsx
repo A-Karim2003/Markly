@@ -34,6 +34,7 @@ type AssessmentsTableProps = {
   targetGrade: number;
   gradedWeight: number;
   currentGrade: number;
+  moduleId: number;
 };
 
 export function AssessmentsTable({
@@ -42,6 +43,7 @@ export function AssessmentsTable({
   targetGrade,
   gradedWeight,
   currentGrade,
+  moduleId,
 }: AssessmentsTableProps) {
   const [modal, setModal] = useState<ModalState>({ mode: "closed" });
 
@@ -179,6 +181,7 @@ export function AssessmentsTable({
       </Card>
 
       <AssessmentModal
+        studentModuleId={moduleId}
         modal={modal}
         onClose={() => setModal({ mode: "closed" })}
       />

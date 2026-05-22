@@ -83,6 +83,7 @@ export default async function ModuleDetailPage({ params }: PageProps) {
         targetGrade={TARGET_GRADE}
         gradedWeight={gradedWeight}
         currentGrade={currentGrade}
+        moduleId={Number(moduleId)}
       />
 
       <GradeSummary
