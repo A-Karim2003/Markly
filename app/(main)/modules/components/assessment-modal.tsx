@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ModalState } from "./assessments-table";
 import { z } from "zod";
+import AssessmentDisclaimer from "./assessment-disclaimer";
 import {
   addCustomAssessment,
   updateAssessment,
@@ -88,12 +89,14 @@ export function AssessmentModal({
       open={modal.mode !== "closed"}
       onOpenChange={(open: boolean) => !open && onClose()}
     >
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>
             {isAdd ? "Add Assessment" : "Edit Assessment"}
           </DialogTitle>
         </DialogHeader>
+
+        {isAdd && <AssessmentDisclaimer />}
 
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           {/* Name */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Clock, Plus, Pencil, Trash2 } from "lucide-react";
+import { Check, Clock, Plus, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -13,7 +13,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getGradeColor } from "../lib/utils/module-grades";
+import { AssessmentDeleteDialog } from "./assessment-delete-dialog";
 import { AssessmentModal } from "./assessment-modal";
+import { deleteAssessment } from "@/lib/actions/assessment-actions";
+import { toast } from "react-toastify";
 
 export type AssessmentRow = {
   id: number;
@@ -47,6 +50,15 @@ export function AssessmentsTable({
   moduleId,
 }: AssessmentsTableProps) {
   const [modal, setModal] = useState<ModalState>({ mode: "closed" });
+
+  async function handleDelete(row: AssessmentRow) {
+    const result = await deleteAssessment(row.id);
+    if (result.success) {
+      toast.success(`"${row.name}" deleted`);
+    } else {
+      toast.error(result.error);
+    }
+  }
 
   return (
     <>
@@ -138,13 +150,10 @@ export function AssessmentsTable({
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <AssessmentDeleteDialog
+                        assessmentName={row.name}
+                        onConfirm={() => handleDelete(row)}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>

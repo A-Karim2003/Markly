@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { getStudentProfile } from "../data/student-profiles";
 import { createClient } from "../supabase/server";
 import { getSession } from "./auth-actions";
 import { Assessment } from "@/app/(main)/modules/components/assessment-modal";
@@ -30,6 +32,23 @@ export async function addCustomAssessment(
 
   console.log(data);
   return data;
+}
+
+export async function deleteAssessment(assessmentId: number) {
+  const session = await getSession();
+  if (!session) return { success: false, error: "User not authenticated" };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("assessments")
+    .delete()
+    .eq("id", assessmentId);
+
+  if (error) return { success: false, error: error.message };
+
+  revalidatePath("/modules/[moduleId]");
+
+  return { success: true };
 }
 
 export async function updateAssessment(assessmentId: number, data: Assessment) {
