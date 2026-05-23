@@ -18,6 +18,7 @@ import {
   addCustomAssessment,
   updateAssessment,
 } from "@/lib/actions/assessment-actions";
+import { toast } from "react-toastify";
 
 type AssessmentModalProps = {
   modal: ModalState;
@@ -72,13 +73,29 @@ export function AssessmentModal({
     }
 
     if (modal.mode === "add") {
-      const newAssessment = await addCustomAssessment(
-        studentModuleId,
-        result.data,
-      );
-      console.log(newAssessment);
+      const res = await addCustomAssessment(studentModuleId, result.data);
+      if (res.success) {
+        toast.success(`"${res.data.name}" added`);
+      } else {
+        toast.error(res.error);
+        return;
+      }
     } else if (modal.mode === "edit") {
-      await updateAssessment(modal.row.id, result.data);
+      const data = modal.row.isCustom
+        ? {
+            name: result.data.name,
+            weight: result.data.weight,
+            grade: result.data.grade,
+          }
+        : { grade: result.data.grade };
+
+      const res = await updateAssessment(modal.row.id, data);
+      if (res.success) {
+        toast.success(`"${modal.row.name}" updated`);
+      } else {
+        toast.error(res.error);
+        return;
+      }
     }
 
     onClose();
@@ -103,6 +120,7 @@ export function AssessmentModal({
           <div className="space-y-1.5">
             <Label htmlFor="name">Assessment Name</Label>
             <Input
+              disabled={isEdit && !modal.row.isCustom}
               id="name"
               name="name"
               placeholder="e.g. Coursework 1"
@@ -117,6 +135,7 @@ export function AssessmentModal({
           <div className="space-y-1.5">
             <Label htmlFor="weight">Weight (%)</Label>
             <Input
+              disabled={isEdit && !modal.row.isCustom}
               id="weight"
               name="weight"
               type="number"

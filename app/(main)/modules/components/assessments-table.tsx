@@ -142,6 +142,7 @@ export function AssessmentsTable({
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-1">
+                      {/* edit button */}
                       <Button
                         variant="ghost"
                         size="icon"
@@ -150,6 +151,7 @@ export function AssessmentsTable({
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
+                      {/* delete button */}
                       <AssessmentDeleteDialog
                         assessmentName={row.name}
                         onConfirm={() => handleDelete(row)}

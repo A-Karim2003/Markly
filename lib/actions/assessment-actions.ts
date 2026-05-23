@@ -1,18 +1,18 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getStudentProfile } from "../data/student-profiles";
 import { createClient } from "../supabase/server";
 import { getSession } from "./auth-actions";
-import { Assessment } from "@/app/(main)/modules/components/assessment-modal";
+import type { Assessment } from "@/app/(main)/modules/components/assessment-modal";
+import type { Result, VoidResult } from "./types";
 
 export async function addCustomAssessment(
   studentModuleId: number,
   assessmentData: Assessment,
-) {
+): Promise<Result<any>> {
   console.log(studentModuleId, assessmentData);
-  const session = getSession();
-  if (!session) throw new Error("User not authenticated");
+  const session = await getSession();
+  if (!session) return { success: false, error: "User not authenticated" };
 
   const supabase = await createClient();
 
@@ -28,13 +28,18 @@ export async function addCustomAssessment(
     .select()
     .single();
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("addCustomAssessment error:", error);
+    return { success: false, error: "Unable to create assessment" };
+  }
 
-  console.log(data);
-  return data;
+  revalidatePath("/modules/[moduleId]");
+  return { success: true, data };
 }
 
-export async function deleteAssessment(assessmentId: number) {
+export async function deleteAssessment(
+  assessmentId: number,
+): Promise<VoidResult> {
   const session = await getSession();
   if (!session) return { success: false, error: "User not authenticated" };
 
@@ -44,20 +49,35 @@ export async function deleteAssessment(assessmentId: number) {
     .delete()
     .eq("id", assessmentId);
 
-  if (error) return { success: false, error: error.message };
+  if (error) {
+    console.error("deleteAssessment error:", error);
+    return { success: false, error: "Unable to delete assessment" };
+  }
 
   revalidatePath("/modules/[moduleId]");
-
-  return { success: true };
+  return { success: true, data: null };
 }
 
-export async function updateAssessment(assessmentId: number, data: Assessment) {
-  //   const supabase = await createClient();
-  //   const { data: updatedData, error } = await supabase
-  //     .from("assessments")
-  //     .update(data)
-  //     .eq("id", assessmentId)
-  //     .select()
-  //     .single();
-  //   if (error) throw new Error(error.message);
+export async function updateAssessment(
+  assessmentId: number,
+  data: { name?: string; weight?: number; grade: number | null },
+): Promise<Result<any>> {
+  const session = await getSession();
+  if (!session) return { success: false, error: "User not authenticated" };
+
+  const supabase = await createClient();
+  const { data: updatedData, error } = await supabase
+    .from("assessments")
+    .update({
+      ...(data?.name && { name: data.name }),
+      ...(data?.weight && { weight: data.weight / 100 }),
+      grade: data.grade,
+    })
+    .eq("id", assessmentId)
+    .select()
+    .single();
+
+  if (error) return { success: false, error: "Unable to update assessment" };
+
+  return { success: true, data: updatedData };
 }
