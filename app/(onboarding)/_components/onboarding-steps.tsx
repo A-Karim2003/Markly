@@ -15,19 +15,20 @@ export default function OnboardingSteps({
   modules,
   student,
 }: OnboardingStepsProp) {
-  const [currentStep, setCurrentStep] = useState(student.onboarding_step);
+  const [currentStep, setCurrentStep] = useState(
+    student.onboarding_step === 2 ? 2 : 1,
+  );
 
   return (
     <div>
-      {currentStep === 1 && (
-        <Step1 setCurrentStep={setCurrentStep} student={student} />
-      )}
-      {currentStep === 2 && (
+      {currentStep === 2 ? (
         <Step2
           setCurrentStep={setCurrentStep}
           modules={modules}
           student={student}
         />
+      ) : (
+        <Step1 setCurrentStep={setCurrentStep} student={student} />
       )}
     </div>
   );

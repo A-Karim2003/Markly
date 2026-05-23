@@ -40,7 +40,7 @@ export const auth = betterAuth({
           try {
             await pool.query(
               "INSERT INTO student_profiles (user_id, onboarding_step) VALUES ($1, $2)",
-              [user.id, 0],
+              [user.id, 1],
             );
           } catch (error) {
             console.error(
