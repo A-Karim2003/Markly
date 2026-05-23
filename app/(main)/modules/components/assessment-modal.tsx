@@ -54,7 +54,7 @@ export function AssessmentModal({
   const defaultGrade =
     isEdit && modal.row.grade !== null ? String(modal.row.grade) : "";
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrors({});
 
@@ -101,10 +101,14 @@ export function AssessmentModal({
     onClose();
   }
 
+  const handleClose = () => {
+    setErrors({});
+    onClose();
+  };
   return (
     <Dialog
       open={modal.mode !== "closed"}
-      onOpenChange={(open: boolean) => !open && onClose()}
+      onOpenChange={(open: boolean) => !open && handleClose()}
     >
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
@@ -172,7 +176,7 @@ export function AssessmentModal({
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={handleClose}>
               Cancel
             </Button>
             <Button type="submit">{isAdd ? "Add" : "Save Changes"}</Button>

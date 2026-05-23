@@ -79,5 +79,6 @@ export async function updateAssessment(
 
   if (error) return { success: false, error: "Unable to update assessment" };
 
+  revalidatePath("/modules/[moduleId]");
   return { success: true, data: updatedData };
 }
