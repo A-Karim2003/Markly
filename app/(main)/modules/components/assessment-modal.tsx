@@ -117,7 +117,14 @@ export function AssessmentModal({
           </DialogTitle>
         </DialogHeader>
 
-        {isAdd && <AssessmentDisclaimer />}
+        {isAdd && (
+          <AssessmentDisclaimer>
+            <span className="font-medium">Heads up</span> — make sure your
+            assessment weights add up to 100% across all assessments. If they
+            don&apos;t, your grade calculations and projections may be
+            inaccurate.
+          </AssessmentDisclaimer>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           {/* Name */}

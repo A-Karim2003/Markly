@@ -14,15 +14,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import AssessmentDisclaimer from "./assessment-disclaimer";
 
 type AssessmentDeleteDialogProps = {
   assessmentName: string;
   onConfirm: () => Promise<void>;
+  isCustom: boolean;
 };
 
 export function AssessmentDeleteDialog({
   assessmentName,
   onConfirm,
+  isCustom,
 }: AssessmentDeleteDialogProps) {
   return (
     <AlertDialog>
@@ -35,12 +38,20 @@ export function AssessmentDeleteDialog({
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="sm:max-w-xl">
         <AlertDialogHeader>
           <AlertDialogTitle>Delete assessment?</AlertDialogTitle>
+          {!isCustom && (
+            <AssessmentDisclaimer>
+              <span className="font-medium">Heads up</span> — this assessment is
+              part of your module&apos;s scheme. Deleting it will remove your
+              grade for it and may affect your overall calculations and
+              projections.
+            </AssessmentDisclaimer>
+          )}
           <AlertDialogDescription>
-            This will permanently remove "{assessmentName}". You won't be able
-            to undo this action.
+            This will permanently remove <strong>{assessmentName}</strong>. You
+            won&apos;t be able to undo this action.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

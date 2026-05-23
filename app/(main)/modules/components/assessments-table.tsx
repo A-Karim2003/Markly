@@ -154,6 +154,7 @@ export function AssessmentsTable({
                       {/* delete button */}
                       <AssessmentDeleteDialog
                         assessmentName={row.name}
+                        isCustom={row.isCustom}
                         onConfirm={() => handleDelete(row)}
                       />
                     </div>

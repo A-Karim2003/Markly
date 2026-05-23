@@ -7,7 +7,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
     <LoaderIcon
       role="status"
       aria-label="Loading"
-      className={cn("size-5 animate-spin text-muted-foreground", className)}
+      className={cn("size-8 animate-spin text-muted-foreground", className)}
       {...props}
     />
   );
@@ -15,10 +15,10 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/60 backdrop-blur-sm">
-      <div className="flex items-center gap-3 rounded-full border border-border/40 bg-background/80 px-4 py-2 shadow-sm">
+    <div className="flex h-full items-center justify-center">
+      <div className="flex items-center gap-3 rounded-full border border-border/40 bg-background/80 px-6 py-4 shadow-sm">
         <Spinner />
-        <p className="text-sm font-medium text-muted-foreground">Loading</p>
+        <p className="text-lg font-medium text-muted-foreground">Loading</p>
       </div>
     </div>
   );
