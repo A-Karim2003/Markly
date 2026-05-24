@@ -18,45 +18,48 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   ]);
 
   const { module_info: moduleInfo, assessments } = studentModule;
+  const assessmentSchemes = moduleInfo?.module_assessments_scheme ?? [];
 
-  const assessment_schemes = moduleInfo?.module_assessments_scheme ?? [];
-
-  // Merge scheme + assessments: each row is a scheme entry with its grade looked up
-
-  const rows = assessments.map((assessment) => {
-    /* 
-    for each assessment, find if theres a scheme associated with it.
-    if not, it means it's a custom assessment
-    */
-
-    const matchedScheme = assessment_schemes.find(
-      (scheme) => scheme.id === assessment.scheme_id,
-    );
-
+  // Scheme-based rows (pre-populated)
+  const schemedAssessments = assessmentSchemes.map((scheme) => {
+    const match = assessments.find((a) => a.scheme_id === scheme.id);
     return {
-      id: assessment.id,
-      name: matchedScheme?.name ?? assessment.name,
-      type: matchedScheme?.type ?? null,
-      weight: matchedScheme?.weight ?? assessment.weight,
-      grade: assessment.grade ?? null,
-      isCustom: !matchedScheme,
+      id: match?.id ?? scheme.id,
+      name: scheme.name,
+      type: scheme.type,
+      weight: scheme.weight,
+      grade: match?.grade ?? null,
+      isCustom: false,
     };
   });
 
-  const gradedRows = rows.filter((r) => r.grade !== null);
+  // Custom assessment rows (no scheme)
+  const customAssessments = assessments
+    .filter((assessment) => assessment.scheme_id === null)
+    .map((a) => ({
+      id: a.id,
+      name: a.name,
+      type: null,
+      weight: a.weight,
+      grade: a.grade ?? null,
+      isCustom: true,
+    }));
+
+  const assessmentRows = [...schemedAssessments, ...customAssessments];
+
+  const gradedRows = assessmentRows.filter((r) => r.grade !== null);
 
   const currentGrade = gradedRows.reduce(
     (sum, r) => sum + r.grade! * r.weight,
     0,
   );
   const gradedWeight = gradedRows.reduce((sum, r) => sum + r.weight, 0);
-  const remainingWeight = rows
-    .filter((r) => r.grade === null) // keeps only ungraded assessments
+  const remainingWeight = assessmentRows
+    .filter((r) => r.grade === null)
     .reduce((sum, r) => sum + r.weight, 0);
 
   const TARGET_GRADE = studentProfile.target_grade ?? 70;
 
-  // if remaining weight is 0, every assessment is already graded so there's nothing left to calculate,
   const requiredGrade =
     remainingWeight > 0
       ? (TARGET_GRADE - currentGrade) / remainingWeight
@@ -85,7 +88,7 @@ export default async function ModuleDetailPage({ params }: PageProps) {
       />
 
       <AssessmentsTable
-        rows={rows}
+        rows={assessmentRows}
         requiredGrade={requiredGrade}
         targetGrade={TARGET_GRADE}
         gradedWeight={gradedWeight}
