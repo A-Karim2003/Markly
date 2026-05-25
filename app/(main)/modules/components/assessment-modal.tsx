@@ -26,7 +26,7 @@ type AssessmentModalProps = {
   onClose: () => void;
 };
 
-const assessmentSchema = z.object({
+const customAssessmentSchema = z.object({
   name: z.string().min(1, "Name is required"),
   weight: z.coerce.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
   grade: z.coerce
@@ -36,7 +36,15 @@ const assessmentSchema = z.object({
     .nullable(),
 });
 
-export type Assessment = z.infer<typeof assessmentSchema>;
+const gradeOnlySchema = z.object({
+  grade: z.coerce
+    .number()
+    .min(0, "Minimum 0")
+    .max(100, "Maximum 100")
+    .nullable(),
+});
+
+export type Assessment = z.infer<typeof customAssessmentSchema>;
 type FieldErrors = Partial<Record<"name" | "weight" | "grade", string[]>>;
 
 export function AssessmentModal({
@@ -60,41 +68,71 @@ export function AssessmentModal({
 
     const formData = new FormData(e.currentTarget);
 
-    const result = assessmentSchema.safeParse({
-      name: formData.get("name"),
-      weight: formData.get("weight"),
-      grade: formData.get("grade") || null,
-    });
-
-    if (!result.success) {
-      const formatted = z.flattenError(result.error);
-      setErrors(formatted.fieldErrors);
-      return;
-    }
-
     if (modal.mode === "add") {
+      const result = customAssessmentSchema.safeParse({
+        name: formData.get("name"),
+        weight: formData.get("weight"),
+        grade: formData.get("grade") || null,
+      });
+
+      if (!result.success) {
+        const formatted = z.flattenError(result.error);
+        setErrors(formatted.fieldErrors);
+        return;
+      }
+
       const res = await addCustomAssessment(studentModuleId, result.data);
       if (res.success) {
-        toast.success(`"${res.data.name}" added`);
+        toast.success(`"${result.data.name}" added`);
       } else {
         toast.error(res.error);
         return;
       }
     } else if (modal.mode === "edit") {
-      const data = modal.row.isCustom
-        ? {
-            name: result.data.name,
-            weight: result.data.weight,
-            grade: result.data.grade,
-          }
-        : { grade: result.data.grade };
+      if (modal.row.isCustom) {
+        const result = customAssessmentSchema.safeParse({
+          name: formData.get("name"),
+          weight: formData.get("weight"),
+          grade: formData.get("grade") || null,
+        });
 
-      const res = await updateAssessment(modal.row.id, data);
-      if (res.success) {
-        toast.success(`"${modal.row.name}" updated`);
+        if (!result.success) {
+          const formatted = z.flattenError(result.error);
+          setErrors(formatted.fieldErrors);
+          return;
+        }
+
+        const res = await updateAssessment(modal.row.id, {
+          name: result.data.name,
+          weight: result.data.weight,
+          grade: result.data.grade,
+        });
+        if (res.success) {
+          toast.success(`"${modal.row.name}" updated`);
+        } else {
+          toast.error(res.error);
+          return;
+        }
       } else {
-        toast.error(res.error);
-        return;
+        const result = gradeOnlySchema.safeParse({
+          grade: formData.get("grade") || null,
+        });
+
+        if (!result.success) {
+          const formatted = z.flattenError(result.error);
+          setErrors(formatted.fieldErrors);
+          return;
+        }
+
+        const res = await updateAssessment(modal.row.id, {
+          grade: result.data.grade,
+        });
+        if (res.success) {
+          toast.success(`"${modal.row.name}" updated`);
+        } else {
+          toast.error(res.error);
+          return;
+        }
       }
     }
 
