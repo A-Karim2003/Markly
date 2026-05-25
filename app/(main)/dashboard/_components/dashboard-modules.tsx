@@ -18,7 +18,11 @@ export function DashboardModules({
       </div>
       <div className="grid grid-cols-2 gap-4">
         {studentModules.map((studentModule) => (
-          <ModuleCard key={studentModule.id} module={studentModule} />
+          <ModuleCard
+            key={studentModule.id}
+            module={studentModule}
+            availableModules={studentModules}
+          />
         ))}
       </div>
     </div>

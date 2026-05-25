@@ -9,7 +9,6 @@ import {
   updateStudentOnboardingStep,
   updateStudentYear,
 } from "@/lib/actions/student-actions";
-import Link from "next/link";
 import OnboardingHeader from "./Onboarding-header";
 
 const years = [
