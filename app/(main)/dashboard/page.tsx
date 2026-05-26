@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   ]);
 
   const targetGrade = studentProfile?.target_grade ?? 70;
-  const year = studentProfile?.year ?? 1;
+  const year = studentProfile.year!;
 
   return (
     <div>

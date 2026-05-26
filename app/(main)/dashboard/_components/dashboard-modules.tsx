@@ -14,7 +14,7 @@ export async function DashboardModules({
   modules,
   year,
 }: DashboardModulesProps) {
-  const currYearModules = await getModulesByYear(3);
+  const currYearModules = await getModulesByYear(year);
   const studentModules = await getStudentModules();
 
   return (

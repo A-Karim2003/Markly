@@ -4,6 +4,7 @@ import {
 } from "@/lib/data/student-modules";
 import { ModuleCard } from "./module-card";
 import { getModulesByYear } from "@/lib/data/modules";
+import { getStudentProfile } from "@/lib/data/student-profiles";
 
 type ModuleSectionProps = {
   title: string;
@@ -11,8 +12,12 @@ type ModuleSectionProps = {
 };
 
 export async function ModuleSection({ title, modules }: ModuleSectionProps) {
-  const currYearModules = await getModulesByYear(3);
-  const studentModules = await getStudentModules();
+  const studentProfile = await getStudentProfile();
+
+  const [currYearModules, studentModules] = await Promise.all([
+    getModulesByYear(studentProfile.year!),
+    getStudentModules(),
+  ]);
 
   return (
     <div className="mb-10">
