@@ -9,27 +9,28 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ProgressBar } from "@/app/_components/progress-bar";
 import { getGradeClass, getGradeColor } from "../lib/utils/module-grades";
 import {
+  StudentModules,
   StudentModuleWithGrades,
-  StudentModulesWithGrades,
 } from "@/lib/data/student-modules";
 import { SwapModuleModal } from "./swap-module-modal";
+import { Module } from "@/lib/data/modules";
+import { getSwapCandidates } from "../lib/utils/modules";
 
 type ModuleCardProps = {
   module: StudentModuleWithGrades;
-  availableModules: StudentModulesWithGrades;
+  currYearModules: Module[];
+  studentModules: StudentModules;
 };
 
-export function ModuleCard({ module, availableModules }: ModuleCardProps) {
+export function ModuleCard({
+  module,
+  currYearModules,
+  studentModules,
+}: ModuleCardProps) {
   const [isSwapOpen, setIsSwapOpen] = useState(false);
   const { module_info, assessments } = module;
-  const swapCandidates = availableModules
-    .filter((availableModule) => availableModule.id !== module.id)
-    .map((availableModule) => ({
-      id: availableModule.id,
-      code: availableModule.module_info?.code ?? "",
-      name: availableModule.module_info?.name ?? "",
-      credits: availableModule.module_info?.credits ?? 0,
-    }));
+
+  const swapCandidates = getSwapCandidates(currYearModules, studentModules);
 
   const totalAvailableAssessments =
     module_info?.module_assessments_scheme?.length ?? 0;

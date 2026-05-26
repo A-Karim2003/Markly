@@ -1,15 +1,22 @@
-import { StudentModulesWithGrades } from "@/lib/data/student-modules";
+import {
+  getStudentModules,
+  StudentModulesWithGrades,
+} from "@/lib/data/student-modules";
 import { ModuleCard } from "@/app/(main)/modules/components/module-card";
+import { getModulesByYear } from "@/lib/data/modules";
 
 type DashboardModulesProps = {
-  studentModules: StudentModulesWithGrades;
+  modules: StudentModulesWithGrades;
   year: number;
 };
 
-export function DashboardModules({
-  studentModules,
+export async function DashboardModules({
+  modules,
   year,
 }: DashboardModulesProps) {
+  const currYearModules = await getModulesByYear(3);
+  const studentModules = await getStudentModules();
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -17,11 +24,12 @@ export function DashboardModules({
         <span className="text-sm text-muted-foreground">Year {year}</span>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {studentModules.map((studentModule) => (
+        {modules.map((module) => (
           <ModuleCard
-            key={studentModule.id}
-            module={studentModule}
-            availableModules={studentModules}
+            key={module.id}
+            module={module}
+            currYearModules={currYearModules}
+            studentModules={studentModules}
           />
         ))}
       </div>

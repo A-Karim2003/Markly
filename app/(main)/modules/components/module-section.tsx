@@ -1,17 +1,19 @@
-import { StudentModulesWithGrades } from "@/lib/data/student-modules";
+import {
+  getStudentModules,
+  StudentModulesWithGrades,
+} from "@/lib/data/student-modules";
 import { ModuleCard } from "./module-card";
+import { getModulesByYear } from "@/lib/data/modules";
 
 type ModuleSectionProps = {
   title: string;
   modules: StudentModulesWithGrades;
-  allModules: StudentModulesWithGrades;
 };
 
-export function ModuleSection({
-  title,
-  modules,
-  allModules,
-}: ModuleSectionProps) {
+export async function ModuleSection({ title, modules }: ModuleSectionProps) {
+  const currYearModules = await getModulesByYear(3);
+  const studentModules = await getStudentModules();
+
   return (
     <div className="mb-10">
       <h2 className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">
@@ -23,7 +25,8 @@ export function ModuleSection({
           <ModuleCard
             key={module.id}
             module={module}
-            availableModules={allModules}
+            currYearModules={currYearModules}
+            studentModules={studentModules}
           />
         ))}
       </div>

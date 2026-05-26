@@ -20,16 +20,8 @@ export default async function ModulesPage() {
         </p>
       </div>
 
-      <ModuleSection
-        title="Core Modules"
-        modules={coreModules}
-        allModules={modules}
-      />
-      <ModuleSection
-        title="Optional Modules"
-        modules={optionalModules}
-        allModules={modules}
-      />
+      <ModuleSection title="Core Modules" modules={coreModules} />
+      <ModuleSection title="Optional Modules" modules={optionalModules} />
     </div>
   );
 }

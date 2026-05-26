@@ -1,9 +1,10 @@
+import { cache } from "react";
 import { createClient } from "../supabase/server";
 import type { Tables } from "@/types/supabase";
 
 export type Module = Tables<"modules">;
 
-export async function getModulesByYear(year: number) {
+export const getModulesByYear = cache(async (year: number) => {
   if (!year) return [];
 
   const supabase = await createClient();
@@ -16,4 +17,4 @@ export async function getModulesByYear(year: number) {
   if (error) throw new Error(error.message);
 
   return data;
-}
+});

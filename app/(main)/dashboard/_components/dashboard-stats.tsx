@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { StudentModulesWithGrades } from "@/lib/data/student-modules";
 
 type DashboardStatsProps = {
-  studentModules: StudentModulesWithGrades;
+  modules: StudentModulesWithGrades;
   targetGrade: number;
 };
 
@@ -12,12 +12,9 @@ function getTargetLabel(targetGrade: number): string {
   return "2:2";
 }
 
-export function DashboardStats({
-  studentModules,
-  targetGrade,
-}: DashboardStatsProps) {
+export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
   // Year average — weighted grade so far across all modules
-  const allGradedAssessments = studentModules.flatMap((sm) =>
+  const allGradedAssessments = modules.flatMap((sm) =>
     sm.assessments.filter((a) => a.grade !== null),
   );
 
@@ -33,7 +30,7 @@ export function DashboardStats({
       : null;
 
   // Credits tracked
-  const totalTrackedCredits = studentModules.reduce(
+  const totalTrackedCredits = modules.reduce(
     (sum, sm) => sum + (sm.module_info?.credits ?? 0),
     0,
   );
@@ -41,7 +38,7 @@ export function DashboardStats({
   const MAX_CREDITS = 120;
 
   // list of modules on track to achieving 70%
-  const modulesOnTrack = studentModules.filter((module) => {
+  const modulesOnTrack = modules.filter((module) => {
     // graded returns all graded assessments for the specific module
     const gradedAssessments = module.assessments.filter(
       (a) => a.grade !== null,
@@ -102,7 +99,7 @@ export function DashboardStats({
             </span>
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            {studentModules.length} modules enrolled
+            {modules.length} modules enrolled
           </p>
         </CardContent>
       </Card>
@@ -114,7 +111,7 @@ export function DashboardStats({
           <p className="text-4xl font-bold text-foreground">
             {modulesOnTrack}{" "}
             <span className="text-lg font-normal text-muted-foreground">
-              / {studentModules.length}
+              / {modules.length}
             </span>
           </p>
           <p className="text-xs text-muted-foreground mt-1">

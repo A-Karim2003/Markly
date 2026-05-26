@@ -89,3 +89,22 @@ export async function getStudentModuleById(studentModuleId: number) {
 export type StudentModuleById = Awaited<
   ReturnType<typeof getStudentModuleById>
 >;
+
+export type StudentModules = Awaited<ReturnType<typeof getStudentModules>>;
+export async function getStudentModules() {
+  const session = await getSession();
+  if (!session) throw new Error("User not authenticated");
+
+  const studentProfile = await getStudentProfile();
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("student_modules")
+    .select("*")
+    .eq("student_profile_id", studentProfile.id)
+    .eq("year", studentProfile.year!);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

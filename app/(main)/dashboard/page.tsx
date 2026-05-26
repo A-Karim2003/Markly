@@ -37,11 +37,11 @@ export default async function DashboardPage() {
       </div>
 
       <DashboardStats
-        studentModules={studentModules ?? []}
+        modules={studentModules ?? []}
         targetGrade={targetGrade}
       />
 
-      <DashboardModules studentModules={studentModules ?? []} year={year} />
+      <DashboardModules modules={studentModules ?? []} year={year} />
     </div>
   );
 }
