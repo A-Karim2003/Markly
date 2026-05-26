@@ -75,17 +75,18 @@ export function ModuleCard({
 
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{module_info?.credits} credits</Badge>
-
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              className="relative z-20 text-muted-foreground hover:text-foreground"
-              aria-label={`Swap ${module_info?.name ?? "module"}`}
-              onClick={() => setIsSwapOpen(true)}
-            >
-              <ArrowLeftRight className="size-3.5" />
-            </Button>
+            {module_info?.is_optional && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                className="relative z-20 text-muted-foreground hover:text-foreground"
+                aria-label={`Swap ${module_info?.name ?? "module"}`}
+                onClick={() => setIsSwapOpen(true)}
+              >
+                <ArrowLeftRight className="size-3.5" />
+              </Button>
+            )}
           </div>
         </CardHeader>
 

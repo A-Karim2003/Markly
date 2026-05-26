@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "../supabase/server";
 import { getSession } from "./auth-actions";
 import { getStudentProfile } from "../data/student-profiles";
+import { Result } from "./types";
 
 export async function updateStudentYear(studentId: number, year: number) {
   const session = await getSession();
@@ -124,4 +125,63 @@ export async function updateStudentProfile(
   revalidatePath("/settings");
 
   return { success: true };
+}
+
+export async function swapModule(
+  studentModuleId: number,
+  selectedModuleId: number,
+): Promise<Result<unknown>> {
+  const session = await getSession();
+  if (!session) return { success: false, error: "User not authenticated" };
+
+  const supabase = await createClient();
+
+  //? Delete assessment records for the module we want to replace
+  const { error: assessmentError } = await supabase
+    .from("assessments")
+    .delete()
+    .eq("student_module_id", studentModuleId);
+
+  if (assessmentError)
+    return { success: false, error: assessmentError.message };
+
+  //? Perform the module swap by updating the student module to the new module
+  const { error: moduleError } = await supabase
+    .from("student_modules")
+    .update({ module_id: selectedModuleId })
+    .eq("id", studentModuleId);
+
+  if (moduleError) return { success: false, error: moduleError.message };
+
+  //? Fetch the assessment schemes for the new module
+  const { data: moduleSchemes, error: moduleSchemeError } = await supabase
+    .from("module_assessments_scheme")
+    .select("id, name, weight")
+    .eq("module_id", selectedModuleId);
+
+  if (moduleSchemeError)
+    return { success: false, error: moduleSchemeError.message };
+
+  //? Seed new assessment records for the updated student module
+  const { data: seededAssessments, error: assessmentsError } = await supabase
+    .from("assessments")
+    .insert(
+      moduleSchemes.map((scheme) => ({
+        student_module_id: studentModuleId,
+        scheme_id: scheme.id,
+        name: scheme.name,
+        weight: scheme.weight,
+        grade: null,
+      })),
+    )
+    .select();
+
+  if (assessmentsError)
+    return { success: false, error: assessmentsError.message };
+
+  revalidatePath("/modules");
+  revalidatePath("/dashboard");
+  revalidatePath("/assessments");
+
+  return { success: true, data: seededAssessments };
 }
