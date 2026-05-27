@@ -127,10 +127,23 @@ export async function updateStudentProfile(
   return { success: true };
 }
 
+type seededAssessments =
+  | {
+      created_at: string;
+      grade: number | null;
+      id: number;
+      name: string;
+      scheme_id: number | null;
+      student_module_id: number;
+      updated_at: string;
+      weight: number;
+    }[]
+  | null;
+
 export async function swapModule(
   studentModuleId: number,
   selectedModuleId: number,
-): Promise<Result<unknown>> {
+): Promise<Result<seededAssessments>> {
   const session = await getSession();
   if (!session) return { success: false, error: "User not authenticated" };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import {
 import { SwapModuleModal } from "./swap-module-modal";
 import { Module } from "@/lib/data/modules";
 import { getSwapCandidates } from "../lib/utils/modules";
+import { swapModule } from "@/lib/actions/student-actions";
+import { toast } from "react-toastify";
 
 type ModuleCardProps = {
   module: StudentModuleWithGrades;
@@ -28,6 +30,7 @@ export function ModuleCard({
   studentModules,
 }: ModuleCardProps) {
   const [isSwapOpen, setIsSwapOpen] = useState(false);
+  const [isSwapping, startSwapTransition] = useTransition();
   const { module_info, assessments } = module;
 
   const swapCandidates = getSwapCandidates(currYearModules, studentModules);
@@ -50,6 +53,17 @@ export function ModuleCard({
   const isComplete =
     totalGradedAssessments === totalAvailableAssessments &&
     totalAvailableAssessments > 0;
+
+  function handleSwap(selectedModuleId: number) {
+    startSwapTransition(async () => {
+      const result = await swapModule(module.id, selectedModuleId);
+      if (!result.success) {
+        toast.error(result.error ?? "Failed to swap module");
+        return;
+      }
+      toast.success("Module swapped successfully");
+    });
+  }
 
   return (
     <>
@@ -161,6 +175,7 @@ export function ModuleCard({
           credits: module_info?.credits ?? 0,
         }}
         availableModules={swapCandidates}
+        onSwap={handleSwap}
       />
     </>
   );

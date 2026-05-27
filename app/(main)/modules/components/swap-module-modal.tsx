@@ -24,6 +24,7 @@ type SwapModuleModalProps = {
     name: string;
     credits: number;
   }[];
+  onSwap: (selectedModuleId: number) => void;
 };
 
 export function SwapModuleModal({
@@ -31,6 +32,7 @@ export function SwapModuleModal({
   onClose,
   currentModule,
   availableModules,
+  onSwap,
 }: SwapModuleModalProps) {
   const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
 
@@ -48,6 +50,7 @@ export function SwapModuleModal({
   const handleConfirm = () => {
     if (selectedModuleId === null) return;
 
+    onSwap(selectedModuleId);
     handleClose();
   };
 
