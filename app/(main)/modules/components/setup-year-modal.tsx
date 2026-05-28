@@ -24,7 +24,6 @@ type SetupYearModalProps = {
   open: boolean;
   onClose: () => void;
   year: number;
-  studentId: number;
   modules: Module[];
 };
 
@@ -32,7 +31,6 @@ export function SetupYearModal({
   open,
   onClose,
   year,
-  studentId,
   modules,
 }: SetupYearModalProps) {
   const router = useRouter();
@@ -61,6 +59,10 @@ export function SetupYearModal({
   const isMaxed = totalCredits >= 120;
 
   function handleConfirm() {
+    if (totalCredits < 120) {
+      setError("You must select at least 120 credits.");
+      return;
+    }
     setError(null);
 
     startTransition(async () => {
@@ -70,7 +72,7 @@ export function SetupYearModal({
           ...selectedOptionalIds,
         ];
 
-        await enrolStudentModules(studentId, moduleIds);
+        await enrolStudentModules(moduleIds);
 
         toast.success(`Year ${year} modules added`);
         handleClose();
@@ -209,7 +211,10 @@ export function SetupYearModal({
           <Button variant="outline" onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleConfirm} disabled={isPending}>
+          <Button
+            onClick={handleConfirm}
+            disabled={isPending || totalCredits !== 120}
+          >
             {isPending ? "Saving..." : "Continue"}
           </Button>
         </DialogFooter>

@@ -9,15 +9,10 @@ import type { Module } from "@/lib/data/modules";
 
 type SetupYearCardProps = {
   year: number;
-  studentId: number;
   modules: Module[];
 };
 
-export function SetupYearCard({
-  year,
-  studentId,
-  modules,
-}: SetupYearCardProps) {
+export function SetupYearCard({ year, modules }: SetupYearCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,7 +47,6 @@ export function SetupYearCard({
         open={open}
         onClose={() => setOpen(false)}
         year={year}
-        studentId={studentId}
         modules={modules}
       />
     </>

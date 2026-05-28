@@ -9,14 +9,12 @@ import { toast } from "react-toastify";
 import { updateUserName } from "@/lib/actions/user-action";
 
 type SettingsFormProps = {
-  studentId: number;
   initialName: string;
   initialYear: number;
   initialTargetGrade: number | null;
 };
 
 export function SettingsForm({
-  studentId,
   initialName,
   initialYear,
   initialTargetGrade,
@@ -29,7 +27,7 @@ export function SettingsForm({
   function handleSave() {
     startTransition(async () => {
       if (year !== initialYear || targetGrade !== initialTargetGrade) {
-        const result = await updateStudentProfile(studentId, {
+        const result = await updateStudentProfile({
           year,
           target_grade: targetGrade ?? 70,
         });

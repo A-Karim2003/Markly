@@ -40,10 +40,7 @@ export async function updateStudentOnboardingStep(
   revalidatePath("/onboarding");
 }
 
-export async function enrolStudentModules(
-  studentId: number,
-  moduleIds: number[],
-) {
+export async function enrolStudentModules(moduleIds: number[]) {
   const session = await getSession();
   if (!session) throw new Error("User not authenticated");
 
@@ -54,7 +51,7 @@ export async function enrolStudentModules(
     .from("student_modules")
     .insert(
       moduleIds.map((moduleId) => ({
-        student_profile_id: studentId,
+        student_profile_id: studentProfile.id,
         module_id: moduleId,
         year: studentProfile.year!,
       })),
@@ -104,21 +101,20 @@ type UpdateStudentProfileData = {
   target_grade?: number;
 };
 
-export async function updateStudentProfile(
-  studentId: number,
-  data: UpdateStudentProfileData,
-) {
+export async function updateStudentProfile(data: UpdateStudentProfileData) {
   if (Object.keys(data).length === 0)
     return { success: false, error: "Nothing to update" };
 
   const session = await getSession();
   if (!session) return { success: false, error: "User not authenticated" };
 
+  const studentProfile = await getStudentProfile();
+
   const supabase = await createClient();
   const { error } = await supabase
     .from("student_profiles")
     .update(data)
-    .eq("id", studentId);
+    .eq("id", studentProfile.id);
 
   if (error) return { success: false, error: error.message };
 

@@ -50,7 +50,7 @@ export default function Step2({
     const moduleIds = [...selectedOptionalIds, ...coreModules.map((m) => m.id)];
     setError(null);
     try {
-      await enrolStudentModules(studentId, moduleIds);
+      await enrolStudentModules(moduleIds);
       await updateStudentOnboardingStep(studentId, 3);
       router.replace("/dashboard");
     } catch {

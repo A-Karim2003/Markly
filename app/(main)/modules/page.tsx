@@ -13,13 +13,7 @@ export default async function ModulesPage() {
       ? await getModulesByYear(studentProfile.year)
       : [];
 
-    return (
-      <SetupYearCard
-        year={studentProfile.year!}
-        studentId={studentProfile.id}
-        modules={yearModules}
-      />
-    );
+    return <SetupYearCard year={studentProfile.year!} modules={yearModules} />;
   }
 
   const coreModules = modules.filter(
