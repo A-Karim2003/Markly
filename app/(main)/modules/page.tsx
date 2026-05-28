@@ -1,8 +1,26 @@
+import { getModulesByYear } from "@/lib/data/modules";
+import { getStudentProfile } from "@/lib/data/student-profiles";
 import { getStudentModulesWithGrades } from "@/lib/data/student-modules";
+import { SetupYearCard } from "./components/setup-year-card";
 import { ModuleSection } from "./components/module-section";
 
 export default async function ModulesPage() {
+  const studentProfile = await getStudentProfile();
   const modules = await getStudentModulesWithGrades();
+
+  if (modules.length === 0) {
+    const yearModules = studentProfile.year
+      ? await getModulesByYear(studentProfile.year)
+      : [];
+
+    return (
+      <SetupYearCard
+        year={studentProfile.year!}
+        studentId={studentProfile.id}
+        modules={yearModules}
+      />
+    );
+  }
 
   const coreModules = modules.filter(
     (module) => !module.module_info?.is_optional,
