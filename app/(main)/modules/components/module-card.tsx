@@ -176,6 +176,7 @@ export function ModuleCard({
         }}
         availableModules={swapCandidates}
         onSwap={handleSwap}
+        isSwapping={isSwapping}
       />
     </>
   );

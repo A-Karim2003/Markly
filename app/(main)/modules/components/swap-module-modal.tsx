@@ -25,6 +25,7 @@ type SwapModuleModalProps = {
     credits: number;
   }[];
   onSwap: (selectedModuleId: number) => void;
+  isSwapping: boolean;
 };
 
 export function SwapModuleModal({
@@ -33,6 +34,7 @@ export function SwapModuleModal({
   currentModule,
   availableModules,
   onSwap,
+  isSwapping,
 }: SwapModuleModalProps) {
   const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
 
@@ -126,7 +128,7 @@ export function SwapModuleModal({
           <Button
             type="button"
             onClick={handleConfirm}
-            disabled={!selectedModule}
+            disabled={!selectedModule || isSwapping}
           >
             Confirm Swap
           </Button>
