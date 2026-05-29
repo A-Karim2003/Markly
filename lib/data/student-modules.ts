@@ -71,9 +71,11 @@ export async function getStudentModuleById(studentModuleId: number) {
     )
     .eq("id", studentModuleId)
     .eq("student_profile_id", studentProfile.id)
-    .single();
+    .maybeSingle();
 
   if (moduleError) throw new Error(moduleError.message);
+
+  if (!moduleData) return null;
 
   // Select all the assessments a student has taken for a specific module
   const { data: assessments, error: assessmentsError } = await supabase

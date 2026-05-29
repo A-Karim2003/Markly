@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ModuleHeader } from "../components/module-header";
@@ -12,10 +13,18 @@ interface PageProps {
 
 export default async function ModuleDetailPage({ params }: PageProps) {
   const { moduleId } = await params;
+  if (!/^[1-9]\d*$/.test(moduleId)) {
+    notFound();
+  }
+
+  const moduleIdNumber = Number(moduleId);
+
   const [studentModule, studentProfile] = await Promise.all([
-    getStudentModuleById(Number(moduleId)),
+    getStudentModuleById(moduleIdNumber),
     getStudentProfile(),
   ]);
+
+  if (!studentModule) notFound();
 
   const { module_info: moduleInfo, assessments } = studentModule;
   const assessmentSchemes = moduleInfo?.module_assessments_scheme ?? [];
