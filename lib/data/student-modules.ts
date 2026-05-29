@@ -71,6 +71,7 @@ export async function getStudentModuleById(studentModuleId: number) {
     )
     .eq("id", studentModuleId)
     .eq("student_profile_id", studentProfile.id)
+    .eq("year", studentProfile.year!)
     .maybeSingle();
 
   if (moduleError) throw new Error(moduleError.message);
