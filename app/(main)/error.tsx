@@ -8,6 +8,7 @@ type ErrorProps = {
   reset: () => void;
 };
 
+// TODO: Make reset functional
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     console.error(error);

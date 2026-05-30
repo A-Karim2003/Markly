@@ -22,16 +22,28 @@ type ModuleCardProps = {
   module: StudentModuleWithGrades;
   currYearModules: Module[];
   studentModules: StudentModules;
+  colorIndex?: number;
 };
+
+// 1-based module colour index, matches the .progress-module-N utilities and
+// the --module-N tokens defined in globals.css.
+function moduleColorIndex(colorIndex: number) {
+  return (colorIndex % 6) + 1;
+}
 
 export function ModuleCard({
   module,
   currYearModules,
   studentModules,
+  colorIndex = 0,
 }: ModuleCardProps) {
   const [isSwapOpen, setIsSwapOpen] = useState(false);
   const [isSwapping, startSwapTransition] = useTransition();
   const { module_info, assessments } = module;
+
+  const n = moduleColorIndex(colorIndex);
+  const moduleVar = `var(--module-${n})`;
+  const softBg = `color-mix(in oklch, ${moduleVar} 14%, transparent)`;
 
   const swapCandidates = getSwapCandidates(currYearModules, studentModules);
 
@@ -67,34 +79,50 @@ export function ModuleCard({
 
   return (
     <>
-      <Card className="group relative cursor-pointer overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)]">
+      <Card
+        className="group relative cursor-pointer overflow-hidden rounded-2xl border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+        style={{ "--module-accent": moduleVar } as React.CSSProperties}
+      >
+        {/* Accent strip down the left edge */}
+        <span
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-1"
+          style={{ backgroundColor: moduleVar }}
+        />
+
         <Link
           href={`/modules/${module.id}`}
           aria-label={`Open ${module_info?.name ?? "module"}`}
-          className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--module-accent)/50"
         >
           <span className="sr-only">Open {module_info?.name ?? "module"}</span>
         </Link>
 
-        <CardHeader className="relative flex flex-row items-start justify-between pb-2">
+        <CardHeader className="relative flex flex-row items-start justify-between pb-2 pl-5">
           <div>
-            <p className="text-xs font-medium text-muted-foreground">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               {module_info?.code}
             </p>
 
-            <h4 className="mt-0.5 text-base font-semibold text-foreground transition-colors group-hover:text-primary">
+            <h4 className="mt-0.5 text-base font-semibold leading-snug text-foreground text-balance transition-colors group-hover:text-(--module-accent)">
               {module_info?.name}
             </h4>
           </div>
 
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">{module_info?.credits} credits</Badge>
+            <Badge
+              variant="secondary"
+              className="border-transparent font-semibold"
+              style={{ color: moduleVar, backgroundColor: softBg }}
+            >
+              {module_info?.credits} credits
+            </Badge>
             {module_info?.is_optional && (
               <Button
                 type="button"
                 variant="ghost"
                 size="icon-sm"
-                className="relative z-20 text-muted-foreground hover:text-foreground"
+                className="relative z-20 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
                 aria-label={`Swap ${module_info?.name ?? "module"}`}
                 onClick={() => setIsSwapOpen(true)}
               >
@@ -104,20 +132,20 @@ export function ModuleCard({
           </div>
         </CardHeader>
 
-        <CardContent className="relative space-y-4">
+        <CardContent className="relative space-y-4 pl-5">
           <div>
             <div className="mb-1.5 flex items-center justify-between text-xs text-muted-foreground">
               <span>Assessments graded</span>
-              <span>
+              <span className="font-medium">
                 {totalGradedAssessments}/{totalAvailableAssessments}
               </span>
             </div>
 
             <ProgressBar
-              className="border rounded-md"
+              className="rounded-full"
               value={totalGradedAssessments}
               max={totalAvailableAssessments}
-              color="var(--primary)"
+              color={moduleVar}
             />
           </div>
 
@@ -126,7 +154,7 @@ export function ModuleCard({
               {hasGrades ? (
                 <>
                   <p
-                    className="text-2xl font-bold"
+                    className="text-2xl font-bold tracking-tight"
                     style={{
                       color: isComplete
                         ? getGradeColor(weightedAverage)
@@ -158,7 +186,11 @@ export function ModuleCard({
                 Complete
               </Badge>
             ) : (
-              <Badge variant="outline">
+              <Badge
+                variant="outline"
+                className="border-transparent font-medium"
+                style={{ color: moduleVar, backgroundColor: softBg }}
+              >
                 {totalAvailableAssessments - totalGradedAssessments} remaining
               </Badge>
             )}

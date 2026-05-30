@@ -1,5 +1,10 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { StudentModulesWithGrades } from "@/lib/data/student-modules";
+import { BookOpen, Target } from "lucide-react";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
+import CircleIcon from "./circle-icon";
 
 type DashboardStatsProps = {
   modules: StudentModulesWithGrades;
@@ -10,6 +15,55 @@ function getTargetLabel(targetGrade: number): string {
   if (targetGrade >= 70) return "First";
   if (targetGrade >= 60) return "2:1";
   return "2:2";
+}
+
+const COLORS = {
+  brand: "#7c6af7",
+  blue: "#3b6fd4",
+  green: "#22a06b",
+} as const;
+
+// creating the shape of the sparkline
+const avgSparkData = [
+  { v: 30 },
+  { v: 75 },
+  { v: 50 },
+  { v: 65 },
+  { v: 45 },
+  { v: 80 },
+  { v: 70 },
+  { v: 120 },
+];
+
+function InlineSparkline() {
+  return (
+    <div className="h-14 w-32.5 shrink-0">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          data={avgSparkData}
+          margin={{ top: 10, right: 6, left: 6, bottom: 6 }}
+        >
+          <defs>
+            <linearGradient id="spark-brand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={COLORS.brand} stopOpacity={3} />
+              <stop offset="100%" stopColor={COLORS.brand} stopOpacity={0.08} />
+            </linearGradient>
+          </defs>
+          <Area
+            type="monotone"
+            dataKey="v"
+            stroke={COLORS.brand}
+            strokeWidth={2.5}
+            fill="url(#spark-brand)"
+            dot={false}
+            isAnimationActive={false}
+            activeDot={false}
+          />
+          {/* Terminal dot at last data point */}
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
@@ -62,61 +116,74 @@ export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
   }).length;
 
   return (
-    <div className="grid grid-cols-3 gap-4 mb-6">
-      {/* Year Average */}
-      <Card>
+    <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {/* ── Year Average */}
+      <Card className="rounded-2xl border border-border bg-card shadow-sm">
         <CardContent className="p-6">
-          <p className="text-sm text-muted-foreground mb-1">Year Average</p>
-          {yearAverage !== null ? (
-            <>
-              <p className="text-4xl font-bold text-foreground">
-                {yearAverage.toFixed(1)}%
+          <p className="mb-2 text-sm font-semibold text-brand">Year Average</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-4xl font-bold tracking-tight text-foreground">
+                {yearAverage !== null ? `${yearAverage.toFixed(1)}%` : "—"}
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                weighted so far
+              <p className="mt-1 text-xs text-muted-foreground">
+                {yearAverage !== null ? "weighted so far" : "no grades yet"}
               </p>
-            </>
-          ) : (
-            // if no assessment is graded
-            <>
-              <p className="text-4xl font-bold text-muted-foreground">—</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                no grades yet
-              </p>
-            </>
-          )}
+            </div>
+            <InlineSparkline />
+          </div>
         </CardContent>
       </Card>
 
-      {/* Credits Tracked */}
-      <Card>
+      {/* ── Credits Tracked */}
+      <Card className="rounded-2xl border border-border bg-card shadow-sm">
         <CardContent className="p-6">
-          <p className="text-sm text-muted-foreground mb-1">Credits Tracked</p>
-          <p className="text-4xl font-bold text-foreground">
-            {totalTrackedCredits}{" "}
-            <span className="text-lg font-normal text-muted-foreground">
-              / {MAX_CREDITS}
-            </span>
+          <p className="mb-2 text-sm font-semibold text-grade-upper-second">
+            Credits Tracked
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {modules.length} modules enrolled
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-4xl font-bold tracking-tight text-foreground">
+                {totalTrackedCredits}
+                <span className="ml-1 text-xl font-normal text-muted-foreground">
+                  / {MAX_CREDITS}
+                </span>
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {modules.length} modules enrolled
+              </p>
+            </div>
+            <CircleIcon
+              className="bg-grade-upper-second-bg"
+              icon={<BookOpen className="h-6 w-6 text-grade-upper-second" />}
+            />
+          </div>
         </CardContent>
       </Card>
 
-      {/* Modules on Track */}
-      <Card>
+      {/* ── Modules on Track */}
+      <Card className="rounded-2xl border border-border bg-card shadow-sm">
         <CardContent className="p-6">
-          <p className="text-sm text-muted-foreground mb-1">Modules on Track</p>
-          <p className="text-4xl font-bold text-foreground">
-            {modulesOnTrack}{" "}
-            <span className="text-lg font-normal text-muted-foreground">
-              / {modules.length}
-            </span>
+          <p className="mb-2 text-sm font-semibold text-grade-first">
+            Modules on Track
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            targeting {getTargetLabel(targetGrade)} ({targetGrade}%)
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-4xl font-bold tracking-tight text-foreground">
+                {modulesOnTrack}
+                <span className="ml-1 text-xl font-normal text-muted-foreground">
+                  / {modules.length}
+                </span>
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                targeting {getTargetLabel(targetGrade)} ({targetGrade}%)
+              </p>
+            </div>
+            <CircleIcon
+              className="bg-grade-first-bg"
+              icon={<Target className="h-6 w-6 text-grade-first" />}
+            />
+          </div>
         </CardContent>
       </Card>
     </div>

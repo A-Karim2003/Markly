@@ -2,6 +2,7 @@ import { getStudentModulesWithGrades } from "@/lib/data/student-modules";
 import { getStudentProfile } from "@/lib/data/student-profiles";
 import { DashboardStats } from "./_components/dashboard-stats";
 import { DashboardModules } from "./_components/dashboard-modules";
+import { Target, ChevronDown } from "lucide-react";
 
 function getTargetLabel(targetGrade: number): string {
   if (targetGrade >= 70) return "First";
@@ -19,20 +20,33 @@ export default async function DashboardPage() {
   const year = studentProfile.year!;
 
   return (
-    <div>
+    <div className="min-h-full">
       {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Track your academic progress
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Dashboard
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Track your academic progress 👋
           </p>
         </div>
-        <div className="px-3 py-1.5 rounded-lg bg-card border border-border text-sm text-muted-foreground">
-          Target:{" "}
-          <span className="text-foreground font-medium">
-            {getTargetLabel(targetGrade)} ({targetGrade}%)
-          </span>
+
+        <div className="flex items-center gap-3">
+          {/* Year selector */}
+          <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-1.5 text-sm shadow-sm">
+            <span className="font-medium text-foreground">Year {year}</span>
+            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
+
+          {/* Target badge */}
+          <div className="flex items-center gap-2 rounded-xl bg-brand-subtle px-3 py-1.5 text-sm">
+            <Target className="h-3.5 w-3.5 text-brand" />
+            <span className="text-muted-foreground">Target:</span>
+            <span className="font-semibold text-brand">
+              {getTargetLabel(targetGrade)} ({targetGrade}%)
+            </span>
+          </div>
         </div>
       </div>
 

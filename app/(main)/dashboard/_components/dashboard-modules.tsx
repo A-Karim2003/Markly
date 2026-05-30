@@ -4,6 +4,8 @@ import {
 } from "@/lib/data/student-modules";
 import { ModuleCard } from "@/app/(main)/modules/components/module-card";
 import { getModulesByYear } from "@/lib/data/modules";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 type DashboardModulesProps = {
   modules: StudentModulesWithGrades;
@@ -19,17 +21,34 @@ export async function DashboardModules({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-foreground">My Modules</h2>
-        <span className="text-sm text-muted-foreground">Year {year}</span>
+      {/* Section header */}
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-xl font-semibold text-foreground tracking-tight">
+          My Modules
+        </h2>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-muted-foreground bg-muted px-2.5 py-1 rounded-md font-medium">
+            Year {year}
+          </span>
+          <Link
+            href="/modules"
+            className="flex items-center gap-1 text-sm font-medium text-brand hover:opacity-80 transition-opacity"
+          >
+            View all modules
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        {modules.map((module) => (
+
+      {/* Module grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {modules.map((module, index) => (
           <ModuleCard
             key={module.id}
             module={module}
             currYearModules={currYearModules}
             studentModules={studentModules}
+            colorIndex={index}
           />
         ))}
       </div>
