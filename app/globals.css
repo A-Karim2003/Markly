@@ -10,6 +10,36 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
+
+  /* Brand / accent */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-subtle: var(--brand-subtle);
+
+  /* Grade classification colours */
+  --color-grade-first: var(--grade-first);
+  --color-grade-first-bg: var(--grade-first-bg);
+  --color-grade-upper-second: var(--grade-upper-second);
+  --color-grade-upper-second-bg: var(--grade-upper-second-bg);
+  --color-grade-lower-second: var(--grade-lower-second);
+  --color-grade-lower-second-bg: var(--grade-lower-second-bg);
+
+  /* Module progress-bar palette */
+  --color-module-1: var(--module-1);
+  --color-module-2: var(--module-2);
+  --color-module-3: var(--module-3);
+  --color-module-4: var(--module-4);
+  --color-module-5: var(--module-5);
+  --color-module-6: var(--module-6);
+
+  /* Status colours */
+  --color-status-pending: var(--status-pending);
+  --color-status-pending-bg: var(--status-pending-bg);
+  --color-status-graded: var(--status-graded);
+  --color-status-graded-bg: var(--status-graded-bg);
+
+  /* Sidebar tokens */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -18,6 +48,8 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
+  /* shadcn tokens */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -39,6 +71,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,73 +81,161 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ─────────────────────────────────────────────
+   LIGHT MODE
+   Content area: near-white with a cool tint
+   Sidebar: deep navy-purple (always dark)
+───────────────────────────────────────────── */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* Surfaces */
+  --background: oklch(0.975 0.004 270);
+  --foreground: oklch(0.13 0.015 270);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.13 0.015 270);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.13 0.015 270);
+
+  /* Brand purple — matches sidebar active pill & buttons */
+  --brand: oklch(0.48 0.22 275);
+  --brand-foreground: oklch(1 0 0);
+  --brand-muted: oklch(0.92 0.06 275);
+  --brand-subtle: oklch(0.96 0.025 275);
+
+  /* Primary = brand */
+  --primary: oklch(0.48 0.22 275);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Secondary */
+  --secondary: oklch(0.94 0.01 270);
+  --secondary-foreground: oklch(0.25 0.02 270);
+
+  /* Muted */
+  --muted: oklch(0.94 0.008 270);
+  --muted-foreground: oklch(0.52 0.01 270);
+
+  /* Accent (hover, selected state) */
+  --accent: oklch(0.92 0.06 275);
+  --accent-foreground: oklch(0.35 0.15 275);
+
+  /* Borders & inputs */
+  --border: oklch(0.9 0.008 270);
+  --input: oklch(0.9 0.008 270);
+  --ring: oklch(0.48 0.22 275);
+
+  /* Destructive */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── Grade classification colours ── */
+  --grade-first: oklch(0.45 0.15 145);
+  --grade-first-bg: oklch(0.94 0.07 145);
+  --grade-upper-second: oklch(0.45 0.18 255);
+  --grade-upper-second-bg: oklch(0.93 0.07 255);
+  --grade-lower-second: oklch(0.55 0.16 55);
+  --grade-lower-second-bg: oklch(0.95 0.07 80);
+
+  /* ── Status colours ── */
+  --status-pending: oklch(0.62 0.18 55); /* orange-amber                      */
+  --status-pending-bg: oklch(0.96 0.06 80);
+  --status-graded: oklch(0.45 0.15 145);
+  --status-graded-bg: oklch(0.94 0.07 145);
+
+  /* ── Per-module progress-bar colours ── */
+  --module-1: oklch(0.55 0.22 275);
+  --module-2: oklch(0.55 0.19 245);
+  --module-3: oklch(0.58 0.19 145);
+  --module-4: oklch(0.65 0.19 55);
+  --module-5: oklch(0.58 0.22 0);
+  --module-6: oklch(0.62 0.22 315);
+
+  /* ── Chart sparklines ── */
+  --chart-1: oklch(0.55 0.22 275);
+  --chart-2: oklch(0.58 0.19 145);
+  --chart-3: oklch(0.65 0.19 55);
+  --chart-4: oklch(0.58 0.22 0);
+  --chart-5: oklch(0.55 0.19 245);
+
+  --radius: 0.75rem;
+
+  /* ── Sidebar: always the deep navy-purple ── */
+  --sidebar: oklch(0.19 0.06 278);
+  --sidebar-foreground: oklch(0.82 0.04 270);
+  --sidebar-primary: oklch(0.48 0.22 275);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.27 0.07 278);
+  --sidebar-accent-foreground: oklch(0.95 0.02 270);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.48 0.22 275);
 }
 
+/* ─────────────────────────────────────────────
+   DARK MODE
+   Full dark — sidebar deepens, content goes dark
+───────────────────────────────────────────── */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --background: oklch(0.14 0.03 278);
+  --foreground: oklch(0.93 0.02 270);
+  --card: oklch(0.19 0.04 278);
+  --card-foreground: oklch(0.93 0.02 270);
+  --popover: oklch(0.19 0.04 278);
+  --popover-foreground: oklch(0.93 0.02 270);
+
+  --brand: oklch(0.62 0.22 275);
+  --brand-foreground: oklch(1 0 0);
+  --brand-muted: oklch(0.28 0.1 275);
+  --brand-subtle: oklch(0.24 0.07 275);
+
+  --primary: oklch(0.62 0.22 275);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.24 0.04 278);
+  --secondary-foreground: oklch(0.9 0.02 270);
+
+  --muted: oklch(0.24 0.04 278);
+  --muted-foreground: oklch(0.6 0.03 270);
+
+  --accent: oklch(0.28 0.1 275);
+  --accent-foreground: oklch(0.93 0.02 270);
+
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.62 0.22 275);
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  /* Grade colours brighten slightly in dark mode */
+  --grade-first: oklch(0.62 0.17 145);
+  --grade-first-bg: oklch(0.26 0.08 145);
+  --grade-upper-second: oklch(0.62 0.18 255);
+  --grade-upper-second-bg: oklch(0.26 0.08 255);
+  --grade-lower-second: oklch(0.72 0.16 60);
+  --grade-lower-second-bg: oklch(0.26 0.08 70);
+
+  --status-pending: oklch(0.75 0.17 60);
+  --status-pending-bg: oklch(0.26 0.08 70);
+  --status-graded: oklch(0.62 0.17 145);
+  --status-graded-bg: oklch(0.26 0.08 145);
+
+  --module-1: oklch(0.68 0.22 275);
+  --module-2: oklch(0.65 0.19 245);
+  --module-3: oklch(0.68 0.19 145);
+  --module-4: oklch(0.74 0.18 55);
+  --module-5: oklch(0.68 0.22 0);
+  --module-6: oklch(0.72 0.22 315);
+
+  --chart-1: oklch(0.68 0.22 275);
+  --chart-2: oklch(0.68 0.19 145);
+  --chart-3: oklch(0.74 0.18 55);
+  --chart-4: oklch(0.68 0.22 0);
+  --chart-5: oklch(0.65 0.19 245);
+
+  --sidebar: oklch(0.16 0.05 278);
+  --sidebar-foreground: oklch(0.8 0.04 270);
+  --sidebar-primary: oklch(0.55 0.22 275);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.24 0.07 278);
+  --sidebar-accent-foreground: oklch(0.9 0.02 270);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.55 0.22 275);
 }
 
 @layer base {
@@ -126,5 +247,73 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY CLASSES
+   Convenience classes for the Markly design system
+───────────────────────────────────────────── */
+@layer utilities {
+  /* Grade badges */
+  .badge-first {
+    color: var(--grade-first);
+    background-color: var(--grade-first-bg);
+  }
+  .badge-upper-second {
+    color: var(--grade-upper-second);
+    background-color: var(--grade-upper-second-bg);
+  }
+  .badge-lower-second {
+    color: var(--grade-lower-second);
+    background-color: var(--grade-lower-second-bg);
+  }
+
+  /* Status pills */
+  .status-pending {
+    color: var(--status-pending);
+    background-color: var(--status-pending-bg);
+  }
+  .status-graded {
+    color: var(--status-graded);
+    background-color: var(--status-graded-bg);
+  }
+
+  /* Module progress bars — apply to the <div> acting as the filled bar */
+  .progress-module-1 {
+    background-color: var(--module-1);
+  }
+  .progress-module-2 {
+    background-color: var(--module-2);
+  }
+  .progress-module-3 {
+    background-color: var(--module-3);
+  }
+  .progress-module-4 {
+    background-color: var(--module-4);
+  }
+  .progress-module-5 {
+    background-color: var(--module-5);
+  }
+  .progress-module-6 {
+    background-color: var(--module-6);
+  }
+
+  /* Brand button */
+  .btn-brand {
+    background-color: var(--brand);
+    color: var(--brand-foreground);
+  }
+  .btn-brand:hover {
+    background-color: oklch(from var(--brand) calc(l - 0.04) c h);
+  }
+
+  /* Sidebar motivational card gradient (matches the purple-to-indigo card) */
+  .sidebar-motivational-card {
+    background: linear-gradient(
+      135deg,
+      oklch(0.35 0.18 285) 0%,
+      oklch(0.25 0.12 290) 100%
+    );
   }
 }
