@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, CheckCircle2, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
@@ -35,28 +35,54 @@ export function CompletedAssessmentsTable({
       <h2 className="text-lg font-semibold text-foreground mb-4">
         Completed Assessments
       </h2>
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden rounded-2xl border border-border shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Assessment</TableHead>
-              <TableHead>Module</TableHead>
-              <TableHead>Weight</TableHead>
-              <TableHead>Grade</TableHead>
-              <TableHead>Classification</TableHead>
-              <TableHead>Status</TableHead>
+            <TableRow className="bg-muted/40 hover:bg-muted/40">
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Assessment
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Module
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Weight
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Grade
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Classification
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Status
+              </TableHead>
+              <TableHead className="w-8" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {assessments.map((a) => (
-              <TableRow key={a.id}>
+              <TableRow
+                key={a.id}
+                className="group border-border transition-colors hover:bg-muted/40"
+              >
                 <TableCell className="font-medium">
-                  {a.assessmentName}
+                  <span className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-status-graded-bg">
+                      <CheckCircle2 className="h-4 w-4 text-status-graded" />
+                    </span>
+                    {a.assessmentName}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-foreground">{a.moduleName}</span>
-                  <span className="text-xs text-muted-foreground ml-2">
-                    {a.code}
+                  <span className="flex items-center gap-2">
+                    <span className="text-foreground">{a.moduleName}</span>
+                    <Badge
+                      variant="secondary"
+                      className="bg-secondary font-mono text-[11px] font-normal text-muted-foreground"
+                    >
+                      {a.code}
+                    </Badge>
                   </span>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
@@ -73,6 +99,7 @@ export function CompletedAssessmentsTable({
                 <TableCell>
                   <Badge
                     variant="secondary"
+                    className="rounded-full font-medium"
                     style={{
                       backgroundColor: `${getGradeColor(a.grade)}15`,
                       color: getGradeColor(a.grade),
@@ -82,10 +109,13 @@ export function CompletedAssessmentsTable({
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="inline-flex items-center gap-1.5 text-sm text-[#16a34a]">
-                    <Check className="h-4 w-4" />
+                  <span className="status-graded inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium">
+                    <Check className="h-3.5 w-3.5" />
                     Graded
                   </span>
+                </TableCell>
+                <TableCell>
+                  <ChevronRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-foreground" />
                 </TableCell>
               </TableRow>
             ))}

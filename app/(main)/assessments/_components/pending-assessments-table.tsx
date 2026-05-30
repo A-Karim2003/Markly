@@ -1,4 +1,5 @@
-import { Clock } from "lucide-react";
+import { Clock, ClipboardList, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -29,36 +30,61 @@ export function PendingAssessmentsTable({
       <h2 className="text-lg font-semibold text-foreground mb-4">
         Pending Assessments
       </h2>
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden rounded-2xl border border-border shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Assessment</TableHead>
-              <TableHead>Module</TableHead>
-              <TableHead>Weight</TableHead>
-              <TableHead>Status</TableHead>
+            <TableRow className="bg-muted/40 hover:bg-muted/40">
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Assessment
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Module
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Weight
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Status
+              </TableHead>
+              <TableHead className="w-8" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {assessments.map((a) => (
-              <TableRow key={a.id}>
+              <TableRow
+                key={a.id}
+                className="group border-border transition-colors hover:bg-muted/40"
+              >
                 <TableCell className="font-medium">
-                  {a.assessmentName}
+                  <span className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-subtle">
+                      <ClipboardList className="h-4 w-4 text-brand" />
+                    </span>
+                    {a.assessmentName}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-foreground">{a.moduleName}</span>
-                  <span className="text-xs text-muted-foreground ml-2">
-                    {a.code}
+                  <span className="flex items-center gap-2">
+                    <span className="text-foreground">{a.moduleName}</span>
+                    <Badge
+                      variant="secondary"
+                      className="bg-secondary font-mono text-[11px] font-normal text-muted-foreground"
+                    >
+                      {a.code}
+                    </Badge>
                   </span>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {a.weight}%
                 </TableCell>
                 <TableCell>
-                  <span className="inline-flex items-center gap-1.5 text-sm text-[#d97706]">
-                    <Clock className="h-4 w-4" />
+                  <span className="status-pending inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium">
+                    <Clock className="h-3.5 w-3.5" />
                     Pending
                   </span>
+                </TableCell>
+                <TableCell>
+                  <ChevronRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-foreground" />
                 </TableCell>
               </TableRow>
             ))}
