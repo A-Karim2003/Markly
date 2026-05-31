@@ -48,7 +48,7 @@ export function ModuleHeader({
         </div>
 
         <div
-          className={`px-4 py-3 rounded-xl text-sm font-medium ${
+          className={`px-4 py-3 rounded-radius text-sm font-medium ${
             isOnTrack
               ? "bg-[#16a34a]/10 text-[#16a34a] border border-[#16a34a]/20"
               : "bg-[#d97706]/10 text-[#d97706] border border-[#d97706]/20"

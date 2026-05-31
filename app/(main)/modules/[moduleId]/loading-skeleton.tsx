@@ -12,7 +12,7 @@ export default function ModuleDetailLoadingSkeleton() {
           </div>
         </div>
 
-        <Skeleton className="h-8 w-24 rounded-full" />
+        <Skeleton className="h-8 w-24 rounded-radius" />
       </div>
 
       <Card>

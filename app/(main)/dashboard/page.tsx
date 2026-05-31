@@ -34,13 +34,13 @@ export default async function DashboardPage() {
 
         <div className="flex items-center gap-3">
           {/* Year selector */}
-          <div className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-1.5 text-sm shadow-sm w-40">
+          <div className="flex items-center justify-between gap-2 rounded-radius border border-border bg-card px-3 py-1.5 text-sm shadow-sm w-40">
             <span className="font-medium text-foreground">Year {year}</span>
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
           </div>
 
           {/* Target badge */}
-          <div className="flex items-center gap-2 rounded-xl bg-brand/15 px-3 py-1.5 text-sm w-50">
+          <div className="flex items-center gap-2 rounded-radius bg-brand/15 px-3 py-1.5 text-sm w-50">
             <Target className="h-3.5 w-3.5 text-brand" />
             <span className="text-muted-foreground">Target:</span>
             <span className="font-semibold text-brand">

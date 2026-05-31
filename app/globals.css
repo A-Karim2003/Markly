@@ -242,6 +242,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  * {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
   body {
     @apply bg-background text-foreground;
   }

@@ -43,7 +43,7 @@ export function SettingsProfile({
                 type="button"
                 onClick={() => onYearChange(y)}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                  "px-4 py-2 rounded-radius text-sm font-medium transition-all",
                   y === year
                     ? "bg-primary text-primary-foreground"
                     : "bg-background border border-border text-muted-foreground hover:text-foreground hover:border-primary/40",

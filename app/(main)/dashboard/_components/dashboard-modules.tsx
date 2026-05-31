@@ -27,7 +27,7 @@ export async function DashboardModules({
           My Modules
         </h2>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-muted-foreground bg-muted px-2.5 py-1 rounded-md font-medium">
+          <span className="text-sm text-muted-foreground bg-muted px-2.5 py-1 rounded-radius font-medium">
             Year {year}
           </span>
           <Link

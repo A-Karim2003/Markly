@@ -20,7 +20,7 @@ export function SetupYearCard({ year, modules }: SetupYearCardProps) {
       <div className="flex min-h-[calc(100vh-14rem)] items-center justify-center py-10">
         <Card className="w-full max-w-2xl border-dashed bg-muted/20 shadow-none">
           <CardContent className="flex flex-col items-center px-8 py-12 text-center sm:px-10 sm:py-14">
-            <div className="mb-6 flex size-20 items-center justify-center rounded-full border border-primary/10 bg-primary/10 shadow-sm">
+            <div className="mb-6 flex size-20 items-center justify-center rounded-radius border border-primary/10 bg-primary/10 shadow-sm">
               <BookOpen className="size-5 text-primary" aria-hidden="true" />
             </div>
 

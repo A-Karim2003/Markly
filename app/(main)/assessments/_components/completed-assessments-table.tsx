@@ -35,7 +35,7 @@ export function CompletedAssessmentsTable({
       <h2 className="text-lg font-semibold text-foreground mb-4">
         Completed Assessments
       </h2>
-      <Card className="overflow-hidden rounded-2xl border border-border shadow-sm">
+      <Card className="overflow-hidden rounded-radius border border-border shadow-sm">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">
@@ -67,7 +67,7 @@ export function CompletedAssessmentsTable({
               >
                 <TableCell className="font-medium">
                   <span className="flex items-center gap-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-status-graded-bg">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-radius bg-status-graded-bg">
                       <CheckCircle2 className="h-4 w-4 text-status-graded" />
                     </span>
                     {assessment.assessmentName}
@@ -100,7 +100,7 @@ export function CompletedAssessmentsTable({
                 <TableCell>
                   <Badge
                     variant="secondary"
-                    className="rounded-full font-medium"
+                    className="rounded-radius font-medium"
                     style={{
                       backgroundColor: `${getGradeColor(assessment.grade)}15`,
                       color: getGradeColor(assessment.grade),
@@ -110,7 +110,7 @@ export function CompletedAssessmentsTable({
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="status-graded inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium">
+                  <span className="status-graded inline-flex items-center gap-1.5 rounded-radius px-2.5 py-1 text-xs font-medium">
                     <Check className="h-3.5 w-3.5" />
                     Graded
                   </span>

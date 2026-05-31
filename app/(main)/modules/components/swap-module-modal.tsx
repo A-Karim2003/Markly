@@ -109,7 +109,7 @@ export function SwapModuleModal({
             })}
           </div>
         ) : (
-          <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed bg-muted/30 px-6 py-10 text-center">
+          <div className="flex min-h-40 items-center justify-center rounded-radius border border-dashed bg-muted/30 px-6 py-10 text-center">
             <p className="text-sm text-muted-foreground">
               No other modules available for your year.
             </p>

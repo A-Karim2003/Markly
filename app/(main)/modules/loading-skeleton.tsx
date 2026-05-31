@@ -29,7 +29,7 @@ export default function ModulesLoadingSkeleton() {
               </div>
 
               <div>
-                <Skeleton className="h-6 w-20 rounded-full" />
+                <Skeleton className="h-6 w-20 rounded-radius" />
               </div>
             </CardHeader>
 
@@ -65,7 +65,7 @@ export default function ModulesLoadingSkeleton() {
               </div>
 
               <div>
-                <Skeleton className="h-6 w-6 rounded-full" />
+                <Skeleton className="h-6 w-6 rounded-radius" />
               </div>
             </CardHeader>
 

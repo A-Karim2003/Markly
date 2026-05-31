@@ -78,7 +78,7 @@ export function ModuleCard({
   return (
     <>
       <Card
-        className="group relative cursor-pointer overflow-hidden rounded-2xl border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+        className="group relative cursor-pointer overflow-hidden rounded-radius border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
         style={{ "--module-accent": moduleVar } as React.CSSProperties}
       >
         {/* Accent strip down the left edge */}
@@ -91,7 +91,7 @@ export function ModuleCard({
         <Link
           href={`/modules/${module.id}`}
           aria-label={`Open ${module_info?.name ?? "module"}`}
-          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--module-accent)/50"
+          className="absolute inset-0 z-10 rounded-radius focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--module-accent)/50"
         >
           <span className="sr-only">Open {module_info?.name ?? "module"}</span>
         </Link>
@@ -120,7 +120,7 @@ export function ModuleCard({
                 type="button"
                 variant="ghost"
                 size="icon-sm"
-                className="relative z-20 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150 rounded-md"
+                className="relative z-20 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150 rounded-radius"
                 aria-label={`Swap ${module_info?.name ?? "module"}`}
                 onClick={() => setIsSwapOpen(true)}
               >
@@ -140,7 +140,7 @@ export function ModuleCard({
             </div>
 
             <ProgressBar
-              className="rounded-full"
+              className="rounded-radius"
               value={totalGradedAssessments}
               max={totalAvailableAssessments}
               color={moduleVar}

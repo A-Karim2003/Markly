@@ -46,7 +46,7 @@ export default function AssessmentsLoadingSkeleton() {
                     <Skeleton className="h-4 w-full" />
                     <Skeleton className="h-4 w-full" />
                     <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-6 w-24 rounded-full" />
+                    <Skeleton className="h-6 w-24 rounded-radius" />
                   </div>
                 ))}
               </div>

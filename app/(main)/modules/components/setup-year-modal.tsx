@@ -104,7 +104,7 @@ export function SetupYearModal({
 
         {error && <p className="text-sm text-destructive">{error}</p>}
 
-        <div className="space-y-2 rounded-xl border bg-muted/30 p-4">
+        <div className="space-y-2 rounded-radius border bg-muted/30 p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm font-medium text-foreground">Credit target</p>
             <p className="text-sm text-muted-foreground">
@@ -190,7 +190,7 @@ export function SetupYearModal({
                       </div>
 
                       {isSelected && (
-                        <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+                        <div className="mt-3 inline-flex items-center gap-1.5 rounded-radius bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
                           <Check className="size-3.5" />
                           Selected
                         </div>

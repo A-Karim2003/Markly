@@ -30,7 +30,7 @@ export function PendingAssessmentsTable({
       <h2 className="text-lg font-semibold text-foreground mb-4">
         Pending Assessments
       </h2>
-      <Card className="overflow-hidden rounded-2xl border border-border shadow-sm">
+      <Card className="overflow-hidden rounded-radius border border-border shadow-sm">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">
@@ -56,7 +56,7 @@ export function PendingAssessmentsTable({
               >
                 <TableCell className="font-medium">
                   <span className="flex items-center gap-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-subtle">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-radius bg-brand-subtle">
                       <ClipboardList className="h-4 w-4 text-brand" />
                     </span>
                     {a.assessmentName}
@@ -77,7 +77,7 @@ export function PendingAssessmentsTable({
                   {a.weight}%
                 </TableCell>
                 <TableCell>
-                  <span className="status-pending inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium">
+                  <span className="status-pending inline-flex items-center gap-1.5 rounded-radius px-2.5 py-1 text-xs font-medium">
                     <Clock className="h-3.5 w-3.5" />
                     Pending
                   </span>

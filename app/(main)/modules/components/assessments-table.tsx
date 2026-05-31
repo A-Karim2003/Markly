@@ -124,7 +124,7 @@ export function AssessmentsTable({
                   <TableCell>
                     {!isGraded && requiredGrade !== null ? (
                       <span
-                        className={`px-2.5 py-1 rounded-md text-sm font-medium ${
+                        className={`px-2.5 py-1 rounded-radius text-sm font-medium ${
                           requiredGrade > 100
                             ? "bg-[#dc2626]/15 text-[#dc2626]"
                             : requiredGrade > 75

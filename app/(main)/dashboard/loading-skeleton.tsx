@@ -12,7 +12,7 @@ export default function DashboardLoadingSkeleton() {
           </div>
         </div>
 
-        <Skeleton className="h-7 w-24 rounded-lg" />
+        <Skeleton className="h-7 w-24 rounded-radius" />
       </div>
 
       {/* stats */}
@@ -45,12 +45,12 @@ export default function DashboardLoadingSkeleton() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Skeleton className="h-6 w-20 rounded-full" />
+                  <Skeleton className="h-6 w-20 rounded-radius" />
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-4">
-                <Skeleton className="h-2 w-full rounded-sm" />
+                <Skeleton className="h-2 w-full rounded-radius" />
 
                 <div className="flex items-end justify-between">
                   <div>
