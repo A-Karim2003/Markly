@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   const year = studentProfile.year!;
 
   return (
-    <div className="flex-1 overflow-scroll">
+    <div className="flex-1 overflow-scroll border p-4 rounded-radius">
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>

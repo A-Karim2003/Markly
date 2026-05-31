@@ -14,7 +14,6 @@ export function AssessmentsStats({
 }: AssessmentsStatsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 mb-8 sm:grid-cols-3">
-      {/* ── Total Assessments — faint brand purple tint ── */}
       <Card className="rounded-radius border border-brand-muted bg-brand-subtle/40 shadow-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">
@@ -31,7 +30,6 @@ export function AssessmentsStats({
         </CardContent>
       </Card>
 
-      {/* ── Completed — faint green tint ── */}
       <Card className="rounded-radius border border-grade-first-bg bg-grade-first-bg/40 shadow-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">
@@ -48,7 +46,6 @@ export function AssessmentsStats({
         </CardContent>
       </Card>
 
-      {/* ── Pending — faint amber tint ── */}
       <Card className="rounded-radius border border-status-pending-bg bg-status-pending-bg/40 shadow-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">

@@ -266,6 +266,10 @@
    Convenience classes for the Markly design system
 ───────────────────────────────────────────── */
 @layer utilities {
+  .rounded-radius {
+    border-radius: var(--radius);
+  }
+
   /* Status pills */
   .status-pending {
     color: var(--status-pending);
