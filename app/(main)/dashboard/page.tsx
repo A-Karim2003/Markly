@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   const year = studentProfile.year!;
 
   return (
-    <div className="min-h-full">
+    <div className="flex-1 overflow-scroll">
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
@@ -28,7 +28,7 @@ export default async function DashboardPage() {
             Dashboard
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Track your academic progress 👋
+            Track your academic progress
           </p>
         </div>
 

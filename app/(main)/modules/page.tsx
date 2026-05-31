@@ -24,7 +24,7 @@ export default async function ModulesPage() {
   );
 
   return (
-    <div>
+    <div className="flex-1 overflow-scroll">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Modules</h1>
         <p className="text-muted-foreground mt-1">

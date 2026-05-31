@@ -28,7 +28,7 @@ export default async function AssessmentsPage() {
     }));
 
   return (
-    <div>
+    <div className="h-full border-10 border-green-500 flex-1 overflow-scroll">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground">Assessments</h1>
         <p className="text-muted-foreground mt-1">
