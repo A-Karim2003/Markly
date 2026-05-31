@@ -25,8 +25,6 @@ type ModuleCardProps = {
   colorIndex?: number;
 };
 
-// 1-based module colour index, matches the .progress-module-N utilities and
-// the --module-N tokens defined in globals.css.
 function moduleColorIndex(colorIndex: number) {
   return (colorIndex % 6) + 1;
 }

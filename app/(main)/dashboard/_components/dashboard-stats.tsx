@@ -59,7 +59,6 @@ function InlineSparkline() {
             isAnimationActive={false}
             activeDot={false}
           />
-          {/* Terminal dot at last data point */}
         </AreaChart>
       </ResponsiveContainer>
     </div>
@@ -118,7 +117,7 @@ export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
   return (
     <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
       {/* ── Year Average */}
-      <Card className="rounded-2xl border border-border bg-card shadow-sm">
+      <Card className="rounded-2xl border border-brand/20 bg-brand-subtle shadow-sm">
         <CardContent className="p-6">
           <p className="mb-2 text-sm font-semibold text-brand">Year Average</p>
           <div className="flex items-center justify-between">
@@ -136,7 +135,7 @@ export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
       </Card>
 
       {/* ── Credits Tracked */}
-      <Card className="rounded-2xl border border-border bg-card shadow-sm">
+      <Card className="rounded-2xl border border-grade-upper-second/25 bg-grade-upper-second-bg shadow-sm">
         <CardContent className="p-6">
           <p className="mb-2 text-sm font-semibold text-grade-upper-second">
             Credits Tracked
@@ -162,7 +161,7 @@ export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
       </Card>
 
       {/* ── Modules on Track */}
-      <Card className="rounded-2xl border border-border bg-card shadow-sm">
+      <Card className="rounded-2xl border border-grade-first/25 bg-grade-first-bg shadow-sm">
         <CardContent className="p-6">
           <p className="mb-2 text-sm font-semibold text-grade-first">
             Modules on Track

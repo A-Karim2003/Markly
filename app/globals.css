@@ -255,20 +255,6 @@
    Convenience classes for the Markly design system
 ───────────────────────────────────────────── */
 @layer utilities {
-  /* Grade badges */
-  .badge-first {
-    color: var(--grade-first);
-    background-color: var(--grade-first-bg);
-  }
-  .badge-upper-second {
-    color: var(--grade-upper-second);
-    background-color: var(--grade-upper-second-bg);
-  }
-  .badge-lower-second {
-    color: var(--grade-lower-second);
-    background-color: var(--grade-lower-second-bg);
-  }
-
   /* Status pills */
   .status-pending {
     color: var(--status-pending);
@@ -279,33 +265,10 @@
     background-color: var(--status-graded-bg);
   }
 
-  /* Module progress bars — apply to the <div> acting as the filled bar */
-  .progress-module-1 {
-    background-color: var(--module-1);
-  }
-  .progress-module-2 {
-    background-color: var(--module-2);
-  }
-  .progress-module-3 {
-    background-color: var(--module-3);
-  }
-  .progress-module-4 {
-    background-color: var(--module-4);
-  }
-  .progress-module-5 {
-    background-color: var(--module-5);
-  }
-  .progress-module-6 {
-    background-color: var(--module-6);
-  }
-
   /* Brand button */
   .btn-brand {
     background-color: var(--brand);
     color: var(--brand-foreground);
-  }
-  .btn-brand:hover {
-    background-color: oklch(from var(--brand) calc(l - 0.04) c h);
   }
 
   /* Sidebar motivational card gradient (matches the purple-to-indigo card) */

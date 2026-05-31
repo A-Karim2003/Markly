@@ -1,4 +1,4 @@
-import { Clock, ClipboardList, ChevronRight } from "lucide-react";
+import { Clock, ClipboardList } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
@@ -46,7 +46,6 @@ export function PendingAssessmentsTable({
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Status
               </TableHead>
-              <TableHead className="w-8" />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -82,9 +81,6 @@ export function PendingAssessmentsTable({
                     <Clock className="h-3.5 w-3.5" />
                     Pending
                   </span>
-                </TableCell>
-                <TableCell>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-foreground" />
                 </TableCell>
               </TableRow>
             ))}

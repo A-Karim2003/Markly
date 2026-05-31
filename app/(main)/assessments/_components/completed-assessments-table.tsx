@@ -1,4 +1,4 @@
-import { Check, CheckCircle2, ChevronRight } from "lucide-react";
+import { Check, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
@@ -57,13 +57,12 @@ export function CompletedAssessmentsTable({
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Status
               </TableHead>
-              <TableHead className="w-8" />
             </TableRow>
           </TableHeader>
           <TableBody>
-            {assessments.map((a) => (
+            {assessments.map((assessment) => (
               <TableRow
-                key={a.id}
+                key={assessment.id}
                 className="group border-border transition-colors hover:bg-muted/40"
               >
                 <TableCell className="font-medium">
@@ -71,29 +70,31 @@ export function CompletedAssessmentsTable({
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-status-graded-bg">
                       <CheckCircle2 className="h-4 w-4 text-status-graded" />
                     </span>
-                    {a.assessmentName}
+                    {assessment.assessmentName}
                   </span>
                 </TableCell>
                 <TableCell>
                   <span className="flex items-center gap-2">
-                    <span className="text-foreground">{a.moduleName}</span>
+                    <span className="text-foreground">
+                      {assessment.moduleName}
+                    </span>
                     <Badge
                       variant="secondary"
                       className="bg-secondary font-mono text-[11px] font-normal text-muted-foreground"
                     >
-                      {a.code}
+                      {assessment.code}
                     </Badge>
                   </span>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
-                  {a.weight}%
+                  {assessment.weight}%
                 </TableCell>
                 <TableCell>
                   <span
                     className="font-semibold"
-                    style={{ color: getGradeColor(a.grade) }}
+                    style={{ color: getGradeColor(assessment.grade) }}
                   >
-                    {a.grade}%
+                    {assessment.grade}%
                   </span>
                 </TableCell>
                 <TableCell>
@@ -101,11 +102,11 @@ export function CompletedAssessmentsTable({
                     variant="secondary"
                     className="rounded-full font-medium"
                     style={{
-                      backgroundColor: `${getGradeColor(a.grade)}15`,
-                      color: getGradeColor(a.grade),
+                      backgroundColor: `${getGradeColor(assessment.grade)}15`,
+                      color: getGradeColor(assessment.grade),
                     }}
                   >
-                    {getGradeClass(a.grade)}
+                    {getGradeClass(assessment.grade)}
                   </Badge>
                 </TableCell>
                 <TableCell>
@@ -113,9 +114,6 @@ export function CompletedAssessmentsTable({
                     <Check className="h-3.5 w-3.5" />
                     Graded
                   </span>
-                </TableCell>
-                <TableCell>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-foreground" />
                 </TableCell>
               </TableRow>
             ))}

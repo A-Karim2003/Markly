@@ -26,12 +26,13 @@ export async function ModuleSection({ title, modules }: ModuleSectionProps) {
       </h2>
 
       <div className="grid grid-cols-2 gap-4">
-        {modules.map((module) => (
+        {modules.map((module, index) => (
           <ModuleCard
             key={module.id}
             module={module}
             currYearModules={currYearModules}
             studentModules={studentModules}
+            colorIndex={index}
           />
         ))}
       </div>
