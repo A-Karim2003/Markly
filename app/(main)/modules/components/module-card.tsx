@@ -120,7 +120,7 @@ export function ModuleCard({
                 type="button"
                 variant="ghost"
                 size="icon-sm"
-                className="relative z-20 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
+                className="relative z-20 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150 rounded-md"
                 aria-label={`Swap ${module_info?.name ?? "module"}`}
                 onClick={() => setIsSwapOpen(true)}
               >
