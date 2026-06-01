@@ -48,15 +48,17 @@ export function AppSidebar({ student, session }: AppSidebar) {
   const pathname = usePathname();
   return (
     <Sidebar>
-      <SidebarHeader className="p-0">
-        <Image
-          src="/logo.png"
-          alt="Markly Logo"
-          width={500}
-          height={200}
-          className="w-full h-auto"
-        />
-      </SidebarHeader>
+      <Link href="/dashboard" className="mb-4">
+        <SidebarHeader className="p-0">
+          <Image
+            src="/logo-light.png"
+            alt="Markly Logo"
+            width={500}
+            height={200}
+            className="w-full h-auto"
+          />
+        </SidebarHeader>
+      </Link>
 
       <SidebarContent>
         <SidebarGroup>
