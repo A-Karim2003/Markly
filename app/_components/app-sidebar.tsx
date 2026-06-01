@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Session, signOut } from "@/lib/actions/auth-actions";
 import { StudentProfile } from "@/lib/data/student-profiles";
+import Image from "next/image";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -47,10 +48,14 @@ export function AppSidebar({ student, session }: AppSidebar) {
   const pathname = usePathname();
   return (
     <Sidebar>
-      <SidebarHeader className="px-6 py-5">
-        <span className="text-xl font-bold text-primary tracking-tight">
-          Markly
-        </span>
+      <SidebarHeader className="p-0">
+        <Image
+          src="/logo.png"
+          alt="Markly Logo"
+          width={500}
+          height={200}
+          className="w-full h-auto"
+        />
       </SidebarHeader>
 
       <SidebarContent>
