@@ -75,7 +75,7 @@ export function AppSidebar({ student, session }: AppSidebar) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t">
+      <SidebarFooter className="border-t border-accent">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>

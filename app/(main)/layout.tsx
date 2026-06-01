@@ -22,11 +22,13 @@ export default async function Layout({
     <SidebarProvider>
       <AppSidebar student={student} session={session} />
       <main
-        className="w-full h-screen pt-4 px-4 overflow-hidden flex flex-col"
+        className="w-full h-screen pt-4 px-4 overflow-hidden flex flex-col bg-brand-subtle"
         style={{ maxWidth: "1600px" }}
       >
         <SidebarTrigger />
-        {children}
+        <div className="flex-1 overflow-scroll border p-4 pt-8 rounded-radius bg-background">
+          {children}
+        </div>
         <ToastContainer
           position="bottom-right"
           autoClose={2000}
