@@ -6,6 +6,7 @@ import { ModuleCard } from "@/app/(main)/modules/components/module-card";
 import { getModulesByYear } from "@/lib/data/modules";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { DashboardModulesEmptyState } from "./dashboard-modules-empty-state";
 
 type DashboardModulesProps = {
   modules: StudentModulesWithGrades;
@@ -40,18 +41,22 @@ export async function DashboardModules({
         </div>
       </div>
 
-      {/* Module grid */}
-      <div className="modules-grid">
-        {modules.map((module, index) => (
-          <ModuleCard
-            key={module.id}
-            module={module}
-            currYearModules={currYearModules}
-            studentModules={studentModules}
-            colorIndex={index}
-          />
-        ))}
-      </div>
+      {modules.length === 0 ? (
+        <DashboardModulesEmptyState year={year} />
+      ) : (
+        /* Module grid */
+        <div className="modules-grid">
+          {modules.map((module, index) => (
+            <ModuleCard
+              key={module.id}
+              module={module}
+              currYearModules={currYearModules}
+              studentModules={studentModules}
+              colorIndex={index}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -118,7 +118,7 @@ export async function updateStudentProfile(data: UpdateStudentProfileData) {
 
   if (error) return { success: false, error: error.message };
 
-  revalidatePath("/settings");
+  revalidatePath("/", "layout");
 
   return { success: true };
 }

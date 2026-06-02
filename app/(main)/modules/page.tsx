@@ -4,6 +4,19 @@ import { getStudentModulesWithGrades } from "@/lib/data/student-modules";
 import { SetupYearCard } from "./components/setup-year-card";
 import { ModuleSection } from "./components/module-section";
 
+function ModulesPageHeader() {
+  return (
+    <div className="mb-8">
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">
+        Modules
+      </h1>
+      <p className="mt-1 text-sm text-muted-foreground">
+        View and manage your modules
+      </p>
+    </div>
+  );
+}
+
 export default async function ModulesPage() {
   const studentProfile = await getStudentProfile();
   const modules = await getStudentModulesWithGrades();
@@ -13,7 +26,12 @@ export default async function ModulesPage() {
       ? await getModulesByYear(studentProfile.year)
       : [];
 
-    return <SetupYearCard year={studentProfile.year!} modules={yearModules} />;
+    return (
+      <div>
+        <ModulesPageHeader />
+        <SetupYearCard year={studentProfile.year!} modules={yearModules} />
+      </div>
+    );
   }
 
   const coreModules = modules.filter(
@@ -25,12 +43,7 @@ export default async function ModulesPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Modules</h1>
-        <p className="text-muted-foreground mt-1">
-          View and manage your modules
-        </p>
-      </div>
+      <ModulesPageHeader />
 
       <ModuleSection title="Core Modules" modules={coreModules} />
       <ModuleSection title="Optional Modules" modules={optionalModules} />

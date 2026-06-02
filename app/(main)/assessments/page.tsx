@@ -2,6 +2,7 @@ import { AssessmentsStats } from "./_components/assessments-stats";
 import { PendingAssessmentsTable } from "./_components/pending-assessments-table";
 import { CompletedAssessmentsTable } from "./_components/completed-assessments-table";
 import { getAssessments } from "@/lib/data/assessments";
+import { AssessmentsEmptyState } from "./_components/assessments-empty-state";
 
 export default async function AssessmentsPage() {
   const assessments = await getAssessments();
@@ -42,9 +43,15 @@ export default async function AssessmentsPage() {
         pending={pendingAssessments.length}
       />
 
-      <PendingAssessmentsTable assessments={pendingAssessments} />
+      {pendingAssessments.length + completedAssessments.length === 0 ? (
+        <AssessmentsEmptyState />
+      ) : (
+        <>
+          <PendingAssessmentsTable assessments={pendingAssessments} />
 
-      <CompletedAssessmentsTable assessments={completedAssessments} />
+          <CompletedAssessmentsTable assessments={completedAssessments} />
+        </>
+      )}
     </div>
   );
 }
