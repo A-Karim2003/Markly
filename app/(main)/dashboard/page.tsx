@@ -2,7 +2,8 @@ import { getStudentModulesWithGrades } from "@/lib/data/student-modules";
 import { getStudentProfile } from "@/lib/data/student-profiles";
 import { DashboardStats } from "./_components/dashboard-stats";
 import { DashboardModules } from "./_components/dashboard-modules";
-import { Target, ChevronDown } from "lucide-react";
+import { Target } from "lucide-react";
+import { YearSelector } from "./_components/year-selector";
 
 function getTargetLabel(targetGrade: number): string {
   if (targetGrade >= 70) return "First";
@@ -33,11 +34,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Year selector */}
-          <div className="flex items-center justify-between gap-2 rounded-radius border border-border bg-card px-3 py-1.5 text-sm shadow-sm w-40">
-            <span className="font-medium text-foreground">Year {year}</span>
-            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-          </div>
+          <YearSelector key={year} year={year} />
 
           {/* Target badge */}
           <div className="flex items-center gap-2 rounded-radius bg-brand/15 px-3 py-1.5 text-sm w-50">

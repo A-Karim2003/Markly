@@ -41,7 +41,7 @@ export async function DashboardModules({
       </div>
 
       {/* Module grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="modules-grid">
         {modules.map((module, index) => (
           <ModuleCard
             key={module.id}

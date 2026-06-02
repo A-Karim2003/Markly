@@ -266,6 +266,25 @@
    Convenience classes for the Markly design system
 ───────────────────────────────────────────── */
 @layer utilities {
+  .stat-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .stat-card-container > div {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
   .rounded-radius {
     border-radius: var(--radius);
   }

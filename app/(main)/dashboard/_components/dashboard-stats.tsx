@@ -115,7 +115,7 @@ export function DashboardStats({ modules, targetGrade }: DashboardStatsProps) {
   }).length;
 
   return (
-    <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div className="stat-card-container">
       {/* ── Year Average */}
       <Card className="rounded-radius border border-brand/20 bg-brand-subtle shadow-sm">
         <CardContent className="p-6">

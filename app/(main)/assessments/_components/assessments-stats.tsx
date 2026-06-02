@@ -13,7 +13,7 @@ export function AssessmentsStats({
   pending,
 }: AssessmentsStatsProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 mb-8 sm:grid-cols-3">
+    <div className="stat-card-container">
       <Card className="rounded-radius border border-brand-muted bg-brand-subtle/40 shadow-sm">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">

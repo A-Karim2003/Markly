@@ -8,7 +8,6 @@ import {
   ClipboardList,
   Settings,
   ChevronUp,
-  User,
   LogOut,
 } from "lucide-react";
 import {
@@ -49,7 +48,7 @@ export function AppSidebar({ student, session }: AppSidebar) {
   return (
     <Sidebar>
       <Link href="/dashboard" className="mb-4">
-        <SidebarHeader className="p-0">
+        <SidebarHeader>
           <Image
             src="/logo-light.png"
             alt="Markly Logo"
@@ -68,10 +67,14 @@ export function AppSidebar({ student, session }: AppSidebar) {
                 const isActive = pathname === item.href;
                 return (
                   <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton asChild isActive={isActive}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      className="text-base py-6"
+                    >
                       <Link href={item.href}>
-                        <item.icon />
-                        <span>{item.label}</span>
+                        <item.icon size={22} />
+                        <span className="text-base">{item.label}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -108,14 +111,6 @@ export function AppSidebar({ student, session }: AppSidebar) {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-56">
-                <DropdownMenuItem className="cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   className="cursor-pointer text-red-600"
                   onClick={signOut}
