@@ -24,7 +24,6 @@ export function ModuleHeader({
   gradedCount,
   totalCount,
 }: ModuleHeaderProps) {
-  const isOnTrack = currentGrade >= targetGrade;
   const progress = gradedWeight * 100;
 
   /* Use `requiredGrade` to pick the accent color. `currentGrade` 

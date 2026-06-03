@@ -122,6 +122,7 @@ export function ModuleCard({
                 size="icon-sm"
                 className="relative z-20 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150 rounded-radius"
                 aria-label={`Swap ${module_info?.name ?? "module"}`}
+                title="Swap module"
                 onClick={() => setIsSwapOpen(true)}
               >
                 <ArrowLeftRight className="size-3.5" />
