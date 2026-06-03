@@ -28,6 +28,9 @@ export default async function AssessmentsPage() {
       grade: assessment.grade as number,
     }));
 
+  // TODO: Update assessments table to give more info later such as whether its a coursework/exam or maybe weight shown in percentage e.g 60%	rather than 0.6%. Maybe I also need to update database assessments column to add an extra column for assessment type.
+
+  // TODO: custom assessments do not have weight
   return (
     <div>
       <div className="mb-8">

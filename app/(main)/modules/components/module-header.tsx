@@ -48,12 +48,12 @@ export function ModuleHeader({
           <h1 className="text-2xl font-medium tracking-tight text-foreground">
             {name}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="my-1 text-sm text-muted-foreground">
             {code} · {credits} credits
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-4 gap-2.5">
+        <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-4">
           <Card className="rounded-radius border border-brand/20 bg-brand-subtle shadow-sm">
             <CardContent className="p-4">
               <p className="text-sm font-semibold text-brand">Current grade</p>
@@ -106,28 +106,21 @@ export function ModuleHeader({
           <Card className="rounded-radius border border-grade-first/25 bg-grade-first-bg shadow-sm">
             <CardContent className="p-4">
               <p className="text-sm font-semibold text-grade-first">
-                Projected final
+                Required in remaining assessments
               </p>
               <p className="mt-2 text-4xl font-bold tracking-tight text-grade-first">
-                {targetGrade}%
+                {requiredGrade !== null ? `${requiredGrade.toFixed(1)}%` : "—"}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                If target is met
+                To reach your target
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                You need{" "}
+                {requiredGrade !== null ? `${requiredGrade.toFixed(1)}%` : "—"}{" "}
+                in remaining assessments to achieve your target
               </p>
             </CardContent>
           </Card>
-        </div>
-
-        <div
-          className={`mt-6 border-l-4 rounded-r-md px-4 py-2.5 text-sm font-medium ${
-            isOnTrack
-              ? "border-grade-first bg-grade-first-bg text-grade-first"
-              : "border-status-pending bg-status-pending/10 text-status-pending"
-          }`}
-        >
-          {isOnTrack
-            ? `You are on track for a ${getGradeClass(currentGrade)} in this module`
-            : `You need ${requiredGrade !== null ? requiredGrade.toFixed(1) : "—"}% in remaining assessments to achieve your target`}
         </div>
       </CardContent>
     </Card>
