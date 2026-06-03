@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ModuleHeader } from "../components/module-header";
 import { AssessmentsTable } from "../components/assessments-table";
-import { GradeSummary } from "../components/grade-summary";
 import { getStudentModuleById } from "@/lib/data/student-modules";
 import { getStudentProfile } from "@/lib/data/student-profiles";
 
@@ -28,6 +27,8 @@ export default async function ModuleDetailPage({ params }: PageProps) {
 
   const { module_info: moduleInfo, assessments } = studentModule;
   const assessmentSchemes = moduleInfo?.module_assessments_scheme ?? [];
+
+  // TODO: schemedAssessments dont exist anymore, fix later.
 
   // Scheme-based rows (pre-populated)
   const schemedAssessments = assessmentSchemes.map((scheme) => {
@@ -94,6 +95,9 @@ export default async function ModuleDetailPage({ params }: PageProps) {
         currentGrade={currentGrade}
         targetGrade={TARGET_GRADE}
         requiredGrade={requiredGrade}
+        gradedWeight={gradedWeight}
+        gradedCount={gradedRows.length}
+        totalCount={assessmentRows.length}
       />
 
       <AssessmentsTable
@@ -102,15 +106,8 @@ export default async function ModuleDetailPage({ params }: PageProps) {
         targetGrade={TARGET_GRADE}
         gradedWeight={gradedWeight}
         currentGrade={currentGrade}
-        moduleId={Number(moduleId)}
-      />
-
-      <GradeSummary
-        currentGrade={currentGrade}
-        gradedWeight={gradedWeight}
         remainingWeight={remainingWeight}
-        requiredGrade={requiredGrade}
-        targetGrade={TARGET_GRADE}
+        moduleId={Number(moduleId)}
       />
     </div>
   );

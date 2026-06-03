@@ -8,6 +8,9 @@ type ModuleHeaderProps = {
   currentGrade: number;
   targetGrade: number;
   requiredGrade: number | null;
+  gradedWeight: number;
+  gradedCount: number;
+  totalCount: number;
 };
 
 export function ModuleHeader({
@@ -17,41 +20,109 @@ export function ModuleHeader({
   currentGrade,
   targetGrade,
   requiredGrade,
+  gradedWeight,
+  gradedCount,
+  totalCount,
 }: ModuleHeaderProps) {
   const isOnTrack = currentGrade >= targetGrade;
+  const progress = gradedWeight * 100;
+
+  /* Use `requiredGrade` to pick the accent color. `currentGrade` 
+    can be misleading while not all assessments are graded.
+  */
+
+  let currentGradeColor: string;
+  if (requiredGrade === null) {
+    // Use the default grade color based on the current grade
+    currentGradeColor = getGradeColor(currentGrade);
+  } else if (requiredGrade > 100) {
+    currentGradeColor = "var(--color-status-pending)";
+  } else {
+    currentGradeColor = "var(--color-grade-first)";
+  }
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 overflow-hidden rounded-radius border-border shadow-sm">
       <CardContent className="p-6">
-        <h1 className="text-2xl font-bold text-foreground">{name}</h1>
-        <p className="text-muted-foreground mt-1">
-          {code} · {credits} credits
-        </p>
+        <div>
+          <h1 className="text-2xl font-medium tracking-tight text-foreground">
+            {name}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {code} · {credits} credits
+          </p>
+        </div>
 
-        <div className="flex items-center gap-12 mt-4 mb-4 h-22">
-          <div className="flex flex-col h-full">
-            <p className="text-sm text-muted-foreground mb-1">Current Grade</p>
-            <p
-              className="text-4xl font-bold"
-              style={{ color: getGradeColor(currentGrade) }}
-            >
-              {currentGrade.toFixed(1)}%
-            </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {getGradeClass(currentGrade)} · weighted so far
-            </p>
-          </div>
-          <div className="flex flex-col h-full">
-            <p className="text-sm text-muted-foreground mb-1">Target</p>
-            <p className="text-4xl font-bold text-foreground">{targetGrade}%</p>
-          </div>
+        <div className="mt-6 grid grid-cols-4 gap-2.5">
+          <Card className="rounded-radius border border-brand/20 bg-brand-subtle shadow-sm">
+            <CardContent className="p-4">
+              <p className="text-sm font-semibold text-brand">Current grade</p>
+              <p
+                className="mt-2 text-4xl font-bold tracking-tight"
+                style={{ color: currentGradeColor }}
+              >
+                {currentGrade.toFixed(1)}%
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {getGradeClass(currentGrade)} · weighted so far
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-radius border border-border bg-card shadow-sm">
+            <CardContent className="p-4">
+              <p className="text-sm font-semibold text-muted-foreground">
+                Target grade
+              </p>
+              <p className="mt-2 text-4xl font-bold tracking-tight text-foreground">
+                {targetGrade}%
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                First classification
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-radius border border-status-pending-bg bg-status-pending-bg/40 shadow-sm">
+            <CardContent className="p-4">
+              <p className="text-sm font-semibold text-status-pending">
+                Progress
+              </p>
+              <p className="mt-2 text-4xl font-bold tracking-tight text-foreground">
+                {progress.toFixed(0)}%
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {gradedCount} of {totalCount} assessed
+              </p>
+              <div className="mt-3 h-1.5 rounded-full bg-brand/15">
+                <div
+                  className="h-1.5 rounded-full bg-brand"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-radius border border-grade-first/25 bg-grade-first-bg shadow-sm">
+            <CardContent className="p-4">
+              <p className="text-sm font-semibold text-grade-first">
+                Projected final
+              </p>
+              <p className="mt-2 text-4xl font-bold tracking-tight text-grade-first">
+                {targetGrade}%
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                If target is met
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <div
-          className={`px-4 py-3 rounded-radius text-sm font-medium ${
+          className={`mt-6 border-l-4 rounded-r-md px-4 py-2.5 text-sm font-medium ${
             isOnTrack
-              ? "bg-[#16a34a]/10 text-[#16a34a] border border-[#16a34a]/20"
-              : "bg-[#d97706]/10 text-[#d97706] border border-[#d97706]/20"
+              ? "border-grade-first bg-grade-first-bg text-grade-first"
+              : "border-status-pending bg-status-pending/10 text-status-pending"
           }`}
         >
           {isOnTrack

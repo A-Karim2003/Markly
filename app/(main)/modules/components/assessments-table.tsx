@@ -17,6 +17,7 @@ import { AssessmentDeleteDialog } from "./assessment-delete-dialog";
 import { AssessmentModal } from "./assessment-modal";
 import { deleteAssessment } from "@/lib/actions/assessment-actions";
 import { toast } from "react-toastify";
+import { GradeSummary } from "./grade-summary";
 
 export type AssessmentRow = {
   id: number;
@@ -38,6 +39,7 @@ type AssessmentsTableProps = {
   targetGrade: number;
   gradedWeight: number;
   currentGrade: number;
+  remainingWeight: number;
   moduleId: number;
 };
 
@@ -47,6 +49,7 @@ export function AssessmentsTable({
   targetGrade,
   gradedWeight,
   currentGrade,
+  remainingWeight,
   moduleId,
 }: AssessmentsTableProps) {
   const [modal, setModal] = useState<ModalState>({ mode: "closed" });
@@ -64,30 +67,52 @@ export function AssessmentsTable({
     <>
       <Card className="overflow-hidden mb-6">
         <div className="p-4 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Assessments</h2>
+          <h2 className="text-sm font-medium text-foreground">Assessments</h2>
         </div>
 
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Assessment Name</TableHead>
-              <TableHead>Weight</TableHead>
-              <TableHead>Grade</TableHead>
-              <TableHead>Weighted Contribution</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Required to Hit Target</TableHead>
+            <TableRow className="bg-muted/40 hover:bg-muted/40">
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Assessment Name
+              </TableHead>
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Weight
+              </TableHead>
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Grade
+              </TableHead>
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Weighted Contribution
+              </TableHead>
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Status
+              </TableHead>
+              <TableHead className="uppercase text-[12px] tracking-wide text-muted-foreground">
+                Required to Hit Target
+              </TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
             {rows.map((row) => {
-              const weightedContribution =
-                row.grade !== null ? row.grade * row.weight : null;
               const isGraded = row.grade !== null;
+
+              const weightedContribution = isGraded
+                ? row.grade! * row.weight
+                : null;
 
               return (
                 <TableRow key={row.id}>
-                  <TableCell className="font-medium">{row.name}</TableCell>
+                  <TableCell
+                    className={
+                      isGraded
+                        ? "font-medium text-foreground"
+                        : "font-medium text-muted-foreground"
+                    }
+                  >
+                    {row.name}
+                  </TableCell>
                   <TableCell className="text-muted-foreground">
                     {(row.weight * 100).toFixed(0)}%
                   </TableCell>
@@ -110,12 +135,12 @@ export function AssessmentsTable({
                   </TableCell>
                   <TableCell>
                     {isGraded ? (
-                      <span className="inline-flex items-center gap-1.5 text-sm text-[#16a34a]">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-grade-first-bg px-2 py-0.5 text-xs font-medium text-grade-first">
                         <Check className="h-4 w-4" />
                         Graded
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 text-sm text-[#d97706]">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-status-pending-bg px-2 py-0.5 text-xs font-medium text-status-pending">
                         <Clock className="h-4 w-4" />
                         Pending
                       </span>
@@ -124,12 +149,12 @@ export function AssessmentsTable({
                   <TableCell>
                     {!isGraded && requiredGrade !== null ? (
                       <span
-                        className={`px-2.5 py-1 rounded-radius text-sm font-medium ${
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
                           requiredGrade > 100
                             ? "bg-[#dc2626]/15 text-[#dc2626]"
                             : requiredGrade > 75
-                              ? "bg-[#d97706]/15 text-[#d97706]"
-                              : "bg-[#16a34a]/15 text-[#16a34a]"
+                              ? "bg-status-pending-bg text-status-pending"
+                              : "bg-grade-first-bg text-grade-first"
                         }`}
                       >
                         {requiredGrade > 100
@@ -146,7 +171,7 @@ export function AssessmentsTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                        className="h-8 w-8 text-status-pending hover:text-foreground"
                         onClick={() => setModal({ mode: "edit", row })}
                       >
                         <Pencil className="h-4 w-4" />
@@ -164,7 +189,7 @@ export function AssessmentsTable({
             })}
 
             {/* Totals row */}
-            <TableRow className="bg-muted/30 font-semibold">
+            <TableRow className="bg-muted/40 font-semibold">
               <TableCell>Total</TableCell>
               <TableCell>{(gradedWeight * 100).toFixed(0)}%</TableCell>
               <TableCell className="text-muted-foreground">—</TableCell>
@@ -183,13 +208,23 @@ export function AssessmentsTable({
 
         <div className="p-4 border-t border-border">
           <Button
-            variant="outline"
-            className="border-primary text-primary hover:bg-primary/10"
+            variant="ghost"
+            className="border border-dashed border-muted-foreground/40 text-muted-foreground hover:text-foreground"
             onClick={() => setModal({ mode: "add" })}
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Assessment
           </Button>
+        </div>
+
+        <div className="border-t border-border bg-muted/20 px-4 py-4">
+          <GradeSummary
+            currentGrade={currentGrade}
+            gradedWeight={gradedWeight}
+            remainingWeight={remainingWeight}
+            requiredGrade={requiredGrade}
+            targetGrade={targetGrade}
+          />
         </div>
       </Card>
 
