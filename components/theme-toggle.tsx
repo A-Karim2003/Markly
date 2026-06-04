@@ -3,14 +3,14 @@
 import * as React from "react";
 import { Moon, SunMedium } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  console.log(resolvedTheme);
 
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

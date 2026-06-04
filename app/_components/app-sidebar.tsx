@@ -31,7 +31,6 @@ import {
 import { Session, signOut } from "@/lib/actions/auth-actions";
 import { StudentProfile } from "@/lib/data/student-profiles";
 import Image from "next/image";
-import { useTheme } from "next-themes";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -46,21 +45,23 @@ type AppSidebar = {
 };
 export function AppSidebar({ student, session }: AppSidebar) {
   const pathname = usePathname();
-  const theme = useTheme();
   return (
     <Sidebar>
       <Link href="/dashboard" className="mb-4">
         <SidebarHeader>
           <Image
-            src={
-              theme.resolvedTheme === "light"
-                ? "/logo-light.png"
-                : "/logo-dark.png"
-            }
+            src="/logo-light.png"
             alt="Markly Logo"
             width={500}
             height={200}
-            className="w-full h-auto"
+            className="w-full h-auto dark:hidden"
+          />
+          <Image
+            src="/logo-dark.png"
+            alt="Markly Logo"
+            width={500}
+            height={200}
+            className="hidden w-full h-auto dark:block"
           />
         </SidebarHeader>
       </Link>
@@ -68,7 +69,7 @@ export function AppSidebar({ student, session }: AppSidebar) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-1">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
