@@ -14,11 +14,16 @@ export function HeroSection() {
   // Track the scroll progress specifically across this section container
   const { scrollYProgress } = useScroll({
     target: containerRef,
+    // "start start" → top of element touches top of viewport → progress = 0
+    // "end start" → bottom of element touches top of viewport → progress = 1
     offset: ["start start", "end start"],
+    //       progress = 0    progress = 1
   });
 
-  // Smoothly map the scroll progress percentage to your 3D transformation constraints
-  const rotateX = useTransform(scrollYProgress, [0, 1], [22, 0]);
+  /*
+    When scrollYProgress is 0, rotateX is 0. When scrollYProgress is 0.5, rotateX is 11. When scrollYProgress is 1, rotateX is 22. Same idea with scale  
+  */
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 22]);
   const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
 
   return (
@@ -31,6 +36,7 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-4 py-2 text-sm font-medium text-foreground shadow-sm backdrop-blur"
         >
           <ShieldCheck className="h-4 w-4 text-grade-first" />
@@ -42,6 +48,7 @@ export function HeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground uppercase font-heading"
           >
             Track grades. <br /> Reduce stress.
@@ -50,6 +57,7 @@ export function HeroSection() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed"
           >
             Log assessments, track modules, and monitor your degree progress in
@@ -62,6 +70,7 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="flex flex-col sm:flex-row items-center gap-4 px-4"
         >
           <Button
@@ -79,13 +88,11 @@ export function HeroSection() {
           </Link>
         </motion.div>
 
-        {/* 100vw Context Container centering the 80% width Animated Dashboard */}
         <div className="w-full perspective-[1500px] flex justify-center mt-6">
           <motion.div
             className="w-[80%] overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-2xl"
             style={{
               transformOrigin: "center top",
-              transformStyle: "preserve-3d",
               rotateX,
               scale,
             }}
