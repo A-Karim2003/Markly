@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { SectionBadge } from "./section-badge";
+import Image from "next/image";
 
 interface Step {
   number: string;
@@ -52,6 +53,17 @@ export function HowItWorksSection() {
           stand and what you need to hit your target.
         </p>
       </motion.div>
+      {/* TODO: add video demo */}
+      <div className="mx-auto mb-8 w-full max-w-3xl ">
+        <div className="rounded-2xl overflow-hidden bg-muted/20">
+          <Image
+            src="/sectionImages/how-it-works.png"
+            alt="How it works"
+            className="w-full h-auto object-cover"
+            fill
+          />
+        </div>
+      </div>
 
       <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10">
         {STEPS.map((step, i) => (

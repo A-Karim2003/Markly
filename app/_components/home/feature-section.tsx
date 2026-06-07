@@ -16,6 +16,7 @@ export interface FeatureSectionProps {
   subheading: string;
   bullets: Bullet[];
   mediaLabel: string;
+  mediaSrc?: string;
   /** flip=false → text left, media right. flip=true → media left, text right */
   flip?: boolean;
 }
@@ -26,6 +27,7 @@ export function FeatureSection({
   subheading,
   bullets,
   mediaLabel,
+  mediaSrc,
   flip = false,
 }: FeatureSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,7 +69,7 @@ export function FeatureSection({
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
     >
-      <MediaPlaceholder label={mediaLabel} />
+      <MediaPlaceholder label={mediaLabel} src={mediaSrc} />
     </motion.div>
   );
 

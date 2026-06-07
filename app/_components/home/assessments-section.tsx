@@ -9,9 +9,12 @@ export function AssessmentsSection() {
       bullets={[
         { text: "Pending and completed assessments clearly separated" },
         { text: "Grade, weight, and degree classification shown per result" },
-        { text: "Required score to hit your target calculated per pending piece" },
+        {
+          text: "Required score to hit your target calculated per pending piece",
+        },
       ]}
       mediaLabel="Assessments preview"
+      mediaSrc="/sectionImages/assessments.png"
       flip={false}
     />
   );

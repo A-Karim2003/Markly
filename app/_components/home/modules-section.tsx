@@ -16,6 +16,7 @@ export function ModulesSection() {
         },
       ]}
       mediaLabel="Modules preview"
+      mediaSrc="/sectionImages/modules.png"
       flip={true}
     />
   );
