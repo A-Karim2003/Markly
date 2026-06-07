@@ -14,7 +14,7 @@ export function AssessmentsSection() {
         },
       ]}
       mediaLabel="Assessments preview"
-      mediaSrc="/sectionImages/assessments.png"
+      mediaSrc="/sectionImages/assessments_section_image.png"
       flip={false}
     />
   );

@@ -10,7 +10,7 @@ interface MediaPlaceholderProps {
 
 export function MediaPlaceholder({ label, src, alt }: MediaPlaceholderProps) {
   return (
-    <div className="relative w-full aspect-16/10 rounded-2xl border border-border bg-muted/30 overflow-hidden flex items-center justify-center">
+    <div className="w-full aspect-16/10 rounded-radius border border-border overflow-hidden">
       {src ? (
         <div className="relative h-full w-full">
           <Image
@@ -18,11 +18,13 @@ export function MediaPlaceholder({ label, src, alt }: MediaPlaceholderProps) {
             alt={alt ?? label}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
+            className="rounded-xl object-contain"
           />
         </div>
       ) : (
-        <span className="text-xs font-medium">{label}</span>
+        <div className="flex h-full w-full items-center justify-center p-4 text-center">
+          <span className="text-xs font-medium">{label}</span>
+        </div>
       )}
     </div>
   );

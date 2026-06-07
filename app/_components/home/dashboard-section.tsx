@@ -12,7 +12,7 @@ export function DashboardSection() {
         { text: "Target classification — First, 2:1, 2:2 — always visible" },
       ]}
       mediaLabel="Dashboard preview"
-      mediaSrc="/public/sectionImages/dashboard_section_img.png"
+      mediaSrc="/sectionImages/dashboard_section_img.png"
       flip={false}
     />
   );

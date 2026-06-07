@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { SectionBadge } from "./section-badge";
-import Image from "next/image";
 
 interface Step {
   number: string;
@@ -38,6 +37,7 @@ export function HowItWorksSection() {
 
   return (
     <div ref={ref} className="py-20 sm:py-28">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -53,19 +53,9 @@ export function HowItWorksSection() {
           stand and what you need to hit your target.
         </p>
       </motion.div>
-      {/* TODO: add video demo */}
-      <div className="mx-auto mb-8 w-full max-w-3xl ">
-        <div className="rounded-2xl overflow-hidden bg-muted/20">
-          <Image
-            src="/sectionImages/how-it-works.png"
-            alt="How it works"
-            className="w-full h-auto object-cover"
-            fill
-          />
-        </div>
-      </div>
 
-      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10">
+      {/* Steps */}
+      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
         {STEPS.map((step, i) => (
           <motion.div
             key={step.number}
@@ -94,6 +84,25 @@ export function HowItWorksSection() {
           </motion.div>
         ))}
       </div>
+
+      {/* Video demo */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+        className="mx-auto w-full"
+      >
+        <div className="overflow-hidden rounded-2xl border border-border bg-muted/20 shadow-sm">
+          {/* TODO: Replace src with your video path when ready */}
+          <video
+            src="/videos/product-demo.mp4"
+            controls
+            playsInline
+            poster="/videos/product-demo-poster.png"
+            className="w-full aspect-video"
+          />
+        </div>
+      </motion.div>
     </div>
   );
 }
