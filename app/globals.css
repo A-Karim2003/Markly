@@ -258,13 +258,10 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
-/* ─────────────────────────────────────────────
-   UTILITY CLASSES
-   Convenience classes for the Markly design system
-───────────────────────────────────────────── */
 @layer utilities {
   .stat-card-container {
     display: flex;
