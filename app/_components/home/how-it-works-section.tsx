@@ -19,12 +19,18 @@ const STEPS: Step[] = [
   },
   {
     number: "02",
+    title: "Complete onboarding",
+    description:
+      "Choose your year of study and select the modules you're taking so Markly can tailor everything to your course.",
+  },
+  {
+    number: "03",
     title: "Add your modules",
     description:
       "Select from the pre-loaded Essex CS curriculum. Credits and assessment weightings are already set up — nothing to configure.",
   },
   {
-    number: "03",
+    number: "04",
     title: "Log grades as you go",
     description:
       "Enter marks as results come in. Markly recalculates your weighted average instantly and shows exactly what you need in remaining assessments.",
@@ -55,7 +61,7 @@ export function HowItWorksSection() {
       </motion.div>
 
       {/* Steps */}
-      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 mb-16">
         {STEPS.map((step, i) => (
           <motion.div
             key={step.number}
