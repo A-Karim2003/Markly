@@ -53,10 +53,9 @@ export default function Step1({ setCurrentStep, student }: Step1Props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center justify-center p-6 font-serif">
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 font-serif">
       <OnboardingHeader>Step 1 of 2</OnboardingHeader>
 
-      {/* Selection Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mb-10">
         {years.map((year) => {
           const Icon = year.icon;
@@ -66,19 +65,19 @@ export default function Step1({ setCurrentStep, student }: Step1Props) {
             <Card
               key={year.id}
               onClick={() => setSelectedYear(year.id)}
-              className={`cursor-pointer transition-all border-zinc-800 bg-[#0a0a12] hover:border-indigo-500/50 ${
-                isSelected ? "ring-2 ring-indigo-500 border-transparent" : ""
+              className={`cursor-pointer transition-all border-border bg-card hover:border-primary/50 ${
+                isSelected ? "ring-2 ring-primary border-transparent" : ""
               }`}
             >
               <CardContent className="p-8 flex flex-col items-start gap-4">
-                <div className="p-3 rounded-xl bg-indigo-950/30 text-indigo-400">
+                <div className="p-3 rounded-xl bg-primary/10 text-primary">
                   <Icon size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-zinc-100 mb-2">
+                  <h3 className="text-xl font-bold text-foreground mb-2">
                     {year.title}
                   </h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed italic">
+                  <p className="text-muted-foreground text-sm leading-relaxed italic">
                     {year.description}
                   </p>
                 </div>
@@ -87,8 +86,9 @@ export default function Step1({ setCurrentStep, student }: Step1Props) {
           );
         })}
       </div>
+
       <Button
-        className="w-full max-w-4xl bg-indigo-700 hover:bg-indigo-600 text-zinc-100 h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
+        className="w-full max-w-4xl bg-primary hover:bg-primary/90 text-primary-foreground h-14 text-lg font-medium rounded-xl transition-colors cursor-pointer"
         disabled={!selectedYear}
         onClick={() => handleYearSelect(student.id, selectedYear as 1 | 2 | 3)}
       >

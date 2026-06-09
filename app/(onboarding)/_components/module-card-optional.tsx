@@ -21,23 +21,23 @@ export default function ModuleCardOptional({
     <Card
       onClick={() => !isDisabled && onToggle(module.id)}
       className={cn(
-        "bg-[#07070e] transition-all duration-200 relative",
+        "bg-card transition-all duration-200 relative",
         isDisabled
-          ? "cursor-not-allowed opacity-40 border-zinc-800/60"
-          : "cursor-pointer hover:border-indigo-500/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]",
+          ? "cursor-not-allowed opacity-40 border-border"
+          : "cursor-pointer hover:border-primary/40 hover:shadow-md",
         isSelected && !isDisabled
-          ? "border-indigo-500 bg-indigo-500/5"
-          : "border-zinc-800/60",
+          ? "border-primary bg-primary/5"
+          : "border-border",
       )}
     >
       <CardContent className="p-4">
         {isSelected && (
-          <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center">
-            <Check className="h-3 w-3 text-white" />
+          <div className="absolute top-3 right-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
+            <Check className="h-3 w-3 text-primary-foreground" />
           </div>
         )}
-        <h4 className="text-sm font-semibold text-zinc-100">{module.name}</h4>
-        <p className="text-xs text-zinc-500 mt-1 font-sans">
+        <h4 className="text-sm font-semibold text-foreground">{module.name}</h4>
+        <p className="text-xs text-muted-foreground mt-1 font-sans">
           {module.code} · {module.credits} credits
         </p>
       </CardContent>

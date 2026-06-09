@@ -9,14 +9,14 @@ type ErrorProps = {
 
 export default function Error({ error, reset }: ErrorProps) {
   return (
-    <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center justify-center gap-4 font-serif">
-      <h2 className="text-2xl font-semibold text-zinc-100">
+    <div className="dark min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4 font-serif">
+      <h2 className="text-2xl font-semibold text-foreground">
         Something went wrong
       </h2>
-      <p className="text-zinc-500 text-sm">{error.message}</p>
+      <p className="text-muted-foreground text-sm">{error.message}</p>
       <Button
         onClick={reset}
-        className="bg-indigo-700 hover:bg-indigo-600 text-zinc-100 rounded-xl"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl"
       >
         Try again
       </Button>

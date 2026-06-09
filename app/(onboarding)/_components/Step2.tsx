@@ -59,38 +59,41 @@ export default function Step2({
   }
 
   return (
-    <div className="min-h-screen bg-[#050509] text-white flex flex-col items-center pt-16 pb-32 px-6 font-serif">
-      <OnboardingHeader>Step 2 of 2</OnboardingHeader>
-      {error && <p className="text-red-500 text-lg">{error}</p>}
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center pt-16 pb-32 px-6 font-serif">
+      <div className="w-full max-w-4xl">
+        <OnboardingHeader>Step 2 of 2</OnboardingHeader>
 
-      <div className="w-full max-w-4xl space-y-12">
-        {/* Core Modules */}
-        <div>
-          <h3 className="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-6">
-            Core Modules
-          </h3>
-          <div className="grid grid-cols-2 gap-3">
-            {coreModules.map((module) => (
-              <ModuleCardCore key={module.id} module={module} />
-            ))}
+        {error && <p className="text-destructive text-lg mb-6">{error}</p>}
+
+        <div className="w-full max-w-4xl space-y-12">
+          {/* Core Modules */}
+          <div>
+            <h3 className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-6">
+              Core Modules
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {coreModules.map((module) => (
+                <ModuleCardCore key={module.id} module={module} />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Optional Modules */}
-        <div className="mb-24">
-          <h3 className="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-6">
-            Optional Modules
-          </h3>
-          <div className="grid grid-cols-2 gap-3">
-            {optionalModules.map((module) => (
-              <ModuleCardOptional
-                key={module.id}
-                module={module}
-                isSelected={selectedOptionalIds.includes(module.id)}
-                onToggle={toggleOptional}
-                isMaxed={isMaxed}
-              />
-            ))}
+          {/* Optional Modules */}
+          <div className="mb-24">
+            <h3 className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-6">
+              Optional Modules
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {optionalModules.map((module) => (
+                <ModuleCardOptional
+                  key={module.id}
+                  module={module}
+                  isSelected={selectedOptionalIds.includes(module.id)}
+                  onToggle={toggleOptional}
+                  isMaxed={isMaxed}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
