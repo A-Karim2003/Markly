@@ -1,4 +1,5 @@
 import { getSession } from "../actions/auth-actions";
+import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 import { getStudentProfile } from "./student-profiles";
 
@@ -7,7 +8,7 @@ export const wait = (ms: number) =>
 
 export async function getAssessments() {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const studentProfile = await getStudentProfile();
   if (!studentProfile.year) throw new Error("Student year not set");

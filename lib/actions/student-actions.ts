@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 import { getSession } from "./auth-actions";
 import { getStudentProfile } from "../data/student-profiles";
@@ -8,7 +9,7 @@ import { Result } from "./types";
 
 export async function updateStudentYear(studentId: number, year: number) {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const supabase = await createClient();
 
@@ -27,7 +28,7 @@ export async function updateStudentOnboardingStep(
   step: number,
 ) {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const supabase = await createClient();
 
@@ -42,7 +43,7 @@ export async function updateStudentOnboardingStep(
 
 export async function enrolStudentModules(moduleIds: number[]) {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const studentProfile = await getStudentProfile();
   const supabase = await createClient();

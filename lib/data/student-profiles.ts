@@ -1,4 +1,5 @@
 import { getSession } from "../actions/auth-actions";
+import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 import type { Tables } from "@/types/supabase";
 
@@ -6,7 +7,7 @@ export type StudentProfile = Tables<"student_profiles">;
 
 export async function getStudentProfile() {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const userAuthId = session?.user.id;
 

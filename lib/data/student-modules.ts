@@ -1,4 +1,5 @@
 import { getSession } from "../actions/auth-actions";
+import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 import { getStudentProfile } from "./student-profiles";
 
@@ -9,7 +10,7 @@ export type StudentModuleWithGrades = StudentModulesWithGrades[number];
 
 export async function getStudentModulesWithGrades() {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const studentProfile = await getStudentProfile();
   if (!studentProfile.year) throw new Error("Student year not set");
@@ -47,7 +48,7 @@ export async function getStudentModulesWithGrades() {
 */
 export async function getStudentModuleById(studentModuleId: number) {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const studentProfile = await getStudentProfile();
   const supabase = await createClient();
@@ -96,7 +97,7 @@ export type StudentModuleById = Awaited<
 export type StudentModules = Awaited<ReturnType<typeof getStudentModules>>;
 export async function getStudentModules() {
   const session = await getSession();
-  if (!session) throw new Error("User not authenticated");
+  if (!session) redirect("/sign-in");
 
   const studentProfile = await getStudentProfile();
   const supabase = await createClient();
