@@ -56,7 +56,7 @@ export async function signOut() {
     throw new Error(error instanceof Error ? error.message : "Sign out failed");
   }
 
-  redirect("/sign-in");
+  redirect("/");
 }
 
 export type Session = NonNullable<Awaited<ReturnType<typeof getSession>>>;
