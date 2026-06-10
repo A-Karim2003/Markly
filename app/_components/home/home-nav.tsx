@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const navItems = [
   { label: "Dashboard", targetId: "dashboard" },
@@ -35,10 +36,22 @@ export function HomeNav() {
           href="/"
           className="flex items-center gap-3 font-heading text-lg font-bold tracking-tight text-foreground"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border bg-muted/50 text-sm">
-            M
-          </span>
-          <span className="hidden sm:inline">Markly</span>
+          <Image
+            src="/logo-light.png"
+            alt="Markly Logo"
+            width={168}
+            height={20}
+            quality={100}
+            className="w-full h-auto dark:hidden"
+          />
+          <Image
+            src="/logo-dark.png"
+            alt="Markly Logo"
+            width={168}
+            height={20}
+            quality={100}
+            className="hidden w-full h-auto dark:block"
+          />
         </Link>
 
         {/* Nav for larger screens */}

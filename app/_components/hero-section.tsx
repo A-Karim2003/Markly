@@ -51,7 +51,7 @@ export function HeroSection() {
             transition={{ duration: 0.5 }}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground uppercase font-heading"
           >
-            Track grades. <br /> Reduce stress.
+            Track grades. <br /> Stay Ahead.
           </motion.h1>
 
           <motion.p
