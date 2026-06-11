@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
@@ -17,6 +18,7 @@ export interface FeatureSectionProps {
   bullets: Bullet[];
   mediaLabel: string;
   mediaSrc?: string;
+  mediaContent?: ReactNode;
   /** flip=false → text left, media right. flip=true → media left, text right */
   flip?: boolean;
 }
@@ -28,6 +30,7 @@ export function FeatureSection({
   bullets,
   mediaLabel,
   mediaSrc,
+  mediaContent,
   flip = false,
 }: FeatureSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -69,7 +72,7 @@ export function FeatureSection({
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
     >
-      <MediaPlaceholder label={mediaLabel} src={mediaSrc} />
+      {mediaContent ?? <MediaPlaceholder label={mediaLabel} src={mediaSrc} />}
     </motion.div>
   );
 

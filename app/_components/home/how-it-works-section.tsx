@@ -99,12 +99,10 @@ export function HowItWorksSection() {
         className="mx-auto w-full"
       >
         <div className="overflow-hidden rounded-2xl border border-border bg-muted/20 shadow-sm">
-          {/* TODO: Replace src with your video path when ready */}
           <video
-            src="/videos/product-demo.mp4"
+            src="/video/markly-demo.mp4"
             controls
             playsInline
-            poster="/videos/product-demo-poster.png"
             className="w-full aspect-video"
           />
         </div>
