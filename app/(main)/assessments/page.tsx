@@ -4,6 +4,10 @@ import { CompletedAssessmentsTable } from "./_components/completed-assessments-t
 import { getAssessments } from "@/lib/data/assessments";
 import { AssessmentsEmptyState } from "./_components/assessments-empty-state";
 
+function toPercentage(weight: number | undefined) {
+  return Math.round((weight ?? 0) * 100);
+}
+
 export default async function AssessmentsPage() {
   const assessments = await getAssessments();
 
@@ -14,7 +18,7 @@ export default async function AssessmentsPage() {
       assessmentName: assessment.name,
       moduleName: assessment.student_modules.modules?.name,
       code: assessment.student_modules.modules?.code,
-      weight: assessment.module_assessments_scheme?.weight,
+      weight: toPercentage(assessment.module_assessments_scheme?.weight),
     }));
 
   const completedAssessments = assessments
@@ -24,7 +28,7 @@ export default async function AssessmentsPage() {
       assessmentName: assessment.name,
       moduleName: assessment.student_modules.modules?.name,
       code: assessment.student_modules.modules?.code,
-      weight: assessment.module_assessments_scheme?.weight,
+      weight: toPercentage(assessment.module_assessments_scheme?.weight),
       grade: assessment.grade as number,
     }));
 

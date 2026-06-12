@@ -14,8 +14,7 @@ const STEPS: Step[] = [
   {
     number: "01",
     title: "Create your account",
-    description:
-      "Sign up in seconds. Pick your year, set your target degree class — First, 2:1, or 2:2 — and you're in.",
+    description: "Sign up in seconds and unlock the full Markly setup flow.",
   },
   {
     number: "02",
