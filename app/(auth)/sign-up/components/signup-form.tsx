@@ -54,7 +54,7 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="rounded-radius border border-border bg-card p-8 shadow-sm">
           <div className="mb-8 text-center">

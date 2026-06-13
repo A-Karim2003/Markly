@@ -54,6 +54,7 @@ export function AppSidebar({ student, session }: AppSidebar) {
             alt="Markly Logo"
             width={500}
             height={200}
+            loading="eager"
             className="w-full h-auto dark:hidden"
           />
           <Image
@@ -61,6 +62,7 @@ export function AppSidebar({ student, session }: AppSidebar) {
             alt="Markly Logo"
             width={500}
             height={200}
+            loading="eager"
             className="hidden w-full h-auto dark:block"
           />
         </SidebarHeader>

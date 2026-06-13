@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { StudentModulesWithGrades } from "@/lib/data/student-modules";
 import { BookOpen, Target } from "lucide-react";
-import { ResponsiveContainer, AreaChart, Area } from "recharts";
+import { AreaChart, Area } from "recharts";
 import CircleIcon from "./circle-icon";
 
 type DashboardStatsProps = {
@@ -38,29 +38,29 @@ const avgSparkData = [
 function InlineSparkline() {
   return (
     <div className="h-14 w-32.5 shrink-0">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          data={avgSparkData}
-          margin={{ top: 10, right: 6, left: 6, bottom: 6 }}
-        >
-          <defs>
-            <linearGradient id="spark-brand" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={COLORS.brand} stopOpacity={3} />
-              <stop offset="100%" stopColor={COLORS.brand} stopOpacity={0.08} />
-            </linearGradient>
-          </defs>
-          <Area
-            type="monotone"
-            dataKey="v"
-            stroke={COLORS.brand}
-            strokeWidth={2.5}
-            fill="url(#spark-brand)"
-            dot={false}
-            isAnimationActive={false}
-            activeDot={false}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      <AreaChart
+        width={130}
+        height={56}
+        data={avgSparkData}
+        margin={{ top: 10, right: 6, left: 6, bottom: 6 }}
+      >
+        <defs>
+          <linearGradient id="spark-brand" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={COLORS.brand} stopOpacity={3} />
+            <stop offset="100%" stopColor={COLORS.brand} stopOpacity={0.08} />
+          </linearGradient>
+        </defs>
+        <Area
+          type="monotone"
+          dataKey="v"
+          stroke={COLORS.brand}
+          strokeWidth={2.5}
+          fill="url(#spark-brand)"
+          dot={false}
+          isAnimationActive={false}
+          activeDot={false}
+        />
+      </AreaChart>
     </div>
   );
 }
