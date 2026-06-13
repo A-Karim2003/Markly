@@ -42,6 +42,7 @@ export function HomeNav() {
             width={168}
             height={20}
             quality={100}
+            loading="eager"
             className="w-full h-auto dark:hidden"
           />
           <Image
@@ -50,6 +51,7 @@ export function HomeNav() {
             width={168}
             height={20}
             quality={100}
+            loading="eager"
             className="hidden w-full h-auto dark:block"
           />
         </Link>

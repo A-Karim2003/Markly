@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Check, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -16,6 +19,7 @@ import {
 
 export type CompletedAssessment = {
   id: number;
+  moduleId: number;
   assessmentName: string;
   moduleName: string | undefined;
   code: string | undefined;
@@ -30,6 +34,12 @@ type CompletedAssessmentsTableProps = {
 export function CompletedAssessmentsTable({
   assessments,
 }: CompletedAssessmentsTableProps) {
+  const router = useRouter();
+
+  const goToModule = (moduleId: number) => {
+    router.push(`/modules/${moduleId}`);
+  };
+
   return (
     <div>
       <h2 className="text-lg font-semibold text-foreground mb-4">
@@ -63,7 +73,17 @@ export function CompletedAssessmentsTable({
             {assessments.map((assessment) => (
               <TableRow
                 key={assessment.id}
-                className="group border-border transition-colors hover:bg-muted/40"
+                className="group cursor-pointer border-border transition-colors hover:bg-muted/40 focus-visible:bg-muted/40"
+                tabIndex={0}
+                role="link"
+                aria-label={`Go to ${assessment.moduleName ?? "module"}`}
+                onClick={() => goToModule(assessment.moduleId)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    goToModule(assessment.moduleId);
+                  }
+                }}
               >
                 <TableCell className="font-medium">
                   <span className="flex items-center gap-2.5">

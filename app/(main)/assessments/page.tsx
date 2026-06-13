@@ -14,21 +14,23 @@ export default async function AssessmentsPage() {
   const pendingAssessments = assessments
     .filter((assessment) => !assessment.grade)
     .map((assessment) => ({
+      moduleId: assessment.student_modules.id,
       id: assessment.id,
       assessmentName: assessment.name,
       moduleName: assessment.student_modules.modules?.name,
       code: assessment.student_modules.modules?.code,
-      weight: toPercentage(assessment.module_assessments_scheme?.weight),
+      weight: toPercentage(assessment.weight),
     }));
 
   const completedAssessments = assessments
     .filter((assessment) => !!assessment.grade)
     .map((assessment) => ({
       id: assessment.id,
+      moduleId: assessment.student_modules.id,
       assessmentName: assessment.name,
       moduleName: assessment.student_modules.modules?.name,
       code: assessment.student_modules.modules?.code,
-      weight: toPercentage(assessment.module_assessments_scheme?.weight),
+      weight: toPercentage(assessment.weight),
       grade: assessment.grade as number,
     }));
 

@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Clock, ClipboardList } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -12,6 +15,7 @@ import {
 
 export type PendingAssessment = {
   id: number;
+  moduleId: number;
   assessmentName: string;
   moduleName: string | undefined;
   code: string | undefined;
@@ -25,6 +29,12 @@ type PendingAssessmentsTableProps = {
 export function PendingAssessmentsTable({
   assessments,
 }: PendingAssessmentsTableProps) {
+  const router = useRouter();
+
+  const goToModule = (moduleId: number) => {
+    router.push(`/modules/${moduleId}`);
+  };
+
   return (
     <div className="mb-8">
       <h2 className="text-lg font-semibold text-foreground mb-4">
@@ -52,7 +62,17 @@ export function PendingAssessmentsTable({
             {assessments.map((a) => (
               <TableRow
                 key={a.id}
-                className="group border-border transition-colors hover:bg-muted/40"
+                className="group cursor-pointer border-border transition-colors hover:bg-muted/40 focus-visible:bg-muted/40"
+                tabIndex={0}
+                role="link"
+                aria-label={`Go to ${a.moduleName ?? "module"}`}
+                onClick={() => goToModule(a.moduleId)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    goToModule(a.moduleId);
+                  }
+                }}
               >
                 <TableCell className="font-medium">
                   <span className="flex items-center gap-2.5">

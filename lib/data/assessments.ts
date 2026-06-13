@@ -18,9 +18,9 @@ export async function getAssessments() {
     .from("assessments")
     .select(
       `
-      id, name, grade,
-      module_assessments_scheme!scheme_id(weight),
+      id, name, grade, weight,
       student_modules!student_module_id!inner(
+      id,
       student_profile_id,
       modules!module_id(
         name,
