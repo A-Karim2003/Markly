@@ -25,6 +25,7 @@ export type CompletedAssessment = {
   code: string | undefined;
   weight: number | undefined;
   grade: number;
+  type: string | null;
 };
 
 type CompletedAssessmentsTableProps = {
@@ -51,6 +52,9 @@ export function CompletedAssessmentsTable({
             <TableRow className="bg-muted/40 hover:bg-muted/40">
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Assessment
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Type
               </TableHead>
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Module
@@ -85,17 +89,22 @@ export function CompletedAssessmentsTable({
                   }
                 }}
               >
-                <TableCell className="font-medium">
-                  <span className="flex items-center gap-2.5">
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word font-medium align-top">
+                  <span className="flex min-w-0 items-start gap-2.5">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-radius bg-status-graded-bg">
                       <CheckCircle2 className="h-4 w-4 text-status-graded" />
                     </span>
-                    {assessment.assessmentName}
+                    <span className="min-w-0 whitespace-normal wrap-break-word">
+                      {assessment.assessmentName}
+                    </span>
                   </span>
                 </TableCell>
-                <TableCell>
-                  <span className="flex items-center gap-2">
-                    <span className="text-foreground">
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top text-muted-foreground">
+                  {assessment.type}
+                </TableCell>
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top">
+                  <span className="flex min-w-0 items-start gap-2">
+                    <span className="min-w-0 whitespace-normal wrap-break-word text-foreground">
                       {assessment.moduleName}
                     </span>
                     <Badge
@@ -106,10 +115,10 @@ export function CompletedAssessmentsTable({
                     </Badge>
                   </span>
                 </TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top text-muted-foreground">
                   {assessment.weight}%
                 </TableCell>
-                <TableCell>
+                <TableCell className="align-top">
                   <span
                     className="font-semibold"
                     style={{ color: getGradeColor(assessment.grade) }}

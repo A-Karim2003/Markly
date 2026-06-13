@@ -26,36 +26,15 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   if (!studentModule) notFound();
 
   const { module_info: moduleInfo, assessments } = studentModule;
-  const assessmentSchemes = moduleInfo?.module_assessments_scheme ?? [];
 
-  // TODO: schemedAssessments dont exist anymore, fix later.
-
-  // Scheme-based rows (pre-populated)
-  const schemedAssessments = assessmentSchemes.map((scheme) => {
-    const match = assessments.find((a) => a.scheme_id === scheme.id);
-    return {
-      id: match?.id ?? scheme.id,
-      name: scheme.name,
-      type: scheme.type,
-      weight: scheme.weight,
-      grade: match?.grade ?? null,
-      isCustom: false,
-    };
-  });
-
-  // Custom assessment rows (no scheme)
-  const customAssessments = assessments
-    .filter((assessment) => assessment.scheme_id === null)
-    .map((a) => ({
-      id: a.id,
-      name: a.name,
-      type: null,
-      weight: a.weight,
-      grade: a.grade ?? null,
-      isCustom: true,
-    }));
-
-  const assessmentRows = [...schemedAssessments, ...customAssessments];
+  const assessmentRows = assessments.map((assessment) => ({
+    id: assessment.id,
+    name: assessment.name,
+    type: null,
+    weight: assessment.weight,
+    grade: assessment.grade ?? null,
+    isCustom: assessment.scheme_id === null,
+  }));
 
   const gradedRows = assessmentRows.filter((r) => r.grade !== null);
 

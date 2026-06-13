@@ -63,7 +63,7 @@ export async function enrolStudentModules(moduleIds: number[]) {
 
   const { data: modules, error: modulesError } = await supabase
     .from("modules")
-    .select("id, module_assessments_scheme(id, name, weight)")
+    .select("id, module_assessments_scheme(id, name, weight, type)")
     .in("id", moduleIds);
 
   if (modulesError) throw new Error(modulesError.message);
@@ -82,6 +82,7 @@ export async function enrolStudentModules(moduleIds: number[]) {
       grade: null,
       scheme_id: scheme.id,
       student_module_id: studentModule.id,
+      type: scheme.type,
     }));
   });
 

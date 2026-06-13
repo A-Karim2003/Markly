@@ -20,6 +20,7 @@ export default async function AssessmentsPage() {
       moduleName: assessment.student_modules.modules?.name,
       code: assessment.student_modules.modules?.code,
       weight: toPercentage(assessment.weight),
+      type: assessment.type,
     }));
 
   const completedAssessments = assessments
@@ -32,11 +33,9 @@ export default async function AssessmentsPage() {
       code: assessment.student_modules.modules?.code,
       weight: toPercentage(assessment.weight),
       grade: assessment.grade as number,
+      type: assessment.type,
     }));
 
-  // TODO: Update assessments table to give more info later such as whether its a coursework/exam or maybe weight shown in percentage e.g 60%	rather than 0.6%. Maybe I also need to update database assessments column to add an extra column for assessment type.
-
-  // TODO: custom assessments do not have weight
   return (
     <div>
       <div className="mb-8">

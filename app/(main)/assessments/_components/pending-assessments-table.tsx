@@ -20,6 +20,7 @@ export type PendingAssessment = {
   moduleName: string | undefined;
   code: string | undefined;
   weight: number | undefined;
+  type: string | null;
 };
 
 type PendingAssessmentsTableProps = {
@@ -48,6 +49,9 @@ export function PendingAssessmentsTable({
                 Assessment
               </TableHead>
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Type
+              </TableHead>
+              <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Module
               </TableHead>
               <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -74,17 +78,24 @@ export function PendingAssessmentsTable({
                   }
                 }}
               >
-                <TableCell className="font-medium">
-                  <span className="flex items-center gap-2.5">
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word font-medium align-top">
+                  <span className="flex min-w-0 items-start gap-2.5">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-radius bg-brand-subtle">
                       <ClipboardList className="h-4 w-4 text-brand" />
                     </span>
-                    {a.assessmentName}
+                    <span className="min-w-0 whitespace-normal wrap-break-word">
+                      {a.assessmentName}
+                    </span>
                   </span>
                 </TableCell>
-                <TableCell>
-                  <span className="flex items-center gap-2">
-                    <span className="text-foreground">{a.moduleName}</span>
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top text-muted-foreground">
+                  {a.type}
+                </TableCell>
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top">
+                  <span className="flex min-w-0 items-start gap-2">
+                    <span className="min-w-0 whitespace-normal wrap-break-word text-foreground">
+                      {a.moduleName}
+                    </span>
                     <Badge
                       variant="secondary"
                       className="bg-secondary font-mono text-[11px] font-normal text-muted-foreground"
@@ -93,10 +104,10 @@ export function PendingAssessmentsTable({
                     </Badge>
                   </span>
                 </TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="max-w-75 whitespace-normal wrap-break-word align-top text-muted-foreground">
                   {a.weight}%
                 </TableCell>
-                <TableCell>
+                <TableCell className="align-top">
                   <span className="status-pending inline-flex items-center gap-1.5 rounded-radius px-2.5 py-1 text-xs font-medium">
                     <Clock className="h-3.5 w-3.5" />
                     Pending

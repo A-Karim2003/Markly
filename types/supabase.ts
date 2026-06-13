@@ -78,6 +78,7 @@ export type Database = {
           name: string;
           scheme_id: number | null;
           student_module_id: number;
+          type: string | null;
           updated_at: string;
           weight: number;
         };
@@ -88,6 +89,7 @@ export type Database = {
           name: string;
           scheme_id?: number | null;
           student_module_id: number;
+          type?: string | null;
           updated_at?: string;
           weight: number;
         };
@@ -98,6 +100,7 @@ export type Database = {
           name?: string;
           scheme_id?: number | null;
           student_module_id?: number;
+          type?: string | null;
           updated_at?: string;
           weight?: number;
         };

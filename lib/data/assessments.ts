@@ -18,7 +18,7 @@ export async function getAssessments() {
     .from("assessments")
     .select(
       `
-      id, name, grade, weight,
+      id, name, grade, weight, type,
       student_modules!student_module_id!inner(
       id,
       student_profile_id,
