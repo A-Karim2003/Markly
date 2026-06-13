@@ -11,6 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ModalState } from "./assessments-table";
 import { z } from "zod";
 import AssessmentDisclaimer from "./assessment-disclaimer";
@@ -28,6 +35,9 @@ type AssessmentModalProps = {
 
 const customAssessmentSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  type: z.enum(["Exam", "Coursework"], {
+    message: "Type is required",
+  }),
   weight: z.coerce.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
   grade: z.coerce
     .number()
@@ -45,7 +55,9 @@ const gradeOnlySchema = z.object({
 });
 
 export type Assessment = z.infer<typeof customAssessmentSchema>;
-type FieldErrors = Partial<Record<"name" | "weight" | "grade", string[]>>;
+type FieldErrors = Partial<
+  Record<"name" | "type" | "weight" | "grade", string[]>
+>;
 
 export function AssessmentModal({
   modal,
@@ -58,9 +70,11 @@ export function AssessmentModal({
   const isEdit = modal.mode === "edit";
 
   const defaultName = isEdit ? modal.row.name : "";
+  const defaultType = isEdit && modal.row.type ? modal.row.type : "";
   const defaultWeight = isEdit ? (modal.row.weight * 100).toFixed(0) : "";
   const defaultGrade =
     isEdit && modal.row.grade !== null ? String(modal.row.grade) : "";
+  const [assessmentType, setAssessmentType] = useState(defaultType);
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,6 +85,7 @@ export function AssessmentModal({
     if (modal.mode === "add") {
       const result = customAssessmentSchema.safeParse({
         name: formData.get("name"),
+        type: formData.get("type"),
         weight: formData.get("weight"),
         grade: formData.get("grade") || null,
       });
@@ -92,6 +107,7 @@ export function AssessmentModal({
       if (modal.row.isCustom) {
         const result = customAssessmentSchema.safeParse({
           name: formData.get("name"),
+          type: formData.get("type"),
           weight: formData.get("weight"),
           grade: formData.get("grade") || null,
         });
@@ -104,6 +120,7 @@ export function AssessmentModal({
 
         const res = await updateAssessment(modal.row.id, {
           name: result.data.name,
+          type: result.data.type,
           weight: result.data.weight,
           grade: result.data.grade,
         });
@@ -177,6 +194,29 @@ export function AssessmentModal({
             />
             {errors.name && (
               <p className="text-destructive text-xs">{errors.name[0]}</p>
+            )}
+          </div>
+
+          {/* Type */}
+          <div className="space-y-1.5">
+            <Label htmlFor="type">Assessment Type</Label>
+            <Select
+              key={`${modal.mode}-${modal.mode === "edit" ? modal.row.id : "new"}`}
+              value={assessmentType}
+              onValueChange={setAssessmentType}
+              disabled={isEdit && !modal.row.isCustom}
+            >
+              <SelectTrigger id="type" className="w-full">
+                <SelectValue placeholder="Select assessment type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Exam">Exam</SelectItem>
+                <SelectItem value="Coursework">Coursework</SelectItem>
+              </SelectContent>
+            </Select>
+            <input type="hidden" name="type" value={assessmentType} />
+            {errors.type && (
+              <p className="text-destructive text-xs">{errors.type[0]}</p>
             )}
           </div>
 

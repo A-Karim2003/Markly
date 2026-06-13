@@ -20,6 +20,7 @@ export async function addCustomAssessment(
     .from("assessments")
     .insert({
       name: assessmentData.name,
+      type: assessmentData.type,
       weight: assessmentData.weight / 100,
       grade: assessmentData.grade,
       student_module_id: studentModuleId,
@@ -60,7 +61,7 @@ export async function deleteAssessment(
 
 export async function updateAssessment(
   assessmentId: number,
-  data: { name?: string; weight?: number; grade: number | null },
+  data: { name?: string; type?: string; weight?: number; grade: number | null },
 ): Promise<Result<unknown>> {
   const session = await getSession();
   if (!session) return { success: false, error: "User not authenticated" };
@@ -70,6 +71,7 @@ export async function updateAssessment(
     .from("assessments")
     .update({
       ...(data?.name && { name: data.name }),
+      ...(data?.type && { type: data.type }),
       ...(data?.weight && { weight: data.weight / 100 }),
       grade: data.grade,
     })

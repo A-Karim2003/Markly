@@ -78,7 +78,7 @@ export function PendingAssessmentsTable({
                   }
                 }}
               >
-                <TableCell className="max-w-75 whitespace-normal wrap-break-word font-medium align-top">
+                <TableCell className="max-w-50 whitespace-normal wrap-break-word font-medium align-top">
                   <span className="flex min-w-0 items-start gap-2.5">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-radius bg-brand-subtle">
                       <ClipboardList className="h-4 w-4 text-brand" />

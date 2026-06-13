@@ -30,7 +30,7 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   const assessmentRows = assessments.map((assessment) => ({
     id: assessment.id,
     name: assessment.name,
-    type: null,
+    type: assessment.type,
     weight: assessment.weight,
     grade: assessment.grade ?? null,
     isCustom: assessment.scheme_id === null,
