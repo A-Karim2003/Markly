@@ -19,7 +19,6 @@ The dashboard provides a comprehensive overview of your academic journey:
 - **Year Average**: Calculated from all graded assessments using a weighted average, with each assessment contributing according to its weight. For example, if three assessments are worth 30%, 40%, and 30% and the grades are 75%, 82%, and 88%, the year average is calculated as `(75 × 0.30 + 82 × 0.40 + 88 × 0.30) / (0.30 + 0.40 + 0.30) = 81.7%`
 - **Credits Tracked**: Visual representation of completed versus total credits (120 total)
 - **Modules On Track**: Count of modules where you are on track to meet your target degree classification
-- **Performance Metrics**: A visual sparkline that illustrates the overall grade summary, including the weighted average calculation shown above
 
 ### Module Management
 
@@ -37,9 +36,10 @@ The dashboard provides a comprehensive overview of your academic journey:
 The module detail view gives students a full breakdown of a single module so they can understand exactly how their grade is built and what remains to be completed. Because different assessments carry different weights, Markly uses those weights when calculating both the current grade and the grade still required to reach the target classification. It includes:
 
 - Current module grade and target grade
-- Overall progress through the assessment scheme
+- Overall progress as a weighted percentage of completed assessments (for example, if an exam is 60%, a progress test is 10%, and coursework is 30%, completing the progress test and coursework represents 40% progress)
 - Remaining grade required to achieve the target classification
-- A table of assessments showing grade, weight, contribution, and status
+- A table of assessments showing grade, weight, contribution, status, and the grade required to hit your target classification for each specific assessment
+- The ability to add custom assessments beyond the standard assessment scheme
 - Quick actions for updating or removing assessment entries
 
 ### Assessment Tracking
@@ -52,7 +52,7 @@ The module detail view gives students a full breakdown of a single module so the
 
 ### Grade Calculations & Weighted Averages
 
-Markly uses sophisticated weighted average calculations to provide accurate academic insights:
+Markly uses weighted average calculations to provide accurate academic insights:
 
 #### Year Average Calculation
 
@@ -78,7 +78,7 @@ Each module combines multiple assessment components according to the assessment 
 Module Grade = Sum(Assessment Grade × Component Weight) / Sum(Component Weights)
 ```
 
-Assessment weights are determined by the module's official assessment scheme and may include coursework, exams, practical components, and projects.
+Assessment weights are determined by the module's official assessment scheme obtained from the University of Essex and may include coursework, exams, practical components, and projects.
 
 #### Target Grade Tracking
 
@@ -142,6 +142,46 @@ Markly supports all computer science modules across three academic levels:
 - CE324: Network Security
 - CE326: Machine Learning
 - CE812: Physics-Based Games
+
+## Module Reference
+
+All module information, including course codes, names, credits, and assessment schemes, is sourced from the [University of Essex official course database](https://www1.essex.ac.uk/modules/Default.aspx). Below is the complete reference for all available modules:
+
+| ID  | Code       | Name                                                                                                                                          | Link    |
+| --- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| 1   | CE101-4-FY | [Team Project Challenge](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE101&level=4&period=FY&campus=CO&year=26)                  | Level 4 |
+| 2   | CE141-4-FY | [Mathematics for Computing](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE141&level=4&period=FY&campus=CO&year=26)               | Level 4 |
+| 3   | CE151-4-AU | [Introduction to Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE151&level=4&period=AU&campus=CO&year=26)             | Level 4 |
+| 4   | CE152-4-SP | [Object-Oriented Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE152&level=4&period=SP&campus=CO&year=26)             | Level 4 |
+| 5   | CE153-4-AU | [Introduction to Databases](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE153&level=4&period=AU&campus=CO&year=26)               | Level 4 |
+| 6   | CE154-4-SP | [Web Development](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE154&level=4&period=SP&campus=CO&year=26)                         | Level 4 |
+| 7   | CE104-4-SP | [Data Structures and Algorithms I](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE104&level=4&period=SP&campus=CO&year=26)        | Level 4 |
+| 8   | CE161-4-AU | [Fundamentals of Digital Systems](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE161&level=4&period=AU&campus=CO&year=26)         | Level 4 |
+| 9   | CE201-5-FY | [Team Project Challenge](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE201&level=5&period=FY&campus=CO&year=26)                  | Level 5 |
+| 10  | CE202-5-XA | [Software Engineering](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE202&level=5&period=XA&campus=CO&year=26)                    | Level 5 |
+| 11  | CE203-5-AU | [Application Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE203&level=5&period=AU&campus=CO&year=26)                 | Level 5 |
+| 12  | CE204-5-AU | [Data Structures and Algorithms II](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE204&level=5&period=AU&campus=CO&year=26)       | Level 5 |
+| 13  | CE205-5-AU | [Databases and Information Retrieval](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE205&level=5&period=AU&campus=CO&year=26)     | Level 5 |
+| 14  | CE207-5-SP | [Introduction to Data Science](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE207&level=5&period=SP&campus=CO&year=26)            | Level 5 |
+| 15  | CE212-5-SP | [Web Application Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE212&level=5&period=SP&campus=CO&year=26)             | Level 5 |
+| 16  | CE213-5-SP | [Introduction to Artificial Intelligence](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE213&level=5&period=SP&campus=CO&year=26) | Level 5 |
+| 17  | CE217-5-SP | [Computer Game Design](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE217&year=26)                                                | Level 5 |
+| 18  | CE218-5-SP | [Computer Game Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE218&year=26)                                           | Level 5 |
+| 19  | CE221-5-AU | [C++ Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE221&level=5&period=AU&campus=CO&year=26)                         | Level 5 |
+| 20  | CE231-5-SP | [Computer and Data Networks](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE231&level=5&period=SP&campus=CO&year=26)              | Level 5 |
+| 21  | CE235-5-SP | [Computer Security](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE235&level=5&period=SP&campus=CO&year=26)                       | Level 5 |
+| 22  | CE301-6-FY | [Individual Capstone Project Challenge](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE301&level=6&period=FY&campus=CO&year=26)   | Level 6 |
+| 23  | CE303-6-AU | [Advanced Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE303&level=6&period=AU&campus=CO&year=26)                    | Level 6 |
+| 24  | CE305-6-SP | [Languages and Compilers](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE305&year=26)                                             | Level 6 |
+| 25  | CE310-6-SP | [Evolutionary Computation and Genetic Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE310&year=26)                    | Level 6 |
+| 26  | CE314-6-AU | [Natural Language Engineering](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE314&year=26)                                        | Level 6 |
+| 27  | CE316-6-SP | [Computer Vision](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE316&year=26)                                                     | Level 6 |
+| 28  | CE318-6-AU | [High-Level Games Development](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE318&year=26)                                        | Level 6 |
+| 29  | CE320-6-AU | [Large Scale Software Systems and Extreme Programming](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE320&year=26)                | Level 6 |
+| 30  | CE321-6-AU | [Network Engineering](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE321&year=26)                                                 | Level 6 |
+| 31  | CE324-6-SP | [Network Security](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE324&year=26)                                                    | Level 6 |
+| 32  | CE326-6-AU | [Machine Learning](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE326&year=26)                                                    | Level 6 |
+| 33  | CE812-6-SP | [Physics-Based Games](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE812&year=26)                                                 | Level 6 |
 
 ## Getting Started
 
