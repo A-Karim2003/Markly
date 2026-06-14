@@ -16,10 +16,10 @@ Markly is a web-based application that simplifies academic record-keeping for co
 
 The dashboard provides a comprehensive overview of your academic journey:
 
-- **Year Average**: Real-time weighted average across all completed assessments
+- **Year Average**: Calculated from all graded assessments using a weighted average, with each assessment contributing according to its weight. For example, if three assessments are worth 30%, 40%, and 30% and the grades are 75%, 82%, and 88%, the year average is calculated as `(75 × 0.30 + 82 × 0.40 + 88 × 0.30) / (0.30 + 0.40 + 0.30) = 81.7%`
 - **Credits Tracked**: Visual representation of completed versus total credits (120 total)
-- **Modules On Track**: Count of modules where you are on pace to meet your target degree classification
-- **Performance Metrics**: Visual indicators and sparkline charts showing academic trends
+- **Modules On Track**: Count of modules where you are on track to meet your target degree classification
+- **Performance Metrics**: A visual sparkline that illustrates the overall grade summary, including the weighted average calculation shown above
 
 ### Module Management
 
@@ -34,7 +34,7 @@ The dashboard provides a comprehensive overview of your academic journey:
 
 ![Module Detail](public/sectionImages/module_detail.png)
 
-The module detail view gives students a full breakdown of a single module so they can understand exactly how their grade is built and what remains to be completed. It includes:
+The module detail view gives students a full breakdown of a single module so they can understand exactly how their grade is built and what remains to be completed. Because different assessments carry different weights, Markly uses those weights when calculating both the current grade and the grade still required to reach the target classification. It includes:
 
 - Current module grade and target grade
 - Overall progress through the assessment scheme
@@ -46,10 +46,9 @@ The module detail view gives students a full breakdown of a single module so the
 
 ![Assessments Section](public/sectionImages/assessments_section_image.png)
 
-- Log individual assessment grades as they are completed
-- View upcoming assessments requiring grades
+- View pending and completed assessments across your modules
 - Filter between completed and pending assessments
-- Automatic calculation of module grades based on assessment weights
+- Review assessment weights, grades, and module contributions in one place
 
 ### Grade Calculations & Weighted Averages
 
