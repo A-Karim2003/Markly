@@ -2,7 +2,7 @@
 
 ![Markly Logo](public/logo-dark.png)
 
-A comprehensive grade tracking platform designed specifically for University of Essex Computer Science students. Markly enables students to monitor their academic performance, track module assessments, and visualize their progress toward degree classification goals.
+A comprehensive grade tracking platform designed specifically for University of Essex Computer Science students. Markly enables students to monitor their academic performance, track module assessments, and visualise their progress toward degree classification goals.
 
 ## Overview
 
@@ -10,13 +10,22 @@ Markly is a web-based application that simplifies academic record-keeping for co
 
 ## Features
 
+### Onboarding Flow
+
+New students complete a structured onboarding process:
+
+1. **Authentication** - Sign up or sign in with university credentials
+2. **Profile Setup** - Configure personal information and target grade
+3. **Module Selection** - Choose core and optional modules for the current year
+4. **Ready to Track** - Begin logging assessments and monitoring progress
+
 ### Dashboard
 
 ![Dashboard](public/dashboard.png)
 
 The dashboard provides a comprehensive overview of your academic journey:
 
-- **Year Average**: Calculated from all graded assessments using a weighted average, with each assessment contributing according to its weight. For example, if three assessments are worth 30%, 40%, and 30% and the grades are 75%, 82%, and 88%, the year average is calculated as `(75 × 0.30 + 82 × 0.40 + 88 × 0.30) / (0.30 + 0.40 + 0.30) = 81.7%`
+- **Year Average**: Calculated from all graded assessments using a weighted average, with each assessment contributing according to its weight
 - **Credits Tracked**: Visual representation of completed versus total credits (120 total)
 - **Modules On Track**: Count of modules where you are on track to meet your target degree classification
 
@@ -24,7 +33,7 @@ The dashboard provides a comprehensive overview of your academic journey:
 
 ![Modules Section](public/sectionImages/modules_section_image.png)
 
-- Enroll in core and optional modules from the University of Essex Computer Science curriculum
+- Enrol in core and optional modules from the University of Essex Computer Science curriculum
 - View complete module information including credits and assessment structure
 - Track progress within each module across multiple assessment types
 - Support for 33+ modules across levels 4, 5, and 6
@@ -33,10 +42,10 @@ The dashboard provides a comprehensive overview of your academic journey:
 
 ![Module Detail](public/sectionImages/module_detail.png)
 
-The module detail view gives students a full breakdown of a single module so they can understand exactly how their grade is built and what remains to be completed. Because different assessments carry different weights, Markly uses those weights when calculating both the current grade and the grade still required to reach the target classification. It includes:
+The module detail view gives students a full breakdown of a single module so they can understand exactly how their grade is built and what remains to be completed. It includes:
 
 - Current module grade and target grade
-- Overall progress as a weighted percentage of completed assessments (for example, if an exam is 60%, a progress test is 10%, and coursework is 30%, completing the progress test and coursework represents 40% progress)
+- Overall progress as a weighted percentage of completed assessments
 - Remaining grade required to achieve the target classification
 - A table of assessments showing grade, weight, contribution, status, and the grade required to hit your target classification for each specific assessment
 - The ability to add custom assessments beyond the standard assessment scheme
@@ -95,59 +104,52 @@ If this value is ≤ 100, the module is marked as "on track."
 - Manage your student profile and personal information
 - Set your target degree classification (First, 2:1, or 2:2)
 - View and update your enrolled modules
-- Customize your learning preferences
+- Customise your learning preferences
 
-## Module Coverage
+### Additional Features
 
-Markly supports all computer science modules across three academic levels:
+- **Real-Time Analytics**: Watch your year average update as you log new grades and identify which modules need improvement
+- **Flexible Assessment Logging**: Add custom assessments beyond the standard scheme and record them as you complete them throughout the year
+- **Progress Visualisation**: Progress bars for credit accumulation and colour-coded indicators for module performance
+- **Mobile-Responsive Design**: Fully functional on mobile devices and tablets with a touch-friendly interface
 
-**Level 4 (Year 1)**
+## Understanding Your Grade Data
 
-- CE101: Team Project Challenge
-- CE141: Mathematics for Computing
-- CE151: Introduction to Programming
-- CE152: Object-Oriented Programming
-- CE153: Introduction to Databases
-- CE154: Web Development
-- CE104: Data Structures and Algorithms I
-- CE161: Fundamentals of Digital Systems
+### Degree Classifications
 
-**Level 5 (Year 2)**
+Markly tracks progress toward the following UK degree classifications:
 
-- CE201: Team Project Challenge
-- CE202: Software Engineering
-- CE203: Application Programming
-- CE204: Data Structures and Algorithms II
-- CE205: Databases and Information Retrieval
-- CE207: Introduction to Data Science
-- CE212: Web Application Programming
-- CE213: Introduction to Artificial Intelligence
-- CE217: Computer Game Design
-- CE218: Computer Game Programming
-- CE221: C++ Programming
-- CE231: Computer and Data Networks
-- CE235: Computer Security
+| Classification     | Range   | Target |
+| ------------------ | ------- | ------ |
+| First              | 70-100% | 70%+   |
+| Upper Second (2:1) | 60-69%  | 60%+   |
+| Lower Second (2:2) | 50-59%  | 50%+   |
 
-**Level 6 (Final Year)**
+### Assessment Types
 
-- CE301: Individual Capstone Project Challenge
-- CE303: Advanced Programming
-- CE305: Languages and Compilers
-- CE310: Evolutionary Computation and Genetic Programming
-- CE314: Natural Language Engineering
-- CE316: Computer Vision
-- CE318: High-Level Games Development
-- CE320: Large Scale Software Systems and Extreme Programming
-- CE321: Network Engineering
-- CE324: Network Security
-- CE326: Machine Learning
-- CE812: Physics-Based Games
+Different modules use various assessment methods:
+
+- **Coursework**: Submitted written work or projects
+- **Exam**: Formal examination component
+- **Practical**: Lab work or practical assignments
+- **Presentation**: Oral presentations or demonstrations
+- **Project**: Extended project work or capstone projects
+
+Each assessment type has an assigned weight that contributes to the final module grade.
+
+### Important Notes
+
+- Weighted averages are calculated automatically as assessments are logged
+- All calculations follow University of Essex assessment regulations
+- Year average reflects only completed assessments; missing assessments are excluded
+- Module grades update in real time as new assessment grades are entered
+- Target tracking assumes you will achieve 100% on all remaining assessments
 
 ## Module Reference
 
 All module information, including course codes, names, credits, and assessment schemes, is sourced from the [University of Essex official course database](https://www1.essex.ac.uk/modules/Default.aspx). Below is the complete reference for all available modules:
 
-| ID  | Code       | Name                                                                                                                                          | Link    |
+| ID  | Code       | Name                                                                                                                                          | Level   |
 | --- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | 1   | CE101-4-FY | [Team Project Challenge](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE101&level=4&period=FY&campus=CO&year=26)                  | Level 4 |
 | 2   | CE141-4-FY | [Mathematics for Computing](https://www1.essex.ac.uk/modules/Default.aspx?coursecode=CE141&level=4&period=FY&campus=CO&year=26)               | Level 4 |
@@ -207,8 +209,7 @@ cd markly
 npm install
 ```
 
-3. Set up environment variables:
-   Create a `.env.local` file in the project root with your Supabase credentials:
+3. Set up environment variables. Create a `.env.local` file in the project root with your Supabase credentials:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -241,119 +242,21 @@ npm start
 - Next.js 16 - React framework with server-side rendering
 - React 19 - UI library
 - TypeScript - Type-safe development
-- TailwindCSS - Utility-first CSS framework
-- Recharts - Data visualization library
+- TailwindCSS - CSS framework
+- Recharts - Data visualisation library
 - Lucide React - Icon library
+- shadcn/ui - Component library
+- Radix UI - Component primitives
+- Zustand - Lightweight state management
 
 **Backend:**
 
-- Supabase - PostgreSQL database with authentication
-- Better Auth - Authentication management
+- Supabase - PostgreSQL database
+- Better Auth - Authentication
 - React Hook Form - Form handling
 - Zod - Schema validation
 
-**Styling & UI:**
-
-- shadcn/ui - High-quality React components
-- Radix UI - Accessible component primitives
-- Tailwind CSS - Utility-first CSS framework
-
-**State Management:**
-
-- Zustand - Lightweight state management
-- React Context - Built-in state management
-
-## Onboarding Flow
-
-New students complete a structured onboarding process:
-
-1. **Authentication** - Sign up or sign in with university credentials
-2. **Profile Setup** - Configure personal information and target grade
-3. **Module Selection** - Choose core and optional modules for the current year
-4. **Ready to Track** - Begin logging assessments and monitoring progress
-
-## Understanding Your Grade Data
-
-### Degree Classifications
-
-Markly tracks progress toward the following UK degree classifications:
-
-| Classification     | Range   | Target |
-| ------------------ | ------- | ------ |
-| First              | 70-100% | 70%+   |
-| Upper Second (2:1) | 60-69%  | 60%+   |
-| Lower Second (2:2) | 50-59%  | 50%+   |
-
-### Assessment Types
-
-Different modules use various assessment methods:
-
-- **Coursework**: Submitted written work or projects
-- **Exam**: Formal examination component
-- **Practical**: Lab work or practical assignments
-- **Presentation**: Oral presentations or demonstrations
-- **Project**: Extended project work or capstone projects
-
-Each assessment type has an assigned weight that contributes to the final module grade.
-
-### Important Notes
-
-- Weighted averages are calculated automatically as assessments are logged
-- All calculations follow University of Essex assessment regulations
-- Year average reflects only completed assessments; missing assessments are excluded
-- Module grades update in real-time as new assessment grades are entered
-- Target tracking assumes you will achieve 100% on all remaining assessments
-
-## Features in Detail
-
-### Real-Time Analytics
-
-- Watch your year average update as you log new grades
-- Monitor progress toward your degree classification goal
-- Identify which modules need improvement
-
-### Flexible Assessment Logging
-
-- Add custom assessments beyond the standard scheme
-- Adjust assessment weights if needed
-- Record assessments as you complete them throughout the year
-
-### Progress Visualization
-
-- Sparkline charts showing performance trends
-- Progress bars for credit accumulation
-- Color-coded indicators for module performance
-
-### Mobile-Responsive Design
-
-- Fully functional on mobile devices and tablets
-- Optimized for studying on the go
-- Touch-friendly interface
-
 ## Privacy & Security
 
-- All data is stored securely in Supabase
 - Authentication is managed through Better Auth
 - Row-level security policies ensure students can only access their own data
-- HTTPS encryption for all data in transit
-
-## Feedback & Support
-
-For issues, feature requests, or general feedback, please contact the development team or submit an issue through the repository.
-
-## Academic Integrity
-
-Markly is a personal academic tracking tool. Grades entered into the system should accurately reflect your official assessment results. This application is designed to help you understand and monitor your own progress, not to misrepresent your academic achievements.
-
-## License
-
-This project is proprietary software for use by University of Essex students. Unauthorized copying or distribution is prohibited.
-
-## Acknowledgments
-
-Designed and built for University of Essex Computer Science students. Special thanks to all students who provided feedback during development.
-
----
-
-**Last Updated**: June 2026  
-**Version**: 0.1.0
