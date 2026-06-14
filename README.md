@@ -199,7 +199,7 @@ All module information, including course codes, names, credits, and assessment s
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/A-Karim2003/Markly.git
 cd markly
 ```
 
