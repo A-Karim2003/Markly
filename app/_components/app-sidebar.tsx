@@ -21,7 +21,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -101,6 +101,11 @@ export function AppSidebar({ student, session }: AppSidebar) {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton className="h-12 hover:bg-accent/50">
                   <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src={session.user?.image || ""}
+                      alt="Profile Image"
+                      className="grayscale"
+                    />
                     <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                       {session.user?.name
                         ?.split(" ")

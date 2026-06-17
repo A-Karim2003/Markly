@@ -16,6 +16,7 @@ import Link from "next/link";
 import MicrosoftIcon from "../../sign-in/components/microosoft-icon";
 import { signUpWithEmail } from "@/lib/actions/auth-actions";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const signupSchema = z
   .object({
@@ -33,6 +34,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
   const [error, setError] = useState<string | null>(null);
+  const [isMicrosoftSigningUp, setIsMicrosoftSigningUp] = useState(false);
   const router = useRouter();
 
   const {
@@ -50,6 +52,21 @@ export default function SignupForm() {
       router.push("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
+    }
+  }
+
+  async function handleMicrosoftSignUp() {
+    setError(null);
+    setIsMicrosoftSigningUp(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "microsoft",
+        callbackURL: "/onboarding",
+      });
+    } catch {
+      setError("Microsoft sign-up failed. Please try again.");
+      setIsMicrosoftSigningUp(false);
     }
   }
 
@@ -76,10 +93,11 @@ export default function SignupForm() {
             type="button"
             variant="outline"
             className="h-11 w-full gap-3 text-card-foreground hover:bg-secondary"
-            disabled={isSubmitting}
+            onClick={() => void handleMicrosoftSignUp()}
+            disabled={isSubmitting || isMicrosoftSigningUp}
           >
             <MicrosoftIcon className="h-5 w-5" />
-            Sign up with Microsoft
+            {isMicrosoftSigningUp ? "Redirecting..." : "Sign up with Microsoft"}
           </Button>
 
           <FieldSeparator className="my-6">or</FieldSeparator>

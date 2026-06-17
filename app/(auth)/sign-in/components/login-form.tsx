@@ -17,6 +17,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import MicrosoftIcon from "./microosoft-icon";
 import { signInWithEmail } from "@/lib/actions/auth-actions";
+import { authClient } from "@/lib/auth-client";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -28,6 +29,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
+  const [isMicrosoftSigningIn, setIsMicrosoftSigningIn] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -45,6 +47,21 @@ export function LoginForm() {
       router.push("/dashboard");
     } catch {
       setError("Invalid email or password.");
+    }
+  }
+
+  async function handleMicrosoftSignIn() {
+    setError(null);
+    setIsMicrosoftSigningIn(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "microsoft",
+        callbackURL: "/dashboard",
+      });
+    } catch {
+      setError("Microsoft sign-in failed. Please try again.");
+      setIsMicrosoftSigningIn(false);
     }
   }
 
@@ -72,10 +89,13 @@ export function LoginForm() {
             type="button"
             variant="outline"
             className="h-11 w-full gap-3 text-card-foreground hover:bg-secondary"
-            disabled={isSubmitting}
+            onClick={() => void handleMicrosoftSignIn()}
+            disabled={isSubmitting || isMicrosoftSigningIn}
           >
             <MicrosoftIcon className="h-5 w-5" />
-            Continue with Microsoft
+            {isMicrosoftSigningIn
+              ? "Redirecting..."
+              : "Continue with Microsoft"}
           </Button>
 
           <FieldSeparator className="my-6">or</FieldSeparator>
