@@ -12,6 +12,15 @@ const pool = new Pool({
 export const auth = betterAuth({
   database: pool,
 
+  socialProviders: {
+    microsoft: {
+      clientId: process.env.MICROSOFT_CLIENT_ID as string,
+      clientSecret: process.env.MICROSOFT_CLIENT_SECRET as string,
+      authority: "https://login.microsoftonline.com",
+      prompt: "select_account", // Forces account selection
+    },
+  },
+
   // When Better Auth tries to set cookies inside a Server Action, manually sync those cookies into Next.js/browser.”
   plugins: [nextCookies()],
 
