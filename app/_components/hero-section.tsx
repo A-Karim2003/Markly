@@ -104,6 +104,7 @@ export function HeroSection() {
                   alt="Markly dashboard preview"
                   fill
                   priority
+                  loading="eager"
                   quality="100"
                   sizes="80vw"
                 />
