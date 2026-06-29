@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { motion, useInView } from "motion/react";
 import { SectionBadge } from "./section-badge";
 
@@ -38,7 +38,13 @@ const STEPS: Step[] = [
 
 export function HowItWorksSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-200px" });
+
+  const responsiveMargin = useMemo(() => {
+    if (typeof window === "undefined") return "-100px"; // SSR fallback
+    return window.innerWidth < 300 ? "-50px" : "-200px";
+  }, []);
+
+  const inView = useInView(ref, { once: true, margin: responsiveMargin });
 
   return (
     <div ref={ref} className="py-20 sm:py-28">

@@ -23,7 +23,7 @@ export default async function Layout({
     <SidebarProvider>
       <AppSidebar student={student} session={session} />
       <main
-        className="w-full h-svh pt-4 px-4 overflow-hidden flex flex-col bg-brand-subtle"
+        className="w-full h-screen pt-4 px-4 overflow-hidden flex flex-col bg-brand-subtle"
         style={{ maxWidth: "1600px" }}
       >
         <div className="flex items-center justify-between gap-3 mb-3 px-0.5">

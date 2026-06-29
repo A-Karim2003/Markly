@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { motion, useInView } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
 import { SectionBadge } from "./section-badge";
@@ -34,7 +34,15 @@ export function FeatureSection({
   flip = false,
 }: FeatureSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-200px" });
+
+  // Use responsive margin that works on small screens
+  // On very small screens (< 250px), reduce margin to prevent detection failure
+  const responsiveMargin = useMemo(() => {
+    if (typeof window === "undefined") return "-100px";
+    return window.innerWidth < 300 ? "-50px" : "-200px";
+  }, []);
+
+  const inView = useInView(ref, { once: true, margin: responsiveMargin });
 
   const textCol = (
     <motion.div
