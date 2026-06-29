@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   title: "Markly",
   description:
     "A grade tracker for University of Essex Computer Science students. Track your modules, log assessments and monitor your overall performance in one place.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({
