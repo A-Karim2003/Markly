@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 
 export function FeatureSections() {
   return (
-    <div className="w-full max-w-[80vw] mx-auto px-6 sm:px-8">
+    <div className="w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8">
       <section id="dashboard" className="scroll-mt-28">
         <DashboardSection />
       </section>

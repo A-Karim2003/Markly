@@ -29,7 +29,7 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-background py-16 text-foreground border-b border-border"
+      className="w-full overflow-hidden bg-background py-16 text-foreground border-b border-border"
     >
       <div className="w-full flex flex-col items-center gap-12 text-center">
         {/* Badge */}
