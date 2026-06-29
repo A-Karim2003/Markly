@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center overflow-x-hidden">
       <HomeNav />
       <HeroSection />
       <FeatureSections />
